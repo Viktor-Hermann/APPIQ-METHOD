@@ -1,0 +1,20 @@
+bundle:
+  name: Mobile Team React Native
+  icon: ⚛️
+  description: Complete React Native mobile development team with specialized mobile agents for comprehensive React Native app development.
+agents:
+  - bmad-orchestrator
+  - analyst
+  - mobile-pm
+  - mobile-ux-expert
+  - mobile-architect
+  - po
+  - mobile-developer
+  - mobile-qa
+  - mobile-security
+  - mobile-analytics
+workflows:
+  - mobile-greenfield-react-native.yaml
+  - mobile-brownfield-react-native.yaml
+  - mobile-platform-selection.yaml
+  - mobile-app-development-init.yaml

@@ -1,0 +1,20 @@
+bundle:
+  name: Mobile Team Flutter
+  icon: 📱
+  description: Complete Flutter mobile development team with specialized mobile agents for comprehensive Flutter app development.
+agents:
+  - bmad-orchestrator
+  - analyst
+  - mobile-pm
+  - mobile-ux-expert
+  - mobile-architect
+  - po
+  - mobile-developer
+  - mobile-qa
+  - mobile-security
+  - mobile-analytics
+workflows:
+  - mobile-greenfield-flutter.yaml
+  - mobile-brownfield-flutter.yaml
+  - mobile-platform-selection.yaml
+  - mobile-app-development-init.yaml

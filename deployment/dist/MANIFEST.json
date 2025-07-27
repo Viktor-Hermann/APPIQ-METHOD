@@ -1,0 +1,45 @@
+{
+  "name": "APPIQ Method Mobile Development",
+  "version": "1.0.0",
+  "build_date": "2025-07-27T17:12:08Z",
+  "git_commit": "354f533",
+  "files": {
+    "installer": {
+      "filename": "appiq_installer.sh",
+      "description": "Single-file installer with embedded components",
+      "size": "60409",
+      "executable": true
+    },
+    "quick_install": {
+      "filename": "quick-install.sh", 
+      "description": "One-command download and install script",
+      "size": "1967",
+      "executable": true
+    },
+    "documentation": {
+      "filename": "README.md",
+      "description": "Complete setup and usage documentation",
+      "size": "8233"
+    }
+  },
+  "capabilities": [
+    "mobile_development",
+    "flutter_support", 
+    "react_native_support",
+    "interactive_workflows",
+    "ide_integration",
+    "auto_configuration"
+  ],
+  "supported_ides": [
+    "claude",
+    "cursor", 
+    "windsurf",
+    "universal"
+  ],
+  "workflows": [
+    "mobile-greenfield-flutter",
+    "mobile-greenfield-react-native",
+    "mobile-brownfield-flutter", 
+    "mobile-brownfield-react-native"
+  ]
+}

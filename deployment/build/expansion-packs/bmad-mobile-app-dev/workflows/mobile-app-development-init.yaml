@@ -1,0 +1,555 @@
+workflow:
+  id: mobile-app-development-init
+  name: Mobile App Development Initialization Flow
+  description: >-
+    Comprehensive initialization workflow for mobile app development that handles
+    both new app creation and existing app enhancement, with platform selection
+    and state management guidance integrated into the BMad Method.
+  type: initialization
+  project_types:
+    - mobile-app-new
+    - mobile-app-existing
+    - platform-migration
+    - app-modernization
+
+  sequence:
+    - step: project_type_discovery
+      agent: bmad-orchestrator
+      action: determine_project_nature
+      creates: project-type-classification.md
+      notes: |
+        Initial project classification to route to appropriate workflow:
+        
+        Key Questions:
+        1. Are you developing a mobile application? (vs web application)
+        2. Is this a new mobile app or enhancing an existing one?
+        3. If existing, are you looking to:
+           - Add new features
+           - Fix performance issues
+           - Modernize technology stack
+           - Migrate to different platform
+        
+        Classification Options:
+        - NEW_MOBILE_APP: Greenfield mobile application
+        - EXISTING_MOBILE_APP: Brownfield mobile application enhancement
+        - PLATFORM_MIGRATION: Moving from one platform to another
+        - WEB_TO_MOBILE: Expanding web app to mobile platforms
+
+    - step: platform_selection_routing
+      condition: project_type_classified
+      routes:
+        new_mobile_app:
+          next_step: new_app_platform_selection
+          notes: "Route to new app platform selection workflow"
+        existing_mobile_app:
+          next_step: existing_app_analysis
+          notes: "Route to existing app analysis and enhancement planning"
+        platform_migration:
+          next_step: migration_analysis
+          notes: "Route to platform migration planning"
+        web_to_mobile:
+          next_step: web_to_mobile_strategy
+          notes: "Route to web-to-mobile expansion planning"
+
+    # NEW MOBILE APP WORKFLOW BRANCH
+    - step: new_app_platform_selection
+      agent: mobile-architect
+      action: execute_platform_selection
+      condition: new_mobile_app
+      uses: platform-selection.md
+      creates: platform-selection-results.md
+      notes: |
+        Execute comprehensive platform selection process:
+        
+        Process includes:
+        1. Requirements gathering and analysis
+        2. Team capability assessment
+        3. Technical constraints evaluation
+        4. Platform comparison matrix
+        5. State management recommendation
+        6. Final platform and architecture recommendation
+        
+        Output: Detailed platform recommendation with rationale
+
+    - step: new_app_project_planning
+      agent: mobile-pm
+      action: create_mobile_prd
+      condition: platform_selected
+      requires: platform-selection-results.md
+      creates: mobile-prd.md
+      notes: |
+        Create comprehensive Product Requirements Document for mobile app:
+        
+        Includes:
+        - Mobile-specific user journeys
+        - Platform-specific requirements
+        - Performance benchmarks
+        - Feature prioritization for mobile
+        - MVP definition
+        - Technical specifications
+        
+        Integrates platform selection results into requirements
+
+    - step: new_app_architecture_design
+      agent: mobile-architect
+      action: create_mobile_architecture
+      requires: 
+        - mobile-prd.md
+        - platform-selection-results.md
+      creates: mobile-architecture.md
+      uses: mobile-architecture-tmpl.yaml
+      notes: |
+        Design comprehensive mobile architecture:
+        
+        Architecture components:
+        - Clean architecture implementation
+        - State management integration
+        - Navigation design
+        - Data layer architecture
+        - Security implementation
+        - Performance optimization strategy
+        - Testing architecture
+
+    # EXISTING MOBILE APP WORKFLOW BRANCH
+    - step: existing_app_analysis
+      agent: mobile-architect
+      action: analyze_existing_mobile_app
+      condition: existing_mobile_app
+      uses: existing-app-analysis.md
+      creates: existing-app-analysis-report.md
+      notes: |
+        Comprehensive analysis of existing mobile application:
+        
+        Analysis includes:
+        1. Current architecture assessment
+        2. Code quality evaluation
+        3. Performance analysis
+        4. Security audit
+        5. User experience review
+        6. Technical debt assessment
+        7. Feature inventory
+        8. Improvement recommendations
+        
+        Output: Detailed analysis with prioritized improvement roadmap
+
+    - step: existing_app_strategy_planning
+      agent: mobile-pm
+      action: plan_enhancement_strategy
+      requires: existing-app-analysis-report.md
+      creates: enhancement-strategy.md
+      notes: |
+        Develop strategic plan for app enhancement:
+        
+        Strategy options:
+        - Incremental improvements
+        - Partial rewrite of specific modules
+        - Complete application rewrite
+        - Platform migration
+        - Feature additions and UX improvements
+        
+        Includes timeline, resource requirements, and risk assessment
+
+    - step: existing_app_architecture_evolution
+      agent: mobile-architect
+      action: design_evolution_architecture
+      requires: 
+        - existing-app-analysis-report.md
+        - enhancement-strategy.md
+      creates: evolution-architecture.md
+      notes: |
+        Design target architecture for app evolution:
+        
+        Includes:
+        - Migration path from current to target architecture
+        - Gradual implementation strategy
+        - Risk mitigation approaches
+        - Performance improvement plan
+        - Security enhancement strategy
+
+    # COMMON WORKFLOW CONTINUATION
+    - step: development_guidelines_setup
+      agent: mobile-architect
+      action: establish_development_standards
+      requires: 
+        - mobile-architecture.md OR evolution-architecture.md
+      creates: mobile-development-standards.md
+      condition: architecture_complete
+      notes: |
+        Establish comprehensive development standards:
+        
+        For Flutter projects:
+        - Apply flutter-development-guidelines.md
+        - Customize for specific project needs
+        - Define code review processes
+        - Set quality gates and metrics
+        
+        For React Native projects:
+        - Apply React Native best practices
+        - Define TypeScript standards
+        - Establish component patterns
+        - Set performance benchmarks
+
+    - step: technology_stack_finalization
+      agent: mobile-architect
+      action: finalize_technology_choices
+      requires: mobile-development-standards.md
+      creates: final-technology-stack.md
+      notes: |
+        Finalize complete technology stack:
+        
+        Stack includes:
+        - Core framework and versions
+        - State management solution
+        - Navigation library
+        - Network layer (API client)
+        - Local storage solution
+        - Testing frameworks
+        - CI/CD pipeline tools
+        - Development tools and IDE setup
+        - Third-party integrations
+
+    - step: project_structure_setup
+      agent: mobile-architect
+      action: define_project_structure
+      requires: final-technology-stack.md
+      creates: project-structure.md
+      notes: |
+        Define detailed project structure:
+        
+        Structure includes:
+        - Directory organization
+        - File naming conventions
+        - Module boundaries
+        - Import/export patterns
+        - Asset organization
+        - Configuration management
+        - Environment setup
+
+    - step: quality_assurance_framework
+      agent: mobile-architect
+      action: setup_qa_framework
+      requires: project-structure.md
+      creates: qa-framework.md
+      notes: |
+        Establish comprehensive QA framework:
+        
+        Framework includes:
+        - Testing strategy (unit, widget/component, integration, e2e)
+        - Code quality metrics and gates
+        - Performance benchmarking
+        - Security testing approach
+        - Accessibility testing
+        - CI/CD quality gates
+        - Code review guidelines
+
+    - step: development_environment_setup
+      agent: mobile-architect
+      action: create_environment_guide
+      requires: 
+        - final-technology-stack.md
+        - project-structure.md
+        - qa-framework.md
+      creates: development-environment-guide.md
+      notes: |
+        Create comprehensive development environment setup guide:
+        
+        Guide includes:
+        - IDE/Editor configuration
+        - Required tools and extensions
+        - SDK and dependency installation
+        - Build system configuration
+        - Testing environment setup
+        - Debugging tools configuration
+        - CI/CD integration setup
+
+    - step: team_onboarding_plan
+      agent: mobile-pm
+      action: create_team_onboarding
+      requires: 
+        - mobile-development-standards.md
+        - development-environment-guide.md
+      creates: team-onboarding-plan.md
+      notes: |
+        Create team onboarding and training plan:
+        
+        Plan includes:
+        - Technology training schedule
+        - Development process orientation
+        - Code review training
+        - Quality standards education
+        - Tools and environment setup assistance
+        - Mentoring and support structure
+
+    - step: project_documentation_setup
+      agent: po
+      action: setup_project_documentation
+      requires: 
+        - mobile-prd.md OR enhancement-strategy.md
+        - mobile-architecture.md OR evolution-architecture.md
+        - mobile-development-standards.md
+      creates: project-documentation-index.md
+      notes: |
+        Set up comprehensive project documentation:
+        
+        Documentation includes:
+        - Project overview and objectives
+        - Architecture documentation and decisions
+        - Development guidelines and standards
+        - API documentation (if applicable)
+        - Deployment and release procedures
+        - Troubleshooting guides
+        - Contributing guidelines
+
+    - step: development_workflow_definition
+      agent: mobile-pm
+      action: define_development_workflow
+      requires: 
+        - team-onboarding-plan.md
+        - qa-framework.md
+      creates: development-workflow.md
+      notes: |
+        Define development workflow and processes:
+        
+        Workflow includes:
+        - Sprint planning and story creation process
+        - Development and code review workflow
+        - Testing and QA procedures
+        - Release and deployment process
+        - Bug tracking and resolution
+        - Performance monitoring and optimization
+        - User feedback integration
+
+    - step: initial_project_setup
+      agent: mobile-developer
+      action: create_initial_project_structure
+      requires: 
+        - project-structure.md
+        - development-environment-guide.md
+        - final-technology-stack.md
+      creates: initial-project-codebase
+      notes: |
+        Create initial project structure and boilerplate:
+        
+        Setup includes:
+        - Project scaffold with chosen technology stack
+        - Directory structure implementation
+        - Configuration files setup
+        - Basic routing and navigation structure
+        - State management boilerplate
+        - Testing framework setup
+        - CI/CD pipeline configuration
+        - Documentation templates
+
+    - workflow_completion:
+      action: project_ready_for_development
+      creates: project-initialization-complete.md
+      notes: |
+        Mobile app development initialization complete!
+        
+        Project is ready with:
+        ✅ Platform and technology stack selected
+        ✅ Architecture designed and documented
+        ✅ Development standards established
+        ✅ Quality assurance framework in place
+        ✅ Team onboarding plan ready
+        ✅ Development environment configured
+        ✅ Initial project structure created
+        ✅ Documentation established
+        
+        Ready to proceed with:
+        🚀 Story creation and sprint planning
+        🚀 Feature development and implementation
+        🚀 Testing and quality assurance
+        🚀 Deployment and release management
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Mobile App Project] --> B[Project Type Discovery]
+        B --> C{Project Nature?}
+        
+        C -->|New Mobile App| D[Platform Selection Process]
+        C -->|Existing Mobile App| E[Existing App Analysis]
+        C -->|Platform Migration| F[Migration Analysis]
+        C -->|Web to Mobile| G[Web-to-Mobile Strategy]
+        
+        D --> H[New App Project Planning]
+        H --> I[New App Architecture Design]
+        
+        E --> J[Enhancement Strategy Planning]
+        J --> K[Evolution Architecture Design]
+        
+        F --> L[Migration Planning]
+        G --> M[Cross-Platform Strategy]
+        
+        I --> N[Development Guidelines Setup]
+        K --> N
+        L --> N
+        M --> N
+        
+        N --> O[Technology Stack Finalization]
+        O --> P[Project Structure Definition]
+        P --> Q[QA Framework Setup]
+        Q --> R[Development Environment Guide]
+        R --> S[Team Onboarding Plan]
+        S --> T[Project Documentation Setup]
+        T --> U[Development Workflow Definition]
+        U --> V[Initial Project Setup]
+        V --> W[Project Ready for Development]
+        
+        style W fill:#90EE90
+        style D fill:#ADD8E6
+        style E fill:#FFE4B5
+        style I fill:#DDA0DD
+        style K fill:#DDA0DD
+        style N fill:#F0E68C
+        style O fill:#F0E68C
+        
+        subgraph "New App Path"
+            D --> H --> I
+        end
+        
+        subgraph "Existing App Path"
+            E --> J --> K
+        end
+        
+        subgraph "Common Setup"
+            N --> O --> P --> Q --> R --> S --> T --> U --> V
+        end
+    ```
+
+  decision_guidance:
+    project_type_classification:
+      new_mobile_app:
+        indicators:
+          - "Starting from scratch"
+          - "No existing mobile presence"
+          - "Greenfield development"
+          - "New business requirements"
+        workflow_path: "new_app_platform_selection"
+        
+      existing_mobile_app:
+        indicators:
+          - "Have existing mobile app"
+          - "Need to add features"
+          - "Performance issues"
+          - "Modernization required"
+        workflow_path: "existing_app_analysis"
+        
+      platform_migration:
+        indicators:
+          - "Moving from native to cross-platform"
+          - "Switching frameworks"
+          - "Technology stack change"
+          - "Platform consolidation"
+        workflow_path: "migration_analysis"
+        
+      web_to_mobile:
+        indicators:
+          - "Existing web application"
+          - "Expanding to mobile"
+          - "Code sharing desired"
+          - "Cross-platform strategy"
+        workflow_path: "web_to_mobile_strategy"
+
+  platform_selection_integration:
+    flutter_setup:
+      state_management_options:
+        - bloc_cubit: "Enterprise/Complex applications"
+        - riverpod: "Modern/Medium applications"
+        - getx: "Rapid development/Simple applications"
+        - provider: "Learning/Basic applications"
+      development_guidelines: "flutter-development-guidelines.md"
+      
+    react_native_setup:
+      state_management_options:
+        - redux_toolkit: "Enterprise/Complex applications"
+        - zustand: "Performance-focused/Medium applications"
+        - context_api: "Simple global state"
+      development_guidelines: "react-native-best-practices.md"
+
+  quality_gates:
+    platform_selection:
+      - "Platform choice aligns with requirements"
+      - "Team capability assessment complete"
+      - "State management solution selected"
+      - "Technology stack finalized"
+      
+    architecture_design:
+      - "Clean architecture layers defined"
+      - "Dependency injection strategy planned"
+      - "Performance optimization considered"
+      - "Security requirements addressed"
+      
+    development_setup:
+      - "Development standards established"
+      - "QA framework defined"
+      - "Team onboarding plan ready"
+      - "Initial project structure created"
+
+  handoff_prompts:
+    project_type_to_platform: |
+      Project classified as: {{project_type}}
+      
+      {{#if new_mobile_app}}
+      Proceeding with new mobile app development workflow:
+      - Platform selection and analysis required
+      - Requirements gathering needed
+      - Architecture design from scratch
+      {{/if}}
+      
+      {{#if existing_mobile_app}}
+      Proceeding with existing app enhancement workflow:
+      - Current app analysis required
+      - Enhancement strategy planning needed
+      - Evolution architecture design
+      {{/if}}
+
+    platform_to_architecture: |
+      Platform selection complete:
+      - Selected Platform: {{selected_platform}}
+      - State Management: {{selected_state_management}}
+      - Key Decision Factors: {{decision_factors}}
+      
+      Proceeding to architecture design with selected technology stack.
+
+    architecture_to_setup: |
+      Architecture design complete:
+      - Architecture Pattern: {{architecture_pattern}}
+      - Technology Stack: {{technology_stack}}
+      - Quality Framework: {{quality_framework}}
+      
+      Proceeding to development environment and team setup.
+
+    setup_complete: |
+      Mobile app development initialization complete!
+      
+      Summary:
+      - Platform: {{selected_platform}}
+      - State Management: {{selected_state_management}}
+      - Architecture: {{architecture_pattern}}
+      - Team: {{team_size}} developers
+      - Timeline: {{estimated_timeline}}
+      
+      Ready for story creation and development sprints!
+
+  success_criteria:
+    initialization_quality:
+      - "Platform selection thoroughly justified"
+      - "Architecture aligns with requirements"
+      - "Development standards clearly defined"
+      - "Quality gates established"
+      - "Team onboarding plan comprehensive"
+      
+    setup_completeness:
+      - "All documentation created and accessible"
+      - "Development environment reproducible"
+      - "CI/CD pipeline configured"
+      - "Initial project structure functional"
+      - "Team ready to begin development"
+      
+    stakeholder_alignment:
+      - "Business requirements captured accurately"
+      - "Technical decisions approved by stakeholders"
+      - "Timeline and resource expectations set"
+      - "Success metrics defined and agreed upon"

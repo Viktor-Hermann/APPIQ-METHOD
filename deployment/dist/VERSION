@@ -1,0 +1,16 @@
+APPIQ Method Mobile Development
+Version: 1.0.0
+Build Date: 2025-07-27 17:12:08 UTC
+Git Commit: 354f533
+
+Components:
+- Mobile Expansion Pack: bmad-mobile-app-dev
+- Core System: bmad-core  
+- Slash Commands: /appiq interactive launcher
+- IDE Integration: Claude, Cursor, Windsurf, Universal
+
+Package Contents:
+- appiq_installer.sh: Single-file installer with embedded files
+- init_appiq.sh: Development version installer
+- quick-install.sh: One-command download and install
+- README.md: Complete documentation and usage guide

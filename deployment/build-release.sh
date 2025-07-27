@@ -51,7 +51,7 @@ required_dirs=(
     "workflows" 
     "templates"
     "checklists"
-    "teams"
+    "agent-teams"
 )
 
 missing_dirs=0
@@ -74,7 +74,7 @@ echo -e "${BLUE}📊 Package contents:${NC}"
 echo "• Agents: $(find "${MOBILE_PACK}/agents" -name "*.md" | wc -l)"
 echo "• Workflows: $(find "${MOBILE_PACK}/workflows" -name "*.yaml" | wc -l)" 
 echo "• Templates: $(find "${MOBILE_PACK}/templates" -name "*.yaml" | wc -l)"
-echo "• Teams: $(find "${MOBILE_PACK}/teams" -name "*.yaml" | wc -l)"
+echo "• Teams: $(find "${MOBILE_PACK}/agent-teams" -name "*.yaml" | wc -l)"
 
 # Create the installer package
 echo -e "${BLUE}📦 Building installer package...${NC}"

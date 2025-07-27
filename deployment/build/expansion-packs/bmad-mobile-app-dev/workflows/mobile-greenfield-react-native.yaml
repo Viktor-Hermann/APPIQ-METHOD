@@ -1,0 +1,283 @@
+workflow:
+  id: mobile-greenfield-react-native
+  name: Greenfield React Native Mobile App Development
+  description: >-
+    Agent workflow for building React Native mobile applications from concept to development.
+    Includes platform selection guidance, React Native-specific architecture patterns,
+    and mobile-optimized development processes.
+  type: greenfield
+  platform: react-native
+  project_types:
+    - mobile-app
+    - cross-platform-app
+    - react-native-app
+    - mvp-mobile
+    - prototype-mobile
+
+  sequence:
+    - agent: analyst
+      creates: project-brief.md
+      optional_steps:
+        - mobile_market_research
+        - competitor_app_analysis
+        - platform_analysis
+      notes: "Mobile-focused project brief considering app store landscape, device capabilities, and mobile user behavior. SAVE OUTPUT: Copy final project-brief.md to your project's docs/ folder."
+
+    - agent: mobile-pm
+      creates: mobile-prd.md
+      requires: project-brief.md
+      uses: mobile-prd-tmpl
+      notes: "Creates mobile-specific PRD with React Native considerations, platform features, and mobile performance requirements. SAVE OUTPUT: Copy final mobile-prd.md to your project's docs/ folder."
+
+    - agent: mobile-architect
+      action: platform_selection_validation
+      requires: mobile-prd.md
+      notes: "Validates React Native platform choice based on requirements. May suggest Flutter or native development if React Native isn't optimal for specific needs."
+
+    - agent: mobile-ux-expert
+      creates: mobile-design-system.md
+      requires: mobile-prd.md
+      optional_steps:
+        - mobile_user_research
+        - accessibility_analysis
+        - platform_design_review
+      notes: "Creates React Native-optimized design system with platform-specific components, mobile interaction patterns, and accessibility guidelines. SAVE OUTPUT: Copy final mobile-design-system.md to your project's docs/ folder."
+
+    - agent: mobile-architect
+      creates: mobile-architecture.md
+      requires:
+        - mobile-prd.md
+        - mobile-design-system.md
+      uses: mobile-architecture-tmpl
+      optional_steps:
+        - react_native_architecture_research
+        - state_management_analysis
+        - performance_planning
+      notes: "Creates comprehensive React Native architecture with modern patterns, state management (Redux Toolkit/Zustand/Context), and mobile-specific optimizations. SAVE OUTPUT: Copy final mobile-architecture.md to your project's docs/ folder."
+
+    - agent: mobile-security
+      creates: mobile-security-plan.md
+      requires: mobile-architecture.md
+      notes: "Reviews mobile architecture for security compliance (OWASP Mobile Top 10), creates security implementation plan for React Native app. SAVE OUTPUT: Copy final mobile-security-plan.md to your project's docs/ folder."
+
+    - agent: mobile-pm
+      updates: mobile-prd.md (if needed)
+      requires: mobile-architecture.md
+      condition: architecture_suggests_prd_changes
+      notes: "If architect suggests story changes or mobile-specific adjustments, update PRD and re-export the complete mobile-prd.md to docs/ folder."
+
+    - agent: po
+      validates: all_mobile_artifacts
+      uses: mobile-development-checklist
+      notes: "Validates all mobile documents for React Native compatibility, performance requirements, and mobile best practices. May require updates to any document."
+
+    - agent: various
+      updates: any_flagged_documents
+      condition: po_checklist_issues
+      notes: "If PO finds issues, return to relevant mobile agent to fix and re-export updated documents to docs/ folder."
+
+    - react_native_project_setup:
+      action: guide_react_native_project_structure
+      notes: |
+        React Native Project Setup Guidance:
+        - Initialize React Native project with: npx react-native@latest init ProjectName
+        - Set up TypeScript configuration for type safety
+        - Configure folder structure as per mobile-architecture.md
+        - Set up state management dependencies (Redux Toolkit, Zustand, etc.)
+        - Configure development environment (Metro bundler, Flipper, etc.)
+        - Set up iOS and Android platform-specific configurations
+
+    - agent: po
+      action: shard_mobile_documents
+      creates: sharded_mobile_docs
+      requires: all_mobile_artifacts_in_project
+      notes: |
+        Shard mobile documents for IDE development:
+        - Option A: Use PO agent to shard: @po then ask to shard docs/mobile-prd.md
+        - Option B: Manual: Drag shard-doc task + docs/mobile-prd.md into chat
+        - Creates docs/mobile-prd/ and docs/mobile-architecture/ folders with sharded content
+
+    - agent: sm
+      action: create_mobile_story
+      creates: mobile-story.md
+      requires: sharded_mobile_docs
+      repeats: for_each_mobile_epic
+      notes: |
+        Mobile story creation cycle:
+        - SM Agent (New Chat): @sm → *create
+        - Creates next mobile story from sharded docs
+        - Includes mobile-specific acceptance criteria (device testing, performance)
+        - Story starts in "Draft" status
+
+    - agent: analyst/mobile-pm
+      action: review_mobile_draft_story
+      updates: mobile-story.md
+      requires: mobile-story.md
+      optional: true
+      condition: user_wants_story_review
+      notes: |
+        OPTIONAL: Review and approve draft mobile story
+        - Review mobile story completeness and React Native alignment
+        - Verify device testing requirements
+        - Update story status: Draft → Approved
+
+    - agent: mobile-developer
+      action: implement_react_native_story
+      creates: react_native_implementation_files
+      requires: mobile-story.md
+      notes: |
+        Mobile Dev Agent (New Chat): @mobile-developer
+        - Implements approved React Native story with TypeScript
+        - Follows React Native development best practices
+        - Updates File List with all changes
+        - Marks story as "Review" when complete
+
+    - agent: mobile-qa
+      action: review_react_native_implementation
+      updates: react_native_implementation_files
+      requires: react_native_implementation_files
+      optional: true
+      notes: |
+        OPTIONAL: Mobile QA Agent (New Chat): @mobile-qa → review-story
+        - React Native-specific testing and device compatibility review
+        - Performance and accessibility testing
+        - Fixes small issues directly
+        - Leaves checklist for remaining items
+        - Updates story status (Review → Done or stays Review)
+
+    - agent: mobile-developer
+      action: address_mobile_qa_feedback
+      updates: react_native_implementation_files
+      condition: mobile_qa_left_unchecked_items
+      notes: |
+        If Mobile QA left unchecked items:
+        - Mobile Dev Agent (New Chat): Address remaining React Native items
+        - Return to Mobile QA for final approval
+
+    - repeat_mobile_development_cycle:
+      action: continue_for_all_mobile_stories
+      notes: |
+        Repeat mobile story cycle (SM → Mobile Dev → Mobile QA) for all epic stories
+        Include device testing and performance validation for each story
+        Continue until all stories in mobile PRD are complete
+
+    - agent: mobile-analytics
+      action: setup_mobile_analytics
+      creates: mobile-analytics-config.md
+      condition: analytics_required
+      optional: true
+      notes: |
+        OPTIONAL: Set up mobile analytics and monitoring
+        - Configure Firebase Analytics, Crashlytics for React Native
+        - Set up performance monitoring
+        - Implement user behavior tracking
+        - Create analytics implementation guide
+
+    - agent: po
+      action: mobile_epic_retrospective
+      creates: mobile-epic-retrospective.md
+      condition: mobile_epic_complete
+      optional: true
+      notes: |
+        OPTIONAL: After mobile epic completion
+        - Validate mobile epic was completed correctly
+        - Review device testing coverage
+        - Document mobile-specific learnings and improvements
+
+    - workflow_end:
+      action: react_native_project_complete
+      notes: |
+        All React Native stories implemented and reviewed!
+        Mobile development phase complete.
+        
+        Next steps:
+        - App store preparation (iOS App Store, Google Play)
+        - Performance optimization and bundle analysis
+        - Device testing on real devices
+        - Security review and penetration testing
+        - CodePush setup for over-the-air updates
+        
+        Reference: mobile-development-checklist.md for deployment
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: React Native Greenfield] --> B[analyst: project-brief.md]
+        B --> C[mobile-pm: mobile-prd.md]
+        C --> D[mobile-architect: platform validation]
+        D --> E[mobile-ux-expert: mobile-design-system.md]
+        E --> F[mobile-architect: mobile-architecture.md]
+        F --> G[mobile-security: security-plan.md]
+        G --> H{Architecture suggests PRD changes?}
+        H -->|Yes| I[mobile-pm: update mobile-prd.md]
+        H -->|No| J[po: validate all mobile artifacts]
+        I --> J
+        J --> K{PO finds issues?}
+        K -->|Yes| L[Return to relevant mobile agent]
+        K -->|No| M[React Native project setup]
+        L --> J
+        
+        M --> N[po: shard mobile documents]
+        N --> O[sm: create mobile story]
+        O --> P{Review draft story?}
+        P -->|Yes| Q[analyst/mobile-pm: review & approve]
+        P -->|No| R[mobile-developer: implement RN story]
+        Q --> R
+        R --> S{Mobile QA review?}
+        S -->|Yes| T[mobile-qa: review RN implementation]
+        S -->|No| U{More stories?}
+        T --> V{Mobile QA found issues?}
+        V -->|Yes| W[mobile-developer: address feedback]
+        V -->|No| U
+        W --> T
+        U -->|Yes| O
+        U -->|No| X{Setup analytics?}
+        X -->|Yes| Y[mobile-analytics: setup]
+        X -->|No| Z{Epic retrospective?}
+        Y --> Z
+        Z -->|Yes| AA[po: mobile retrospective]
+        Z -->|No| BB[React Native Project Complete]
+        AA --> BB
+
+        B -.-> B1[Optional: mobile market research]
+        B -.-> B2[Optional: competitor app analysis]
+        E -.-> E1[Optional: mobile user research]
+        E -.-> E2[Optional: accessibility analysis]
+        F -.-> F1[Optional: RN architecture research]
+        F -.-> F2[Optional: state management analysis]
+
+        style BB fill:#90EE90
+        style M fill:#ADD8E6
+        style N fill:#ADD8E6
+        style O fill:#ADD8E6
+        style R fill:#ADD8E6
+        style B fill:#FFE4B5
+        style C fill:#FFE4B5
+        style E fill:#FFE4B5
+        style F fill:#FFE4B5
+        style G fill:#FFB6C1
+        style Q fill:#F0E68C
+        style T fill:#F0E68C
+        style Y fill:#DDA0DD
+        style AA fill:#F0E68C
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Building production React Native mobile apps
+      - Team has React/JavaScript expertise
+      - Need to share code with React web application
+      - Extensive third-party native library integration required
+      - Over-the-air updates (CodePush) are important
+      - Rapid development with familiar React patterns
+
+  handoff_prompts:
+    analyst_to_mobile_pm: "Mobile project brief is complete with platform analysis. Save it as docs/project-brief.md in your project, then create the mobile-specific PRD."
+    mobile_pm_to_architect: "Mobile PRD is ready with React Native requirements. Save it as docs/mobile-prd.md, then validate React Native platform choice."
+    architect_to_ux: "Platform validation complete. React Native is optimal for this project. Please create the mobile design system."
+    ux_to_architect: "Mobile design system complete. Save it as docs/mobile-design-system.md, then create the React Native architecture."
+    architect_to_security: "React Native architecture complete. Save it as docs/mobile-architecture.md, then review security requirements."
+    security_to_pm: "Security plan complete. Save it as docs/mobile-security-plan.md. Do you need PRD updates based on security requirements?"
+    complete_to_po: "All mobile planning documents ready in docs/ folder. Please validate all artifacts for React Native compatibility."
+    setup_react_native: "All planning validated. Set up React Native project structure as per mobile-architecture.md, then begin story development."
+    mobile_development_ready: "React Native project configured. Move to IDE environment to begin mobile story implementation."

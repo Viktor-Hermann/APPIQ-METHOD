@@ -1,0 +1,404 @@
+workflow:
+  id: mobile-platform-selection
+  name: Mobile Platform Selection & Architecture Planning
+  description: >-
+    Comprehensive workflow for selecting optimal mobile development platform 
+    (Flutter vs React Native) and state management solution based on project 
+    requirements, team expertise, and technical constraints.
+  type: decision-making
+  project_types:
+    - mobile-app
+    - cross-platform
+    - native-app
+    - mvp
+    - enterprise-mobile
+
+  sequence:
+    - step: project_type_identification
+      agent: mobile-architect
+      action: identify_project_scope
+      creates: project-requirements-analysis.md
+      notes: |
+        Determine if this is:
+        - New mobile app (greenfield)
+        - Existing app enhancement (brownfield)
+        - Web-to-mobile expansion
+        - Platform migration project
+        
+        Key questions:
+        - Is this a new mobile app or enhancing an existing one?
+        - Do you have existing web applications to integrate with?
+        - What are your primary business goals?
+        - What is your target timeline and budget?
+
+    - step: requirements_gathering
+      agent: mobile-pm
+      action: analyze_functional_requirements
+      requires: project-requirements-analysis.md
+      creates: functional-requirements.md
+      notes: |
+        Gather detailed requirements:
+        - Core features and functionality
+        - Performance requirements
+        - Platform-specific needs (iOS/Android)
+        - Integration requirements
+        - Scalability expectations
+        - Maintenance considerations
+
+    - step: team_assessment
+      agent: mobile-architect
+      action: evaluate_team_capabilities
+      creates: team-capability-matrix.md
+      notes: |
+        Assess team expertise:
+        - Current mobile development experience
+        - JavaScript/TypeScript vs Dart proficiency
+        - React/React Native experience
+        - Flutter/Dart experience
+        - Learning capacity and timeline
+        - Team size and structure
+
+    - step: technical_constraints_analysis
+      agent: mobile-architect
+      action: analyze_technical_constraints
+      requires: 
+        - functional-requirements.md
+        - team-capability-matrix.md
+      creates: technical-constraints.md
+      notes: |
+        Evaluate technical factors:
+        - Performance requirements
+        - Platform-specific feature needs
+        - Third-party integration requirements
+        - Existing infrastructure compatibility
+        - Security and compliance needs
+        - Maintenance and update requirements
+
+    - step: platform_evaluation_matrix
+      agent: mobile-architect
+      action: create_evaluation_matrix
+      requires:
+        - functional-requirements.md
+        - team-capability-matrix.md
+        - technical-constraints.md
+      creates: platform-evaluation-matrix.md
+      notes: |
+        Create comprehensive comparison matrix:
+        
+        Evaluation Criteria:
+        - Development Speed
+        - Performance Requirements
+        - Platform-specific Features
+        - Team Learning Curve
+        - Long-term Maintenance
+        - Community & Ecosystem
+        - Third-party Integrations
+        - UI/UX Flexibility
+        - Testing Capabilities
+        - Deployment Complexity
+
+    - step: platform_recommendation
+      agent: mobile-architect
+      action: recommend_platform
+      requires: platform-evaluation-matrix.md
+      creates: platform-recommendation.md
+      notes: |
+        Provide detailed platform recommendation:
+        - Primary platform choice (Flutter or React Native)
+        - Detailed rationale for decision
+        - Trade-offs and considerations
+        - Risk assessment and mitigation
+        - Timeline implications
+        - Team training needs
+
+    - step: state_management_analysis
+      agent: mobile-architect
+      action: analyze_state_management_needs
+      requires: platform-recommendation.md
+      creates: state-management-analysis.md
+      condition: platform_selected
+      notes: |
+        Analyze state management requirements:
+        - App complexity assessment
+        - Data flow patterns
+        - Real-time requirements
+        - Offline capabilities
+        - Performance considerations
+        - Team familiarity factors
+
+    - step: state_management_recommendation
+      agent: mobile-architect
+      action: recommend_state_management
+      requires: state-management-analysis.md
+      creates: state-management-recommendation.md
+      notes: |
+        For Flutter apps, evaluate:
+        - BLoC/Cubit (Enterprise/Complex apps)
+        - Riverpod (Modern/Medium apps)
+        - GetX (Rapid development/Simple apps)
+        - Provider (Learning/Basic apps)
+        
+        For React Native apps, evaluate:
+        - Redux Toolkit (Enterprise/Complex apps)
+        - Zustand (Performance-focused/Medium apps)
+        - Context API (Simple global state)
+
+    - step: architecture_planning
+      agent: mobile-architect
+      action: design_initial_architecture
+      requires:
+        - platform-recommendation.md
+        - state-management-recommendation.md
+      creates: initial-architecture-plan.md
+      notes: |
+        Create initial architecture blueprint:
+        - Clean architecture layer design
+        - Dependency injection strategy
+        - Navigation architecture
+        - Data layer design
+        - Testing strategy outline
+        - Performance optimization plan
+
+    - step: development_guidelines_selection
+      agent: mobile-architect
+      action: select_development_guidelines
+      requires: initial-architecture-plan.md
+      creates: development-guidelines.md
+      condition: platform_selected
+      notes: |
+        Select and customize development guidelines:
+        - For Flutter: Apply flutter-development-guidelines.md
+        - For React Native: Apply react-native best practices
+        - Customize coding standards for team
+        - Define code review processes
+        - Set quality gates and metrics
+
+    - step: technology_stack_definition
+      agent: mobile-architect
+      action: define_technology_stack
+      requires:
+        - platform-recommendation.md
+        - state-management-recommendation.md
+        - development-guidelines.md
+      creates: technology-stack.md
+      notes: |
+        Define complete technology stack:
+        - Core framework and version
+        - State management solution
+        - Navigation library
+        - Network layer
+        - Local storage solution
+        - Testing frameworks
+        - CI/CD tools
+        - Development tools and IDE setup
+
+    - step: implementation_roadmap
+      agent: mobile-pm
+      action: create_implementation_roadmap
+      requires:
+        - initial-architecture-plan.md
+        - technology-stack.md
+      creates: implementation-roadmap.md
+      notes: |
+        Create detailed implementation plan:
+        - Project phases and milestones
+        - Team onboarding and training plan
+        - Risk mitigation strategies
+        - Quality assurance processes
+        - Deployment and release strategy
+        - Success metrics and KPIs
+
+    - step: stakeholder_review
+      agent: mobile-pm
+      action: prepare_stakeholder_presentation
+      requires:
+        - platform-recommendation.md
+        - implementation-roadmap.md
+      creates: stakeholder-presentation.md
+      notes: |
+        Prepare comprehensive stakeholder presentation:
+        - Executive summary of recommendations
+        - Business impact analysis
+        - Timeline and resource requirements
+        - Risk assessment
+        - Success criteria
+        - Next steps and approvals needed
+
+    - workflow_completion:
+      action: finalize_platform_selection
+      creates: platform-selection-complete.md
+      notes: |
+        Platform selection complete! Ready to proceed with:
+        1. Team setup and training
+        2. Development environment configuration
+        3. Architecture documentation
+        4. Project kickoff and first sprint planning
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Mobile App Project] --> B[Project Type Identification]
+        B --> C{Project Type?}
+        
+        C -->|Greenfield| D[Requirements Gathering]
+        C -->|Brownfield| E[Existing App Analysis]
+        C -->|Migration| F[Migration Requirements]
+        
+        D --> G[Team Assessment]
+        E --> G
+        F --> G
+        
+        G --> H[Technical Constraints Analysis]
+        H --> I[Platform Evaluation Matrix]
+        
+        I --> J{Evaluation Complete?}
+        J -->|No| K[Gather More Data]
+        K --> I
+        J -->|Yes| L[Platform Recommendation]
+        
+        L --> M{Platform Selected?}
+        M -->|Flutter| N[Flutter State Management Analysis]
+        M -->|React Native| O[React Native State Management Analysis]
+        
+        N --> P[State Management Recommendation]
+        O --> P
+        
+        P --> Q[Architecture Planning]
+        Q --> R[Development Guidelines Selection]
+        R --> S[Technology Stack Definition]
+        S --> T[Implementation Roadmap]
+        T --> U[Stakeholder Review]
+        
+        U --> V{Approved?}
+        V -->|No| W[Revise Recommendations]
+        W --> U
+        V -->|Yes| X[Platform Selection Complete]
+        
+        style X fill:#90EE90
+        style L fill:#ADD8E6
+        style N fill:#FFE4B5
+        style O fill:#FFE4B5
+        style P fill:#FFE4B5
+        style Q fill:#DDA0DD
+    ```
+
+  decision_criteria:
+    flutter_selection:
+      high_performance_ui: "App requires complex animations and custom UI"
+      single_codebase_priority: "Maximum code sharing is critical"
+      dart_acceptance: "Team willing to learn Dart language"
+      google_ecosystem: "Heavy integration with Google services"
+      long_term_support: "Long-term maintenance and stability priority"
+      
+    react_native_selection:
+      javascript_expertise: "Team has strong React/JavaScript background"
+      existing_react_web: "Existing React web application to share logic"
+      third_party_integrations: "Extensive native library ecosystem needed"
+      over_the_air_updates: "CodePush-style updates are critical"
+      rapid_prototyping: "Fast time-to-market is priority"
+
+    state_management_selection:
+      flutter:
+        bloc_cubit:
+          complexity: high
+          team_size: large
+          predictability: required
+          testing: extensive
+        riverpod:
+          complexity: medium_high
+          modernization: preferred
+          type_safety: critical
+          flexibility: high
+        getx:
+          complexity: low_medium
+          speed: critical
+          simplicity: preferred
+          team_experience: beginner_intermediate
+        provider:
+          complexity: low
+          learning: true
+          understanding: fundamental
+          
+      react_native:
+        redux_toolkit:
+          complexity: high
+          debugging: advanced
+          middleware: required
+          predictability: critical
+        zustand:
+          complexity: medium
+          performance: critical
+          simplicity: preferred
+          bundle_size: small
+        context_api:
+          complexity: low
+          dependencies: minimal
+          patterns: react_native
+          scope: limited
+
+  handoff_prompts:
+    requirements_to_evaluation: |
+      Requirements analysis complete. Key findings:
+      - Project scope: {{project_scope}}
+      - Performance needs: {{performance_requirements}}
+      - Team expertise: {{team_capabilities}}
+      - Timeline: {{project_timeline}}
+      
+      Proceeding to platform evaluation matrix creation.
+      
+    evaluation_to_recommendation: |
+      Platform evaluation matrix complete. Scoring results:
+      - Flutter total score: {{flutter_score}}/{{max_score}}
+      - React Native total score: {{react_native_score}}/{{max_score}}
+      
+      Key differentiators: {{key_differentiators}}
+      Proceeding to final platform recommendation.
+      
+    platform_to_state_management: |
+      Platform selected: {{chosen_platform}}
+      Rationale: {{platform_rationale}}
+      
+      Now analyzing state management needs for {{chosen_platform}}:
+      - App complexity: {{app_complexity}}
+      - Team experience: {{team_state_management_experience}}
+      - Performance requirements: {{performance_needs}}
+      
+    state_management_to_architecture: |
+      State management solution selected: {{chosen_state_management}}
+      Rationale: {{state_management_rationale}}
+      
+      Proceeding to architecture design with:
+      - Platform: {{chosen_platform}}
+      - State Management: {{chosen_state_management}}
+      - Architecture Pattern: Clean Architecture
+      
+    architecture_to_roadmap: |
+      Initial architecture plan complete:
+      - Layer structure defined
+      - Dependency injection strategy planned
+      - Technology stack selected
+      
+      Creating implementation roadmap with phases and milestones.
+      
+    completion: |
+      Platform selection workflow complete!
+      
+      Final recommendations:
+      - Platform: {{chosen_platform}}
+      - State Management: {{chosen_state_management}}
+      - Architecture: Clean Architecture with {{specific_patterns}}
+      
+      Ready to proceed with project setup and development.
+
+  success_metrics:
+    decision_quality:
+      - Platform choice aligns with 90%+ of requirements
+      - Team confidence in technology selection > 8/10
+      - Stakeholder approval achieved
+      - Clear implementation path defined
+    
+    process_efficiency:
+      - Decision made within planned timeline
+      - All stakeholders consulted and aligned
+      - Comprehensive documentation produced
+      - Risk factors identified and mitigated
