@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# APPIQ Method - Quick Install Script
-# Downloads and installs APPIQ Method in one command
+# APPIQ Method - Quick Install Script v2.0
+# Downloads and installs APPIQ Method with complete IDE integration
 
 set -e
 

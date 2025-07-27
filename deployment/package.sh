@@ -23,40 +23,8 @@ echo -e "${BLUE}📦 Creating APPIQ Method Deployment Package...${NC}"
 mkdir -p "${OUTPUT_DIR}"
 
 # Start building the package
-cat > "${OUTPUT_DIR}/${PACKAGE_NAME}" << 'INSTALLER_START'
-#!/bin/bash
-
-# APPIQ Method - Single File Installer
-# Version: 1.0.0
-# Auto-generated deployment package
-
-set -e
-
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-NC='\033[0m'
-
-# Configuration
-PROJECT_ROOT="$(pwd)"
-APPIQ_DIR=".appiq"
-DOCS_DIR="docs"
-
-# Banner
-show_banner() {
-    echo -e "${CYAN}"
-    echo "╔══════════════════════════════════════════════════════════════════╗"
-    echo "║                    🚀 APPIQ METHOD INSTALLER                     ║"
-    echo "║                                                                  ║"
-    echo "║              Mobile Development Workflow Setup                   ║"
-    echo "║                        Version 1.0.0                            ║"
-    echo "╚══════════════════════════════════════════════════════════════════╝"
-    echo -e "${NC}"
-}
+# Use the new v2.0 installer
+cat "${SCRIPT_DIR}/init_appiq_v2.sh" > "${OUTPUT_DIR}/${PACKAGE_NAME}"
 
 # Logging functions
 log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
@@ -346,18 +314,27 @@ TEMP_DIR=$(mktemp -d)
 mkdir -p "${TEMP_DIR}/agents"
 mkdir -p "${TEMP_DIR}/workflows"
 mkdir -p "${TEMP_DIR}/templates"
+mkdir -p "${TEMP_DIR}/checklists"
+mkdir -p "${TEMP_DIR}/agent-teams"
+mkdir -p "${TEMP_DIR}/installers"
 
-# Copy mobile agents (essential ones)
-cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/agents/mobile-pm.md" "${TEMP_DIR}/agents/"
-cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/agents/mobile-architect.md" "${TEMP_DIR}/agents/"
-cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/agents/mobile-developer.md" "${TEMP_DIR}/agents/"
-cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/agents/mobile-qa.md" "${TEMP_DIR}/agents/"
+# Copy all mobile agents
+cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/agents/"*.md "${TEMP_DIR}/agents/"
 
 # Copy mobile workflows
 cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/workflows/"*.yaml "${TEMP_DIR}/workflows/"
 
 # Copy mobile templates
 cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/templates/"*.yaml "${TEMP_DIR}/templates/"
+
+# Copy mobile checklists
+cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/checklists/"*.md "${TEMP_DIR}/checklists/"
+
+# Copy mobile team configurations
+cp "${PROJECT_ROOT}/expansion-packs/bmad-mobile-app-dev/agent-teams/"*.yaml "${TEMP_DIR}/agent-teams/"
+
+# Copy IDE integration installers
+cp "${PROJECT_ROOT}/deployment/installers/"*.sh "${TEMP_DIR}/installers/"
 
 # Copy slash command documentation
 mkdir -p "${TEMP_DIR}/slash-commands"
