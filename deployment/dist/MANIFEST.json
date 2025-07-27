@@ -1,8 +1,8 @@
 {
   "name": "APPIQ Method Mobile Development",
   "version": "1.0.0",
-  "build_date": "2025-07-27T17:12:08Z",
-  "git_commit": "354f533",
+  "build_date": "2025-07-27T17:17:56Z",
+  "git_commit": "33f9692",
   "files": {
     "installer": {
       "filename": "appiq_installer.sh",
