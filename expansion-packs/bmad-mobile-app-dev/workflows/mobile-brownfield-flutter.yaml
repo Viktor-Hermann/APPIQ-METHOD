@@ -1,0 +1,324 @@
+workflow:
+  id: mobile-brownfield-flutter
+  name: Brownfield Flutter Mobile App Enhancement
+  description: >-
+    Agent workflow for enhancing existing Flutter mobile applications with new features,
+    modernization, or significant changes. Handles existing Flutter app analysis and safe integration.
+  type: brownfield
+  platform: flutter
+  project_types:
+    - flutter-feature-addition
+    - flutter-refactoring
+    - flutter-modernization
+    - flutter-performance-optimization
+
+  sequence:
+    - step: mobile_enhancement_classification
+      agent: analyst
+      action: classify mobile enhancement scope
+      notes: |
+        Determine mobile enhancement complexity to route to appropriate path:
+        - Single mobile story (< 4 hours) → Use mobile-brownfield-create-story task
+        - Small mobile feature (1-3 stories) → Use mobile-brownfield-create-epic task  
+        - Major mobile enhancement (multiple epics) → Continue with full workflow
+        
+        Ask user: "Can you describe the Flutter app enhancement scope? Is this a small fix, a feature addition, or a major enhancement requiring architectural changes?"
+
+    - step: mobile_routing_decision
+      condition: based_on_classification
+      routes:
+        single_mobile_story:
+          agent: mobile-pm
+          uses: mobile-brownfield-create-story
+          notes: "Create single mobile story for immediate Flutter implementation. Exit workflow after story creation."
+        small_mobile_feature:
+          agent: mobile-pm
+          uses: mobile-brownfield-create-epic
+          notes: "Create focused mobile epic with 1-3 Flutter stories. Exit workflow after epic creation."
+        major_mobile_enhancement:
+          continue: to_next_step
+          notes: "Continue with comprehensive mobile planning workflow below."
+
+    - step: flutter_app_analysis
+      agent: mobile-architect
+      action: analyze existing Flutter app
+      uses: existing-app-analysis
+      condition: major_mobile_enhancement_path
+      notes: |
+        Comprehensive Flutter app analysis:
+        - Analyze current Flutter version and dependencies
+        - Review existing architecture patterns (Clean Architecture, BLoC, etc.)
+        - Assess state management implementation
+        - Review widget structure and performance
+        - Identify technical debt and optimization opportunities
+        - Document current folder structure and patterns
+
+    - agent: mobile-pm
+      creates: mobile-prd.md
+      uses: mobile-prd-tmpl
+      requires: flutter_app_analysis
+      notes: |
+        Creates mobile PRD for Flutter enhancement based on existing app analysis.
+        References current Flutter architecture to avoid conflicts.
+        SAVE OUTPUT: Copy final mobile-prd.md to your project's docs/ folder.
+
+    - step: flutter_architecture_decision
+      agent: mobile-architect
+      action: determine if architecture updates needed
+      condition: after_mobile_prd_creation
+      notes: |
+        Review mobile PRD to determine if Flutter architectural planning is needed:
+        - New state management patterns → Create architecture doc
+        - New Flutter libraries/packages → Create architecture doc
+        - Performance optimization changes → Create architecture doc
+        - Widget refactoring → Create architecture doc
+        - Following existing Flutter patterns → Skip to story creation
+
+    - agent: mobile-architect
+      creates: mobile-architecture.md
+      uses: mobile-architecture-tmpl
+      requires: mobile-prd.md
+      condition: flutter_architecture_changes_needed
+      notes: "Creates Flutter architecture ONLY for significant architectural changes. SAVE OUTPUT: Copy final mobile-architecture.md to your project's docs/ folder."
+
+    - agent: mobile-security
+      action: flutter_security_review
+      requires: mobile-architecture.md
+      condition: security_sensitive_changes
+      notes: "Reviews Flutter changes for mobile security implications, especially for new dependencies or platform integrations."
+
+    - agent: po
+      validates: all_mobile_artifacts
+      uses: mobile-development-checklist
+      notes: "Validates all mobile documents for Flutter integration safety and completeness. May require updates to any document."
+
+    - agent: various
+      updates: any_flagged_mobile_documents
+      condition: po_mobile_checklist_issues
+      notes: "If PO finds mobile issues, return to relevant mobile agent to fix and re-export updated documents to docs/ folder."
+
+    - agent: po
+      action: shard_mobile_documents
+      creates: sharded_mobile_docs
+      requires: all_mobile_artifacts_in_project
+      notes: |
+        Shard mobile documents for IDE development:
+        - Option A: Use PO agent to shard: @po then ask to shard docs/mobile-prd.md
+        - Option B: Manual: Drag shard-doc task + docs/mobile-prd.md into chat
+        - Creates docs/mobile-prd/ and docs/mobile-architecture/ folders with sharded content
+
+    - agent: sm
+      action: create_flutter_story
+      creates: flutter-story.md
+      requires: sharded_mobile_docs_or_flutter_analysis
+      repeats: for_each_flutter_epic
+      notes: |
+        Flutter story creation cycle:
+        - For sharded mobile PRD: @sm → *create (uses create-next-story)
+        - For Flutter analysis docs: @sm → use mobile-brownfield-create-story task
+        - Creates Flutter story from available documentation
+        - Includes Flutter-specific testing requirements
+        - Story starts in "Draft" status
+
+    - agent: analyst/mobile-pm
+      action: review_flutter_draft_story
+      updates: flutter-story.md
+      requires: flutter-story.md
+      optional: true
+      condition: user_wants_mobile_story_review
+      notes: |
+        OPTIONAL: Review and approve draft Flutter story
+        - Review story completeness and Flutter alignment
+        - Verify device testing and performance requirements
+        - Update story status: Draft → Approved
+
+    - agent: mobile-developer
+      action: implement_flutter_story
+      creates: flutter_implementation_files
+      requires: flutter-story.md
+      notes: |
+        Mobile Dev Agent (New Chat): @mobile-developer
+        - Implements approved Flutter story
+        - Follows existing Flutter architecture patterns
+        - Updates File List with all changes
+        - Ensures backward compatibility
+        - Marks story as "Review" when complete
+
+    - agent: mobile-qa
+      action: review_flutter_implementation
+      updates: flutter_implementation_files
+      requires: flutter_implementation_files
+      optional: true
+      notes: |
+        OPTIONAL: Mobile QA Agent (New Chat): @mobile-qa → review-story
+        - Flutter-specific testing and regression testing
+        - Device compatibility verification
+        - Performance impact assessment
+        - Fixes small issues directly
+        - Updates story status (Review → Done or stays Review)
+
+    - agent: mobile-developer
+      action: address_flutter_qa_feedback
+      updates: flutter_implementation_files
+      condition: mobile_qa_left_unchecked_items
+      notes: |
+        If Mobile QA left unchecked items:
+        - Mobile Dev Agent (New Chat): Address remaining Flutter items
+        - Return to Mobile QA for final approval
+
+    - repeat_flutter_development_cycle:
+      action: continue_for_all_flutter_stories
+      notes: |
+        Repeat Flutter story cycle (SM → Mobile Dev → Mobile QA) for all epic stories
+        Include regression testing for existing Flutter functionality
+        Continue until all stories in mobile PRD are complete
+
+    - agent: mobile-analytics
+      action: update_mobile_analytics
+      updates: mobile-analytics-config.md
+      condition: analytics_changes_needed
+      optional: true
+      notes: |
+        OPTIONAL: Update mobile analytics for new Flutter features
+        - Add tracking for new user flows
+        - Update performance monitoring
+        - Configure new event tracking
+
+    - agent: po
+      action: flutter_epic_retrospective
+      creates: flutter-epic-retrospective.md
+      condition: flutter_epic_complete
+      optional: true
+      notes: |
+        OPTIONAL: After Flutter epic completion
+        - Validate Flutter epic integration safety
+        - Review impact on existing functionality
+        - Document Flutter-specific learnings
+
+    - workflow_end:
+      action: flutter_enhancement_complete
+      notes: |
+        All Flutter enhancements implemented and reviewed!
+        Mobile enhancement phase complete.
+        
+        Next steps:
+        - Performance regression testing
+        - Device testing on multiple Flutter targets
+        - App store update preparation
+        - User acceptance testing
+        
+        Reference: mobile-development-checklist.md for deployment
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Flutter Brownfield] --> B[analyst: classify mobile enhancement]
+        B --> C{Enhancement Size?}
+        
+        C -->|Single Story| D[mobile-pm: flutter-brownfield-story]
+        C -->|1-3 Stories| E[mobile-pm: flutter-brownfield-epic]
+        C -->|Major Enhancement| F[mobile-architect: Flutter app analysis]
+        
+        D --> END1[To Flutter Dev Implementation]
+        E --> END2[To Flutter Story Creation]
+        
+        F --> G[mobile-pm: mobile PRD]
+        G --> H{Flutter Architecture Needed?}
+        H -->|Yes| I[mobile-architect: mobile-architecture.md]
+        H -->|No| J[po: validate mobile artifacts]
+        I --> K{Security Review Needed?}
+        K -->|Yes| L[mobile-security: Flutter security review]
+        K -->|No| J
+        L --> J
+        
+        J --> M{PO finds mobile issues?}
+        M -->|Yes| N[Fix mobile issues]
+        M -->|No| O[po: shard mobile documents]
+        N --> J
+        
+        O --> P[sm: create Flutter story]
+        P --> Q{Story Type?}
+        Q -->|Sharded Mobile PRD| R[create-next-story]
+        Q -->|Flutter Analysis| S[mobile-brownfield-create-story]
+        
+        R --> T{Review Flutter draft?}
+        S --> T
+        T -->|Yes| U[review & approve Flutter story]
+        T -->|No| V[mobile-developer: implement Flutter]
+        U --> V
+        
+        V --> W{Mobile QA review?}
+        W -->|Yes| X[mobile-qa: review Flutter implementation]
+        W -->|No| Y{More Flutter stories?}
+        X --> Z{Flutter Issues?}
+        Z -->|Yes| AA[mobile-developer: fix Flutter issues]
+        Z -->|No| Y
+        AA --> X
+        Y -->|Yes| P
+        Y -->|No| AB{Update Analytics?}
+        AB -->|Yes| AC[mobile-analytics: update]
+        AB -->|No| AD{Retrospective?}
+        AC --> AD
+        AD -->|Yes| AE[po: Flutter retrospective]
+        AD -->|No| AF[Flutter Enhancement Complete]
+        AE --> AF
+
+        style AF fill:#90EE90
+        style END1 fill:#90EE90
+        style END2 fill:#90EE90
+        style D fill:#87CEEB
+        style E fill:#87CEEB
+        style G fill:#FFE4B5
+        style I fill:#FFE4B5
+        style L fill:#FFB6C1
+        style O fill:#ADD8E6
+        style P fill:#ADD8E6
+        style V fill:#ADD8E6
+        style U fill:#F0E68C
+        style X fill:#F0E68C
+        style AC fill:#DDA0DD
+        style AE fill:#F0E68C
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Flutter app enhancement requires coordinated stories
+      - Flutter architectural changes are needed
+      - Significant Flutter integration work required
+      - Risk assessment for Flutter compatibility needed
+      - Multiple team members will work on Flutter changes
+
+  handoff_prompts:
+    flutter_classification_complete: |
+      Flutter enhancement classified as: {{enhancement_type}}
+      {{if single_story}}: Proceeding with mobile-brownfield-create-story task for immediate Flutter implementation.
+      {{if small_feature}}: Creating focused Flutter epic with mobile-brownfield-create-epic task.
+      {{if major_enhancement}}: Continuing with comprehensive Flutter planning workflow.
+    
+    flutter_analysis_to_pm: |
+      Flutter app analysis complete. Key findings:
+      - Current Flutter version: {{flutter_version}}
+      - Architecture pattern: {{current_architecture}}
+      - State management: {{current_state_management}}
+      - Technical debt areas: {{technical_debt}}
+      Use these findings to inform mobile PRD creation.
+    
+    mobile_pm_to_architect_decision: |
+      Mobile PRD complete and saved as docs/mobile-prd.md. 
+      Flutter architectural changes identified: {{yes/no}}
+      {{if yes}}: Proceeding to create Flutter architecture document for: {{specific_changes}}
+      {{if no}}: No Flutter architectural changes needed. Proceeding to validation.
+    
+    flutter_architect_to_security: |
+      Flutter architecture complete. Save it as docs/mobile-architecture.md.
+      Security review needed: {{yes/no}}
+      {{if yes}}: Please review Flutter security implications.
+      {{if no}}: Proceeding to validation.
+    
+    mobile_po_to_sm: |
+      All mobile artifacts validated. 
+      Documentation type available: {{sharded_mobile_prd / flutter_analysis}}
+      {{if sharded}}: Use standard create-next-story task.
+      {{if flutter_analysis}}: Use mobile-brownfield-create-story task for Flutter-specific context.
+    
+    flutter_development_ready: "All Flutter planning artifacts validated. Begin Flutter story implementation with existing architecture compatibility."

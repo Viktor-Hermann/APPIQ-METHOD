@@ -1,0 +1,422 @@
+template:
+  id: mobile-architecture-template-v1
+  name: Mobile Application Architecture
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/mobile-architecture.md
+    title: "{{app_name}} Mobile Architecture Document"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+  custom_elicitation:
+    title: "Mobile Architecture Elicitation Actions"
+    sections:
+      - id: mobile-overview
+        options:
+          - "Platform Selection Analysis - Evaluate Flutter vs React Native vs Native"
+          - "State Management Strategy - Analyze app complexity and team expertise"
+          - "Architecture Pattern Review - Clean Architecture vs MVVM vs other patterns"
+          - "Performance Requirements Analysis - Define targets for launch time, animations, memory"
+          - "Offline Strategy Planning - Assess offline capabilities and data sync needs"
+          - "Platform Integration Analysis - Native features, APIs, and third-party services"
+          - "Proceed to next section"
+
+sections:
+  - id: initial-setup
+    instruction: |
+      Initial Setup
+      
+      1. Replace {{app_name}} with the actual mobile application name throughout the document
+      2. Gather and review required inputs:
+         - Product Requirements Document (PRD) - Required for business needs and user flows
+         - Target Platform Requirements - Required for platform selection decisions
+         - Team Technical Expertise Assessment - Required for technology choices
+         - Performance Requirements - Required for architecture decisions
+      
+      If any required documents are missing, ask user: "I need the following documents to create a comprehensive mobile architecture: [list missing]. Would you like to proceed with available information or provide the missing documents first?"
+      
+      3. <critical_rule>Cross-reference with PRD to ensure mobile architecture decisions align with business requirements and user experience goals.</critical_rule>
+      
+      Output file location: `docs/mobile-architecture.md`
+
+  - id: executive-summary
+    title: Executive Summary
+    instruction: |
+      Create executive summary based on platform selection and architecture decisions. Include rationale for key choices.
+    elicit: true
+    custom_elicitation: mobile-overview
+    template: |
+      - **Application Name:** {{app_name}}
+      - **Target Platforms:** {{target_platforms}}
+      - **Architecture Pattern:** {{architecture_pattern}} with {{chosen_platform}} and {{state_management_solution}}
+      - **Development Approach:** {{development_methodology}}
+      
+      ### Key Architectural Decisions
+      - **Platform Choice:** {{chosen_platform}} - {{platform_rationale}}
+      - **State Management:** {{state_management_solution}} - {{state_management_rationale}}
+      - **Architecture Pattern:** {{architecture_pattern}} - {{architecture_rationale}}
+      - **Development Environment:** {{development_environment}}
+
+  - id: platform-selection
+    title: Platform Selection Analysis
+    instruction: |
+      Analyze platform options based on project requirements, team expertise, and technical constraints. Create decision matrix for platform choice.
+    template: |
+      ### Requirements-Based Platform Evaluation
+      
+      #### Project Requirements Analysis
+      {{#each project_requirements}}
+      - **{{requirement_category}}:** {{requirement_description}}
+        - Flutter Suitability: {{flutter_rating}}/5 - {{flutter_notes}}
+        - React Native Suitability: {{react_native_rating}}/5 - {{react_native_notes}}
+        - Native Suitability: {{native_rating}}/5 - {{native_notes}}
+      {{/each}}
+      
+      #### Team & Resource Evaluation
+      - **Current Team Expertise:** {{team_expertise}}
+      - **Learning Curve Assessment:** {{learning_curve}}
+      - **Development Timeline:** {{timeline_constraints}}
+      - **Long-term Maintenance Plan:** {{maintenance_strategy}}
+      
+      #### Final Platform Decision: {{chosen_platform}}
+      
+      **Rationale:** {{platform_decision_rationale}}
+      
+      **Trade-offs Considered:**
+      {{#each platform_tradeoffs}}
+      - {{tradeoff_description}}
+      {{/each}}
+
+  - id: state-management
+    title: State Management Architecture
+    instruction: |
+      Design state management strategy based on chosen platform and app complexity. Include decision matrix and implementation patterns.
+    template: |
+      ### Chosen Solution: {{state_management_solution}}
+      
+      #### Decision Matrix
+      | Criteria | {{option_1}} | {{option_2}} | {{option_3}} | Chosen |
+      |----------|-------------|-------------|-------------|---------|
+      | Learning Curve | {{learning_1}} | {{learning_2}} | {{learning_3}} | {{chosen_learning}} |
+      | Performance | {{perf_1}} | {{perf_2}} | {{perf_3}} | {{chosen_perf}} |
+      | Scalability | {{scale_1}} | {{scale_2}} | {{scale_3}} | {{chosen_scale}} |
+      | Testing | {{test_1}} | {{test_2}} | {{test_3}} | {{chosen_test}} |
+      | Community | {{comm_1}} | {{comm_2}} | {{comm_3}} | {{chosen_comm}} |
+      
+      #### Implementation Strategy
+      {{state_management_implementation_plan}}
+
+  - id: clean-architecture
+    title: Clean Architecture Implementation
+    instruction: |
+      Design clean architecture layers appropriate for mobile development. Include folder structure and dependency patterns.
+    template: |
+      ### Layer Architecture
+      
+      ```
+      {{#if is_flutter}}
+      lib/
+      ├── core/                    # Infrastructure & shared utilities
+      │   ├── constants/          # App constants and configuration
+      │   ├── error/             # Error handling and exceptions
+      │   ├── network/           # Network configuration and interceptors
+      │   ├── utils/             # Utility functions and helpers
+      │   └── di/                # Dependency injection setup
+      ├── features/              # Feature modules
+      │   └── {{feature_name}}/
+      │       ├── data/
+      │       │   ├── datasources/    # Remote & local data sources
+      │       │   ├── models/         # Data models with JSON serialization
+      │       │   └── repositories/   # Repository implementations
+      │       ├── domain/
+      │       │   ├── entities/       # Business entities (immutable)
+      │       │   ├── repositories/   # Repository interfaces
+      │       │   └── usecases/       # Business use cases
+      │       └── presentation/
+      │           ├── {{state_management_layer}}/  # State management (bloc/cubit/providers)
+      │           ├── pages/          # Screen widgets
+      │           └── widgets/        # Feature-specific widgets
+      └── main.dart
+      {{/if}}
+      
+      {{#if is_react_native}}
+      src/
+      ├── components/            # Reusable UI components
+      ├── screens/              # Screen components
+      ├── navigation/           # Navigation configuration
+      ├── services/             # API and external services
+      ├── hooks/               # Custom React hooks
+      ├── store/               # State management
+      ├── types/               # TypeScript definitions
+      ├── utils/               # Utility functions
+      └── constants/           # App constants
+      {{/if}}
+      ```
+
+  - id: navigation-architecture
+    title: Navigation Architecture
+    instruction: |
+      Design navigation system for the mobile app. Include deep linking, nested navigation, and state management integration.
+    template: |
+      ### Navigation Strategy
+      
+      {{#if is_flutter}}
+      #### Flutter Navigation (GoRouter)
+      - **Route Structure:** {{route_structure}}
+      - **Deep Linking:** {{deep_linking_strategy}}
+      - **Navigation State:** {{navigation_state_management}}
+      - **Auth Guard:** {{auth_guard_implementation}}
+      {{/if}}
+      
+      {{#if is_react_native}}
+      #### React Native Navigation
+      - **Navigation Library:** {{navigation_library}}
+      - **Stack Configuration:** {{stack_configuration}}
+      - **Tab Navigation:** {{tab_navigation_setup}}
+      - **Deep Linking:** {{deep_linking_setup}}
+      {{/if}}
+
+  - id: ui-architecture
+    title: UI/UX Architecture
+    instruction: |
+      Design UI system including theme management, responsive design, and component library structure.
+    template: |
+      ### Design System
+      - **Theme Management:** {{theme_system}}
+      - **Component Library:** {{component_library_strategy}}
+      - **Responsive Design:** {{responsive_approach}}
+      - **Accessibility:** {{accessibility_implementation}}
+      
+      ### Platform-Specific Considerations
+      {{#if is_flutter}}
+      - **Material Design Integration:** {{material_design_usage}}
+      - **Custom Widgets:** {{custom_widget_strategy}}
+      - **Animation System:** {{animation_approach}}
+      {{/if}}
+      
+      {{#if is_react_native}}
+      - **Native Component Integration:** {{native_component_usage}}
+      - **Styling Approach:** {{styling_system}}
+      - **Platform Differences:** {{platform_specific_ui}}
+      {{/if}}
+
+  - id: data-architecture
+    title: Data Layer Architecture
+    instruction: |
+      Design data management including local storage, caching, offline capabilities, and API integration.
+    template: |
+      ### Data Management Strategy
+      - **API Integration:** {{api_integration_approach}}
+      - **Local Storage:** {{local_storage_solution}}
+      - **Caching Strategy:** {{caching_implementation}}
+      - **Offline Capabilities:** {{offline_strategy}}
+      - **Data Synchronization:** {{sync_mechanism}}
+      
+      ### Repository Pattern Implementation
+      - **Repository Interfaces:** {{repository_interfaces}}
+      - **Data Source Abstraction:** {{data_source_pattern}}
+      - **Error Handling:** {{error_handling_strategy}}
+      - **Network Layer:** {{network_layer_implementation}}
+
+  - id: performance-architecture
+    title: Performance Architecture
+    instruction: |
+      Define performance optimization strategies for mobile platforms. Include metrics, targets, and optimization techniques.
+    template: |
+      ### Performance Optimization Strategy
+      
+      #### Key Performance Metrics
+      - **App Launch Time:** < {{launch_time_target}}ms
+      - **Screen Transition Time:** < {{transition_time_target}}ms
+      - **Memory Usage:** < {{memory_usage_target}}MB
+      - **CPU Usage:** < {{cpu_usage_target}}% during normal operation
+      - **Network Efficiency:** {{network_optimization_strategy}}
+      
+      #### Platform-Specific Optimizations
+      {{#if is_flutter}}
+      - **Widget Optimization:** {{flutter_widget_optimization}}
+      - **Build Optimization:** {{flutter_build_optimization}}
+      - **Image Optimization:** {{flutter_image_optimization}}
+      {{/if}}
+      
+      {{#if is_react_native}}
+      - **Bundle Optimization:** {{rn_bundle_optimization}}
+      - **List Optimization:** {{rn_list_optimization}}
+      - **Memory Management:** {{rn_memory_optimization}}
+      {{/if}}
+
+  - id: security-architecture
+    title: Security Architecture
+    instruction: |
+      Implement mobile-specific security measures. Reference OWASP Mobile Top 10 and platform security guidelines.
+    template: |
+      ### Mobile Security Implementation
+      - **Data Protection:** {{mobile_data_protection}}
+      - **Authentication:** {{mobile_auth_strategy}}
+      - **API Security:** {{api_security_measures}}
+      - **Local Storage Security:** {{local_storage_security}}
+      - **Network Security:** {{network_security_implementation}}
+      
+      ### Platform Security Features
+      {{#if is_flutter}}
+      - **Flutter Security:** {{flutter_security_measures}}
+      - **Native Integration Security:** {{flutter_native_security}}
+      {{/if}}
+      
+      {{#if is_react_native}}
+      - **React Native Security:** {{rn_security_measures}}
+      - **Native Module Security:** {{rn_native_security}}
+      {{/if}}
+      
+      <critical_rule>Apply OWASP Mobile Top 10 security guidelines. Document all security decisions and implementations.</critical_rule>
+
+  - id: testing-architecture
+    title: Testing Architecture
+    instruction: |
+      Design comprehensive testing strategy for mobile applications including unit, integration, and end-to-end testing.
+    template: |
+      ### Testing Strategy
+      
+      {{#if is_flutter}}
+      #### Flutter Testing Approach
+      - **Unit Tests:** {{flutter_unit_testing}}
+      - **Widget Tests:** {{flutter_widget_testing}}
+      - **Integration Tests:** {{flutter_integration_testing}}
+      - **Golden Tests:** {{flutter_golden_testing}}
+      {{/if}}
+      
+      {{#if is_react_native}}
+      #### React Native Testing Approach
+      - **Unit Tests:** {{rn_unit_testing}}
+      - **Component Tests:** {{rn_component_testing}}
+      - **E2E Tests:** {{rn_e2e_testing}}
+      - **Native Testing:** {{rn_native_testing}}
+      {{/if}}
+      
+      ### Test Coverage Goals
+      - **Unit Tests:** > {{unit_test_coverage}}% coverage
+      - **Integration Tests:** {{integration_test_coverage}}
+      - **E2E Tests:** {{e2e_test_coverage}}
+      - **Device Testing:** {{device_testing_strategy}}
+
+  - id: deployment-architecture
+    title: Deployment Architecture
+    instruction: |
+      Design deployment strategy including CI/CD, app store submission, and release management.
+    template: |
+      ### Build and Release Strategy
+      
+      #### Environment Configuration
+      - **Development:** {{dev_environment_config}}
+      - **Staging:** {{staging_environment_config}}
+      - **Production:** {{production_environment_config}}
+      
+      #### CI/CD Pipeline
+      - **Build Pipeline:** {{build_pipeline_config}}
+      - **Testing Pipeline:** {{testing_pipeline_config}}
+      - **Deployment Pipeline:** {{deployment_pipeline_config}}
+      - **App Store Deployment:** {{app_store_deployment_strategy}}
+      
+      #### Release Management
+      - **Version Strategy:** {{version_strategy}}
+      - **Release Cadence:** {{release_cadence}}
+      - **Rollback Strategy:** {{rollback_strategy}}
+
+  - id: monitoring-observability
+    title: Monitoring & Observability
+    instruction: |
+      Design monitoring strategy for mobile applications including crash reporting, analytics, and performance monitoring.
+    template: |
+      ### Mobile Monitoring Strategy
+      - **Crash Reporting:** {{crash_reporting_service}}
+      - **Performance Monitoring:** {{performance_monitoring_service}}
+      - **User Analytics:** {{analytics_service}}
+      - **Custom Metrics:** {{custom_metrics_strategy}}
+      
+      ### Observability Implementation
+      - **Logging Strategy:** {{mobile_logging_strategy}}
+      - **Error Tracking:** {{error_tracking_implementation}}
+      - **User Behavior Analytics:** {{user_behavior_tracking}}
+      - **Performance Metrics:** {{performance_metrics_collection}}
+
+  - id: bmad-integration
+    title: BMad Mobile Development Integration
+    instruction: |
+      Design mobile architecture to specifically support BMad mobile development agents and workflows.
+    sections:
+      - id: mobile-dev-agent-support
+        title: Mobile Development Agent Support
+        template: |
+          - Mobile development environment setup for Flutter/React Native
+          - Mobile-specific CI/CD workflows for app deployment
+          - Mobile testing frameworks integration
+          - Mobile performance monitoring and optimization tools
+      - id: mobile-product-alignment
+        title: Mobile Product & Architecture Alignment
+        template: |
+          - Mobile architecture implementing PRD mobile requirements
+          - Mobile deployment automation supporting rapid iteration
+          - Mobile app performance meeting product user experience goals
+          - Mobile architecture patterns properly implemented
+      - id: mobile-cross-agent-integration
+        title: Mobile Cross-Agent Integration Points
+        template: |
+          - Mobile CI/CD pipelines supporting Flutter/React Native development workflows
+          - Mobile monitoring and analytics data accessible to Mobile QA and Mobile PM agents
+          - Mobile architecture enabling Mobile UX Expert's design requirements
+          - Mobile platform supporting Mobile Analyst's user behavior analysis needs
+
+  - id: platform-specific-considerations
+    title: Platform-Specific Implementation Details
+    instruction: |
+      Document platform-specific architecture decisions and implementation details.
+    sections:
+      - id: flutter-specifics
+        title: Flutter-Specific Architecture
+        condition: Uses Flutter
+        template: |
+          - **State Management:** {{flutter_state_management_details}}
+          - **Widget Architecture:** {{flutter_widget_architecture}}
+          - **Build Configuration:** {{flutter_build_configuration}}
+          - **Platform Channels:** {{flutter_platform_channels}}
+          - **Package Management:** {{flutter_package_strategy}}
+      - id: react-native-specifics
+        title: React Native-Specific Architecture
+        condition: Uses React Native
+        template: |
+          - **Metro Configuration:** {{rn_metro_configuration}}
+          - **Native Modules:** {{rn_native_modules_strategy}}
+          - **Bridge Communication:** {{rn_bridge_communication}}
+          - **Code Push:** {{rn_code_push_strategy}}
+          - **Package Management:** {{rn_package_strategy}}
+
+  - id: maintenance-evolution
+    title: Maintenance and Evolution Strategy
+    instruction: |
+      Document long-term maintenance approach and evolution path for the mobile application.
+    template: |
+      ### Maintenance Plan
+      - **Regular Updates:** {{update_frequency}}
+      - **Security Patches:** {{security_patch_timeline}}
+      - **Performance Reviews:** {{performance_review_schedule}}
+      - **Architecture Reviews:** {{architecture_review_schedule}}
+      
+      ### Technology Evolution
+      - **Platform Updates:** {{platform_update_strategy}}
+      - **Dependency Management:** {{dependency_update_strategy}}
+      - **Migration Planning:** {{migration_planning_approach}}
+      - **Technical Debt Management:** {{technical_debt_strategy}}
+
+  - id: final-review
+    instruction: |
+      Final Review - Ensure all sections are complete and consistent. Verify platform-specific details are accurate and implementation guidance is clear.
+    content: |
+      ---
+      
+      _Document Version: 1.0_
+      _Last Updated: {{current_date}}_
+      _Next Review: {{review_date}}_
+      _Platform: {{chosen_platform}}_
+      _State Management: {{state_management_solution}}_

@@ -1,0 +1,13 @@
+bundle:
+  name: Mobile Team Minimal
+  icon: 📲
+  description: Minimal mobile development team for simple mobile app projects or quick prototyping with essential mobile expertise.
+agents:
+  - bmad-orchestrator
+  - mobile-pm
+  - mobile-architect
+  - mobile-developer
+  - mobile-qa
+workflows:
+  - mobile-platform-selection.yaml
+  - mobile-app-development-init.yaml

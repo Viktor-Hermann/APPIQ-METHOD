@@ -1,0 +1,333 @@
+workflow:
+  id: mobile-brownfield-react-native
+  name: Brownfield React Native Mobile App Enhancement
+  description: >-
+    Agent workflow for enhancing existing React Native mobile applications with new features,
+    modernization, or significant changes. Handles existing React Native app analysis and safe integration.
+  type: brownfield
+  platform: react-native
+  project_types:
+    - react-native-feature-addition
+    - react-native-refactoring
+    - react-native-modernization
+    - react-native-performance-optimization
+
+  sequence:
+    - step: mobile_enhancement_classification
+      agent: analyst
+      action: classify mobile enhancement scope
+      notes: |
+        Determine mobile enhancement complexity to route to appropriate path:
+        - Single mobile story (< 4 hours) → Use mobile-brownfield-create-story task
+        - Small mobile feature (1-3 stories) → Use mobile-brownfield-create-epic task  
+        - Major mobile enhancement (multiple epics) → Continue with full workflow
+        
+        Ask user: "Can you describe the React Native app enhancement scope? Is this a small fix, a feature addition, or a major enhancement requiring architectural changes?"
+
+    - step: mobile_routing_decision
+      condition: based_on_classification
+      routes:
+        single_mobile_story:
+          agent: mobile-pm
+          uses: mobile-brownfield-create-story
+          notes: "Create single mobile story for immediate React Native implementation. Exit workflow after story creation."
+        small_mobile_feature:
+          agent: mobile-pm
+          uses: mobile-brownfield-create-epic
+          notes: "Create focused mobile epic with 1-3 React Native stories. Exit workflow after epic creation."
+        major_mobile_enhancement:
+          continue: to_next_step
+          notes: "Continue with comprehensive mobile planning workflow below."
+
+    - step: react_native_app_analysis
+      agent: mobile-architect
+      action: analyze existing React Native app
+      uses: existing-app-analysis
+      condition: major_mobile_enhancement_path
+      notes: |
+        Comprehensive React Native app analysis:
+        - Analyze current React Native version and dependencies
+        - Review existing architecture patterns (Redux, Context API, etc.)
+        - Assess state management implementation
+        - Review component structure and performance
+        - Identify technical debt and optimization opportunities
+        - Document current folder structure and patterns
+        - Check Metro bundler configuration
+
+    - agent: mobile-pm
+      creates: mobile-prd.md
+      uses: mobile-prd-tmpl
+      requires: react_native_app_analysis
+      notes: |
+        Creates mobile PRD for React Native enhancement based on existing app analysis.
+        References current React Native architecture to avoid conflicts.
+        SAVE OUTPUT: Copy final mobile-prd.md to your project's docs/ folder.
+
+    - step: react_native_architecture_decision
+      agent: mobile-architect
+      action: determine if architecture updates needed
+      condition: after_mobile_prd_creation
+      notes: |
+        Review mobile PRD to determine if React Native architectural planning is needed:
+        - New state management patterns → Create architecture doc
+        - New React Native libraries/packages → Create architecture doc
+        - Performance optimization changes → Create architecture doc
+        - Component refactoring → Create architecture doc
+        - TypeScript migration → Create architecture doc
+        - Following existing React Native patterns → Skip to story creation
+
+    - agent: mobile-architect
+      creates: mobile-architecture.md
+      uses: mobile-architecture-tmpl
+      requires: mobile-prd.md
+      condition: react_native_architecture_changes_needed
+      notes: "Creates React Native architecture ONLY for significant architectural changes. SAVE OUTPUT: Copy final mobile-architecture.md to your project's docs/ folder."
+
+    - agent: mobile-security
+      action: react_native_security_review
+      requires: mobile-architecture.md
+      condition: security_sensitive_changes
+      notes: "Reviews React Native changes for mobile security implications, especially for new dependencies or native modules."
+
+    - agent: po
+      validates: all_mobile_artifacts
+      uses: mobile-development-checklist
+      notes: "Validates all mobile documents for React Native integration safety and completeness. May require updates to any document."
+
+    - agent: various
+      updates: any_flagged_mobile_documents
+      condition: po_mobile_checklist_issues
+      notes: "If PO finds mobile issues, return to relevant mobile agent to fix and re-export updated documents to docs/ folder."
+
+    - agent: po
+      action: shard_mobile_documents
+      creates: sharded_mobile_docs
+      requires: all_mobile_artifacts_in_project
+      notes: |
+        Shard mobile documents for IDE development:
+        - Option A: Use PO agent to shard: @po then ask to shard docs/mobile-prd.md
+        - Option B: Manual: Drag shard-doc task + docs/mobile-prd.md into chat
+        - Creates docs/mobile-prd/ and docs/mobile-architecture/ folders with sharded content
+
+    - agent: sm
+      action: create_react_native_story
+      creates: react-native-story.md
+      requires: sharded_mobile_docs_or_react_native_analysis
+      repeats: for_each_react_native_epic
+      notes: |
+        React Native story creation cycle:
+        - For sharded mobile PRD: @sm → *create (uses create-next-story)
+        - For React Native analysis docs: @sm → use mobile-brownfield-create-story task
+        - Creates React Native story from available documentation
+        - Includes React Native-specific testing requirements
+        - Story starts in "Draft" status
+
+    - agent: analyst/mobile-pm
+      action: review_react_native_draft_story
+      updates: react-native-story.md
+      requires: react-native-story.md
+      optional: true
+      condition: user_wants_mobile_story_review
+      notes: |
+        OPTIONAL: Review and approve draft React Native story
+        - Review story completeness and React Native alignment
+        - Verify device testing and performance requirements
+        - Update story status: Draft → Approved
+
+    - agent: mobile-developer
+      action: implement_react_native_story
+      creates: react_native_implementation_files
+      requires: react-native-story.md
+      notes: |
+        Mobile Dev Agent (New Chat): @mobile-developer
+        - Implements approved React Native story
+        - Follows existing React Native architecture patterns
+        - Uses TypeScript where applicable
+        - Updates File List with all changes
+        - Ensures backward compatibility
+        - Marks story as "Review" when complete
+
+    - agent: mobile-qa
+      action: review_react_native_implementation
+      updates: react_native_implementation_files
+      requires: react_native_implementation_files
+      optional: true
+      notes: |
+        OPTIONAL: Mobile QA Agent (New Chat): @mobile-qa → review-story
+        - React Native-specific testing and regression testing
+        - Device compatibility verification
+        - Performance impact assessment
+        - Bundle size analysis
+        - Fixes small issues directly
+        - Updates story status (Review → Done or stays Review)
+
+    - agent: mobile-developer
+      action: address_react_native_qa_feedback
+      updates: react_native_implementation_files
+      condition: mobile_qa_left_unchecked_items
+      notes: |
+        If Mobile QA left unchecked items:
+        - Mobile Dev Agent (New Chat): Address remaining React Native items
+        - Return to Mobile QA for final approval
+
+    - repeat_react_native_development_cycle:
+      action: continue_for_all_react_native_stories
+      notes: |
+        Repeat React Native story cycle (SM → Mobile Dev → Mobile QA) for all epic stories
+        Include regression testing for existing React Native functionality
+        Continue until all stories in mobile PRD are complete
+
+    - agent: mobile-analytics
+      action: update_mobile_analytics
+      updates: mobile-analytics-config.md
+      condition: analytics_changes_needed
+      optional: true
+      notes: |
+        OPTIONAL: Update mobile analytics for new React Native features
+        - Add tracking for new user flows
+        - Update performance monitoring
+        - Configure new event tracking
+
+    - agent: po
+      action: react_native_epic_retrospective
+      creates: react-native-epic-retrospective.md
+      condition: react_native_epic_complete
+      optional: true
+      notes: |
+        OPTIONAL: After React Native epic completion
+        - Validate React Native epic integration safety
+        - Review impact on existing functionality
+        - Document React Native-specific learnings
+
+    - workflow_end:
+      action: react_native_enhancement_complete
+      notes: |
+        All React Native enhancements implemented and reviewed!
+        Mobile enhancement phase complete.
+        
+        Next steps:
+        - Performance regression testing
+        - Device testing on multiple React Native targets
+        - Bundle size optimization analysis
+        - App store update preparation
+        - User acceptance testing
+        - CodePush deployment (if applicable)
+        
+        Reference: mobile-development-checklist.md for deployment
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: React Native Brownfield] --> B[analyst: classify mobile enhancement]
+        B --> C{Enhancement Size?}
+        
+        C -->|Single Story| D[mobile-pm: rn-brownfield-story]
+        C -->|1-3 Stories| E[mobile-pm: rn-brownfield-epic]
+        C -->|Major Enhancement| F[mobile-architect: React Native app analysis]
+        
+        D --> END1[To React Native Dev Implementation]
+        E --> END2[To React Native Story Creation]
+        
+        F --> G[mobile-pm: mobile PRD]
+        G --> H{React Native Architecture Needed?}
+        H -->|Yes| I[mobile-architect: mobile-architecture.md]
+        H -->|No| J[po: validate mobile artifacts]
+        I --> K{Security Review Needed?}
+        K -->|Yes| L[mobile-security: React Native security review]
+        K -->|No| J
+        L --> J
+        
+        J --> M{PO finds mobile issues?}
+        M -->|Yes| N[Fix mobile issues]
+        M -->|No| O[po: shard mobile documents]
+        N --> J
+        
+        O --> P[sm: create React Native story]
+        P --> Q{Story Type?}
+        Q -->|Sharded Mobile PRD| R[create-next-story]
+        Q -->|React Native Analysis| S[mobile-brownfield-create-story]
+        
+        R --> T{Review React Native draft?}
+        S --> T
+        T -->|Yes| U[review & approve React Native story]
+        T -->|No| V[mobile-developer: implement React Native]
+        U --> V
+        
+        V --> W{Mobile QA review?}
+        W -->|Yes| X[mobile-qa: review React Native implementation]
+        W -->|No| Y{More React Native stories?}
+        X --> Z{React Native Issues?}
+        Z -->|Yes| AA[mobile-developer: fix React Native issues]
+        Z -->|No| Y
+        AA --> X
+        Y -->|Yes| P
+        Y -->|No| AB{Update Analytics?}
+        AB -->|Yes| AC[mobile-analytics: update]
+        AB -->|No| AD{Retrospective?}
+        AC --> AD
+        AD -->|Yes| AE[po: React Native retrospective]
+        AD -->|No| AF[React Native Enhancement Complete]
+        AE --> AF
+
+        style AF fill:#90EE90
+        style END1 fill:#90EE90
+        style END2 fill:#90EE90
+        style D fill:#87CEEB
+        style E fill:#87CEEB
+        style G fill:#FFE4B5
+        style I fill:#FFE4B5
+        style L fill:#FFB6C1
+        style O fill:#ADD8E6
+        style P fill:#ADD8E6
+        style V fill:#ADD8E6
+        style U fill:#F0E68C
+        style X fill:#F0E68C
+        style AC fill:#DDA0DD
+        style AE fill:#F0E68C
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - React Native app enhancement requires coordinated stories
+      - React Native architectural changes are needed
+      - Significant React Native integration work required
+      - Risk assessment for React Native compatibility needed
+      - Multiple team members will work on React Native changes
+      - TypeScript migration or major dependency updates
+
+  handoff_prompts:
+    react_native_classification_complete: |
+      React Native enhancement classified as: {{enhancement_type}}
+      {{if single_story}}: Proceeding with mobile-brownfield-create-story task for immediate React Native implementation.
+      {{if small_feature}}: Creating focused React Native epic with mobile-brownfield-create-epic task.
+      {{if major_enhancement}}: Continuing with comprehensive React Native planning workflow.
+    
+    react_native_analysis_to_pm: |
+      React Native app analysis complete. Key findings:
+      - Current React Native version: {{react_native_version}}
+      - Architecture pattern: {{current_architecture}}
+      - State management: {{current_state_management}}
+      - TypeScript usage: {{typescript_status}}
+      - Bundle size: {{current_bundle_size}}
+      - Technical debt areas: {{technical_debt}}
+      Use these findings to inform mobile PRD creation.
+    
+    mobile_pm_to_architect_decision: |
+      Mobile PRD complete and saved as docs/mobile-prd.md. 
+      React Native architectural changes identified: {{yes/no}}
+      {{if yes}}: Proceeding to create React Native architecture document for: {{specific_changes}}
+      {{if no}}: No React Native architectural changes needed. Proceeding to validation.
+    
+    react_native_architect_to_security: |
+      React Native architecture complete. Save it as docs/mobile-architecture.md.
+      Security review needed: {{yes/no}}
+      {{if yes}}: Please review React Native security implications.
+      {{if no}}: Proceeding to validation.
+    
+    mobile_po_to_sm: |
+      All mobile artifacts validated. 
+      Documentation type available: {{sharded_mobile_prd / react_native_analysis}}
+      {{if sharded}}: Use standard create-next-story task.
+      {{if react_native_analysis}}: Use mobile-brownfield-create-story task for React Native-specific context.
+    
+    react_native_development_ready: "All React Native planning artifacts validated. Begin React Native story implementation with existing architecture compatibility."

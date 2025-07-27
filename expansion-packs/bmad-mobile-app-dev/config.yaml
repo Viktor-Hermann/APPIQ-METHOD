@@ -1,0 +1,54 @@
+expansion:
+  id: bmad-mobile-app-dev
+  name: Mobile App Development
+  version: 1.0.0
+  description: >-
+    Comprehensive mobile app development expansion pack supporting Flutter, React Native, 
+    and modern state management patterns with clean architecture principles.
+  
+  supported_platforms:
+    - flutter
+    - react-native
+  
+  state_management_options:
+    flutter:
+      - getx
+      - bloc_cubit
+      - riverpod
+      - provider
+    react_native:
+      - redux_toolkit
+      - zustand
+      - context_api
+  
+  features:
+    - platform_selection
+    - state_management_guidance
+    - clean_architecture_patterns
+    - existing_app_analysis
+    - new_app_scaffolding
+    - best_practices_integration
+  
+  agents:
+    - mobile-architect
+    - mobile-developer
+    - mobile-pm
+    - mobile-sm
+    - mobile-qa
+  
+  workflows:
+    - mobile-app-greenfield
+    - mobile-app-brownfield
+    - platform-selection
+  
+  dependencies:
+    core_agents:
+      - analyst
+      - po
+    core_templates:
+      - project-brief-tmpl
+      - story-tmpl
+    core_tasks:
+      - create-doc
+      - shard-doc
+      - advanced-elicitation

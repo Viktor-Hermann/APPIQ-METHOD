@@ -1,0 +1,408 @@
+template:
+  id: mobile-prd-template-v1
+  name: Mobile Product Requirements Document
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/mobile-prd.md
+    title: "{{project_name}} Mobile Product Requirements Document (PRD)"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+  custom_elicitation:
+    title: "Mobile PRD Elicitation Actions"
+    sections:
+      - id: mobile-platform-analysis
+        options:
+          - "Platform Strategy Analysis - Evaluate iOS vs Android vs Cross-Platform approach"
+          - "Target Device Analysis - Define supported device ranges and OS versions"
+          - "App Store Strategy - Plan submission and distribution approach"
+          - "Mobile User Experience Requirements - Define mobile-specific UX needs"
+          - "Performance Requirements Analysis - Define mobile performance targets"
+          - "Offline Capabilities Assessment - Evaluate offline/online requirements"
+          - "Proceed to next section"
+
+sections:
+  - id: goals-context
+    title: Goals and Background Context
+    instruction: |
+      Ask if Project Brief document is available. If NO Project Brief exists, STRONGLY recommend creating one first using project-brief-tmpl (it provides essential foundation: problem statement, target users, success metrics, MVP scope, constraints). If user insists on Mobile PRD without brief, gather this information during Goals section with mobile-specific context. If Project Brief exists, review and use it to populate Goals (bullet list of desired mobile outcomes) and Background Context (1-2 paragraphs on mobile solution and why mobile approach) so we can determine what is and is not in scope for mobile PRD MVP. Include mobile-specific change tracking.
+    sections:
+      - id: goals
+        title: Mobile App Goals
+        type: bullet-list
+        instruction: Bullet list of 1 line desired mobile outcomes the PRD will deliver if successful - mobile user and project desires
+      - id: background
+        title: Background Context
+        type: paragraphs
+        instruction: 1-2 short paragraphs summarizing the mobile background context, such as what mobile problem this solves, why mobile is the right approach, what the current mobile landscape or need is
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track mobile PRD document versions and changes
+
+  - id: mobile-platform-strategy
+    title: Mobile Platform Strategy
+    instruction: |
+      Define comprehensive mobile platform strategy. This is critical for architecture and development decisions.
+    elicit: true
+    custom_elicitation: mobile-platform-analysis
+    sections:
+      - id: platform-selection
+        title: Platform Selection
+        instruction: |
+          Define target platforms with clear rationale:
+          - iOS only, Android only, or both?
+          - Native development vs Cross-platform (Flutter/React Native)?
+          - Minimum OS versions to support
+          - Device capability requirements
+        choices:
+          platforms: [iOS Only, Android Only, iOS + Android, Web + Mobile]
+          approach: [Native iOS/Android, Flutter, React Native, Progressive Web App]
+        template: |
+          **Primary Platforms:** {{target_platforms}}
+          **Development Approach:** {{development_approach}}
+          **Rationale:** {{platform_rationale}}
+          
+          **OS Version Support:**
+          - iOS: {{ios_min_version}}+ ({{ios_rationale}})
+          - Android: API {{android_min_api}}+ ({{android_rationale}})
+          
+          **Device Requirements:**
+          - Screen sizes: {{supported_screen_sizes}}
+          - Hardware requirements: {{hardware_requirements}}
+          - Performance targets: {{device_performance_targets}}
+
+      - id: app-distribution
+        title: App Distribution Strategy
+        instruction: Define how the mobile app will be distributed to users
+        template: |
+          **Distribution Channels:**
+          - App Store (iOS): {{ios_app_store_strategy}}
+          - Google Play (Android): {{android_play_store_strategy}}
+          - Enterprise Distribution: {{enterprise_distribution}}
+          - Beta Testing: {{beta_testing_strategy}}
+          
+          **Release Strategy:**
+          - Initial release scope: {{initial_release_scope}}
+          - Update frequency: {{update_frequency}}
+          - Rollout strategy: {{rollout_strategy}}
+
+  - id: mobile-requirements
+    title: Mobile Requirements
+    instruction: Draft mobile-specific functional and non-functional requirements
+    elicit: true
+    sections:
+      - id: functional
+        title: Mobile Functional Requirements
+        type: numbered-list
+        prefix: MFR
+        instruction: Each Mobile Functional Requirement focused on mobile app capabilities
+        examples:
+          - "MFR1: The app must work offline and sync data when connection is restored"
+          - "MFR2: Users can receive push notifications for important updates"
+          - "MFR3: The app supports biometric authentication (Face ID, fingerprint)"
+          - "MFR4: Users can share content from the app to other mobile apps"
+      - id: non-functional
+        title: Mobile Non-Functional Requirements
+        type: numbered-list
+        prefix: MNFR
+        instruction: Each Mobile Non-Functional Requirement focused on mobile performance and constraints
+        examples:
+          - "MNFR1: App launch time must be under 3 seconds on supported devices"
+          - "MNFR2: App size must not exceed 100MB for initial download"
+          - "MNFR3: Battery usage must be optimized for all-day usage"
+          - "MNFR4: App must support dark mode and system accessibility settings"
+
+  - id: mobile-ux-goals
+    title: Mobile User Experience Design Goals
+    instruction: |
+      Capture mobile-specific UX/UI vision to guide Mobile UX Expert and inform mobile story creation. Focus on mobile interaction patterns and user behavior.
+    elicit: true
+    choices:
+      accessibility: [None, WCAG AA, WCAG AAA, Platform Accessibility Standards]
+      design_system: [Material Design, Human Interface Guidelines, Custom Design, Cross-Platform]
+      interaction_paradigms: [Touch-First, Gesture-Heavy, Voice-Enabled, Accessibility-First]
+    sections:
+      - id: mobile-ux-vision
+        title: Mobile UX Vision
+        instruction: Define the overall mobile user experience vision and philosophy
+        template: |
+          **Mobile UX Philosophy:** {{mobile_ux_philosophy}}
+          **Key User Goals:** {{mobile_user_goals}}
+          **Mobile-Specific Value Proposition:** {{mobile_value_prop}}
+
+      - id: mobile-interaction-paradigms
+        title: Mobile Interaction Paradigms
+        instruction: Define how users will interact with the mobile app
+        template: |
+          **Primary Interaction Methods:** {{primary_interactions}}
+          **Gesture Support:** {{gesture_requirements}}
+          **Voice Integration:** {{voice_integration}}
+          **Haptic Feedback:** {{haptic_feedback}}
+          **Accessibility Integration:** {{accessibility_interactions}}
+
+      - id: mobile-navigation-strategy
+        title: Mobile Navigation Strategy
+        instruction: Define mobile app navigation approach and information architecture
+        template: |
+          **Navigation Pattern:** {{navigation_pattern}}
+          **Information Architecture:** {{information_architecture}}
+          **Deep Linking Strategy:** {{deep_linking_strategy}}
+          **Tab/Menu Structure:** {{tab_menu_structure}}
+
+      - id: core-mobile-screens
+        title: Core Mobile Screens and Views
+        instruction: From a mobile product perspective, what are the most critical mobile screens necessary to deliver PRD values and goals?
+        examples:
+          - "Splash/Launch Screen"
+          - "Onboarding Flow"
+          - "Main Dashboard/Home"
+          - "Primary Feature Screen"
+          - "Settings/Profile Screen"
+          - "Offline State Screen"
+
+      - id: mobile-accessibility
+        title: "Mobile Accessibility: {Platform Standards|WCAG AA|WCAG AAA|Custom Requirements}"
+        template: |
+          **Accessibility Standards:** {{accessibility_standards}}
+          **Screen Reader Support:** {{screen_reader_support}}
+          **Voice Control:** {{voice_control_support}}
+          **Visual Accessibility:** {{visual_accessibility_features}}
+          **Motor Accessibility:** {{motor_accessibility_features}}
+
+      - id: mobile-branding
+        title: Mobile Branding & Design System
+        instruction: Mobile-specific branding requirements and design system approach
+        template: |
+          **Design System Approach:** {{design_system_approach}}
+          **Brand Adaptation for Mobile:** {{mobile_brand_adaptation}}
+          **Icon Strategy:** {{icon_strategy}}
+          **Color System:** {{mobile_color_system}}
+          **Typography:** {{mobile_typography}}
+
+  - id: mobile-technical-assumptions
+    title: Mobile Technical Assumptions
+    instruction: |
+      Gather mobile-specific technical decisions that will guide the Mobile Architect. Focus on mobile development stack, frameworks, and platform considerations.
+    elicit: true
+    choices:
+      mobile_framework: [Native iOS/Android, Flutter, React Native, Xamarin, Ionic]
+      state_management: [Platform Default, Redux/BLoC, MobX/Provider, Custom]
+      backend_integration: [REST API, GraphQL, Firebase, Custom Backend]
+      local_storage: [Platform Default, SQLite, Realm, Hive, Custom]
+    sections:
+      - id: mobile-development-approach
+        title: "Mobile Development Framework: {Native|Flutter|React Native|Xamarin|Ionic}"
+        instruction: Document the mobile development framework decision with rationale
+        template: |
+          **Chosen Framework:** {{mobile_framework}}
+          **Rationale:** {{framework_rationale}}
+          **Team Expertise:** {{team_mobile_expertise}}
+          **Long-term Considerations:** {{framework_long_term}}
+
+      - id: mobile-architecture-pattern
+        title: Mobile Architecture Pattern
+        instruction: "CRITICAL DECISION - Document the mobile architecture pattern (e.g., Clean Architecture, MVVM, MVC, Redux Pattern)"
+        template: |
+          **Architecture Pattern:** {{mobile_architecture_pattern}}
+          **State Management:** {{mobile_state_management}}
+          **Rationale:** {{mobile_architecture_rationale}}
+
+      - id: mobile-data-strategy
+        title: Mobile Data Strategy
+        instruction: Define how the mobile app will handle data storage, synchronization, and offline capabilities
+        template: |
+          **Local Storage:** {{mobile_local_storage}}
+          **Data Synchronization:** {{mobile_data_sync}}
+          **Offline Strategy:** {{mobile_offline_strategy}}
+          **Caching Strategy:** {{mobile_caching_strategy}}
+
+      - id: mobile-integration-requirements
+        title: Mobile Integration Requirements
+        instruction: Define integrations with device features and external services
+        template: |
+          **Device Features:** {{required_device_features}}
+          **Push Notifications:** {{push_notification_strategy}}
+          **Analytics Integration:** {{mobile_analytics}}
+          **Crash Reporting:** {{mobile_crash_reporting}}
+          **Third-party SDKs:** {{required_third_party_sdks}}
+
+      - id: mobile-testing-requirements
+        title: Mobile Testing Requirements
+        instruction: "CRITICAL DECISION - Document mobile testing requirements including device testing, automated testing, and manual testing"
+        template: |
+          **Testing Strategy:** {{mobile_testing_strategy}}
+          **Device Testing:** {{device_testing_requirements}}
+          **Automated Testing:** {{mobile_automated_testing}}
+          **Performance Testing:** {{mobile_performance_testing}}
+
+      - id: additional-mobile-assumptions
+        title: Additional Mobile Technical Assumptions
+        instruction: Any other mobile-specific technical assumptions, constraints, or requirements
+
+  - id: mobile-performance-requirements
+    title: Mobile Performance Requirements
+    instruction: |
+      Define specific mobile performance targets and constraints. These become critical non-functional requirements.
+    sections:
+      - id: performance-targets
+        title: Performance Targets
+        template: |
+          **App Launch Time:** {{app_launch_time_target}}
+          **Screen Transition Time:** {{screen_transition_target}}
+          **Memory Usage:** {{memory_usage_target}}
+          **Battery Usage:** {{battery_usage_target}}
+          **Network Efficiency:** {{network_efficiency_target}}
+
+      - id: device-performance
+        title: Device Performance Requirements
+        template: |
+          **Minimum Device Performance:** {{min_device_specs}}
+          **Target Device Performance:** {{target_device_specs}}
+          **Performance Degradation Strategy:** {{performance_degradation_strategy}}
+
+      - id: app_size_constraints
+        title: App Size Constraints
+        template: |
+          **Initial Download Size:** {{initial_download_size}}
+          **Maximum App Size:** {{max_app_size}}
+          **Asset Optimization:** {{asset_optimization_strategy}}
+
+  - id: mobile-security-requirements
+    title: Mobile Security Requirements
+    instruction: |
+      Define mobile-specific security requirements following OWASP Mobile Top 10 and platform security guidelines.
+    sections:
+      - id: data-security
+        title: Mobile Data Security
+        template: |
+          **Data Encryption:** {{mobile_data_encryption}}
+          **Secure Storage:** {{mobile_secure_storage}}
+          **Authentication:** {{mobile_authentication_requirements}}
+          **Biometric Integration:** {{biometric_requirements}}
+
+      - id: communication-security
+        title: Mobile Communication Security
+        template: |
+          **API Security:** {{mobile_api_security}}
+          **Certificate Pinning:** {{certificate_pinning_requirements}}
+          **Network Security:** {{mobile_network_security}}
+
+      - id: platform-security
+        title: Platform Security Features
+        template: |
+          **iOS Security Features:** {{ios_security_features}}
+          **Android Security Features:** {{android_security_features}}
+          **App Store Security:** {{app_store_security_requirements}}
+
+  - id: mobile-epic-list
+    title: Mobile Epic List
+    instruction: |
+      Present a high-level list of all mobile epics for user approval. Each epic should deliver significant mobile functionality following mobile development best practices.
+      
+      CRITICAL MOBILE EPIC SEQUENCING:
+      
+      - Epic 1 must establish mobile project foundation (app setup, platform configuration, basic navigation) while delivering initial mobile functionality
+      - Each epic should deliver deployable mobile functionality that can be tested on devices
+      - Consider mobile-specific concerns: app store submission readiness, device testing, performance optimization
+      - Mobile epics should align with mobile development lifecycle and deployment constraints
+    elicit: true
+    examples:
+      - "Epic 1: Mobile Foundation & Core Navigation: Establish mobile project setup, authentication, and basic navigation"
+      - "Epic 2: Core Mobile Features: Implement primary mobile functionality with offline support"
+      - "Epic 3: Mobile User Experience: Advanced mobile interactions, gestures, and native integrations"
+      - "Epic 4: Mobile Performance & Polish: Performance optimization, app store readiness, and advanced features"
+
+  - id: mobile-epic-details
+    title: Mobile Epic {{epic_number}} {{epic_title}}
+    repeatable: true
+    instruction: |
+      After the mobile epic list is approved, present each epic with mobile-specific stories and acceptance criteria.
+      
+      CRITICAL MOBILE STORY REQUIREMENTS:
+      
+      - Stories must be testable on mobile devices
+      - Consider mobile-specific acceptance criteria (performance, battery, offline behavior)
+      - Include device testing requirements in story acceptance criteria
+      - Consider app store guidelines and mobile platform requirements
+      - Size stories for mobile development complexity
+      - Include mobile-specific edge cases (network connectivity, background app states, device orientation)
+    elicit: true
+    template: "{{epic_goal}}"
+    sections:
+      - id: mobile-story
+        title: Mobile Story {{epic_number}}.{{story_number}} {{story_title}}
+        repeatable: true
+        template: |
+          As a {{mobile_user_type}},
+          I want {{mobile_action}},
+          so that {{mobile_benefit}}.
+        sections:
+          - id: mobile-acceptance-criteria
+            title: Mobile Acceptance Criteria
+            type: numbered-list
+            item_template: "{{criterion_number}}: {{mobile_criteria}}"
+            repeatable: true
+            instruction: |
+              Define mobile-specific acceptance criteria that include:
+              
+              - Mobile functionality verification
+              - Device testing requirements (specific devices/OS versions)
+              - Performance requirements (launch time, responsiveness, memory)
+              - Offline/online behavior verification
+              - Mobile-specific edge cases (background/foreground states, connectivity loss)
+              - App store guideline compliance where applicable
+              - Accessibility testing on mobile devices
+              - Cross-platform behavior (if applicable)
+
+  - id: mobile-checklist-results
+    title: Mobile Checklist Results Report
+    instruction: Before proceeding, offer to output the full mobile PRD. If outputting, confirm with user that you will proceed to run the mobile-development-checklist and produce the results report.
+
+  - id: mobile-next-steps
+    title: Mobile Next Steps
+    sections:
+      - id: mobile-ux-expert-prompt
+        title: Mobile UX Expert Prompt
+        instruction: Generate prompt for Mobile UX Expert to create mobile-specific UI/UX architecture using this mobile PRD as input.
+        template: |
+          Please review the Mobile PRD and create a comprehensive mobile UI/UX specification focusing on:
+          - Mobile-first design principles
+          - Platform-specific design guidelines (iOS/Android)
+          - Mobile interaction patterns and gestures
+          - Responsive design for various mobile screen sizes
+          - Mobile accessibility requirements
+          - Native mobile component usage
+
+      - id: mobile-architect-prompt
+        title: Mobile Architect Prompt
+        instruction: Generate prompt for Mobile Architect to create mobile architecture using this mobile PRD as input.
+        template: |
+          Please review the Mobile PRD and create a comprehensive mobile application architecture focusing on:
+          - Mobile development framework implementation ({{mobile_framework}})
+          - Mobile-specific architecture patterns
+          - Mobile data management and offline capabilities
+          - Mobile performance optimization strategies
+          - Mobile security implementation
+          - Mobile deployment and distribution strategy
+          - Mobile testing and quality assurance approach
+
+      - id: mobile-team-coordination
+        title: Mobile Team Coordination
+        instruction: Define handoff requirements for mobile development team
+        template: |
+          **Mobile Development Team Handoff:**
+          - Mobile Developer: Focus on {{mobile_framework}} implementation
+          - Mobile QA: Device testing strategy and mobile-specific test cases
+          - Mobile Security: OWASP Mobile Top 10 compliance and platform security
+          - Mobile PM: App store submission and mobile release management
+          
+          **Key Mobile Artifacts Required:**
+          - Mobile architecture document
+          - Mobile UI/UX specifications
+          - Mobile testing strategy
+          - Mobile security implementation plan
+          - Mobile deployment pipeline configuration

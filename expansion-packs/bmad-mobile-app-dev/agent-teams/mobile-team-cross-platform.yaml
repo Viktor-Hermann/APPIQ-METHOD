@@ -1,0 +1,22 @@
+bundle:
+  name: Mobile Team Cross-Platform
+  icon: 🌐
+  description: Comprehensive cross-platform mobile development team supporting both Flutter and React Native with platform selection capabilities.
+agents:
+  - bmad-orchestrator
+  - analyst
+  - mobile-pm
+  - mobile-ux-expert
+  - mobile-architect
+  - po
+  - mobile-developer
+  - mobile-qa
+  - mobile-security
+  - mobile-analytics
+workflows:
+  - mobile-platform-selection.yaml
+  - mobile-greenfield-flutter.yaml
+  - mobile-greenfield-react-native.yaml
+  - mobile-brownfield-flutter.yaml
+  - mobile-brownfield-react-native.yaml
+  - mobile-app-development-init.yaml
