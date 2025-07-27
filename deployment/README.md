@@ -9,13 +9,13 @@ This deployment system provides multiple ways to install APPIQ Method in any pro
 ### Option 1: One-Command Install (Recommended)
 ```bash
 # Download and install in one command
-curl -fsSL https://raw.githubusercontent.com/your-org/APPIQ-METHOD/main/deployment/quick-install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/deployment/quick-install.sh | bash
 ```
 
 ### Option 2: Download and Run
 ```bash
 # Download the installer
-wget https://github.com/your-org/APPIQ-METHOD/releases/latest/download/appiq_installer.sh
+wget https://github.com/Viktor-Hermann/APPIQ-METHOD/releases/latest/download/appiq_installer.sh
 
 # Run in your project folder
 bash appiq_installer.sh
@@ -250,7 +250,7 @@ bash appiq_installer.sh
 1. Run validation: `./.appiq/scripts/appiq validate`
 2. Check status: `./.appiq/scripts/appiq status`
 3. Review local docs: `.appiq/README.md`
-4. Submit issues: [GitHub Issues](https://github.com/your-org/APPIQ-METHOD/issues)
+4. Submit issues: [GitHub Issues](https://github.com/Viktor-Hermann/APPIQ-METHOD/issues)
 
 ### Feature Requests
 Open an issue with:
@@ -285,7 +285,7 @@ APPIQ Method is released under [Your License] license.
 cd my-mobile-app
 
 # 2. Install APPIQ Method
-curl -fsSL https://raw.githubusercontent.com/your-org/APPIQ-METHOD/main/deployment/quick-install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/deployment/quick-install.sh | bash
 
 # 3. Customize PRD
 nano docs/main_prd.md

@@ -16,7 +16,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # Configuration
-APPIQ_REPO_URL="https://github.com/your-org/APPIQ-METHOD.git"
+APPIQ_REPO_URL="https://github.com/Viktor-Hermann/APPIQ-METHOD.git"
 APPIQ_VERSION="latest"
 PROJECT_ROOT="$(pwd)"
 APPIQ_DIR=".appiq"

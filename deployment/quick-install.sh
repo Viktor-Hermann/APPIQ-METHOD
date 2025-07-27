@@ -6,7 +6,7 @@
 set -e
 
 # Configuration
-INSTALLER_URL="https://github.com/your-org/APPIQ-METHOD/releases/latest/download/appiq_installer.sh"
+INSTALLER_URL="https://github.com/Viktor-Hermann/APPIQ-METHOD/releases/latest/download/appiq_installer.sh"
 TEMP_FILE="/tmp/appiq_installer.sh"
 
 # Colors
