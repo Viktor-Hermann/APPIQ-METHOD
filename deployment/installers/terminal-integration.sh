@@ -53,8 +53,8 @@ get_shell_config() {
 # Create global appiq command script
 echo -e "${BLUE}📝 Creating global /appiq command...${NC}"
 
-# Create the main appiq script
-cat > "${APPIQ_DIR}/scripts/appiq-global" << 'EOF'
+# Create the main appiq script - use our improved version
+cp "$(dirname "$0")/appiq-global.sh" "${APPIQ_DIR}/scripts/appiq-global" 2>/dev/null || cat > "${APPIQ_DIR}/scripts/appiq-global" << 'EOF'
 #!/bin/bash
 
 # APPIQ Method - Global Terminal Command
@@ -478,7 +478,7 @@ if [ -f "$SHELL_CONFIG" ]; then
         echo "" >> "$SHELL_CONFIG"
         echo "# APPIQ Method - Shell Completion" >> "$SHELL_CONFIG"
         
-        local shell_type=$(detect_shell)
+        shell_type=$(detect_shell)
         case $shell_type in
             "zsh")
                 echo "[ -f \"$(realpath "${APPIQ_DIR}/scripts/appiq-completion.zsh")\" ] && source \"$(realpath "${APPIQ_DIR}/scripts/appiq-completion.zsh")\"" >> "$SHELL_CONFIG"
