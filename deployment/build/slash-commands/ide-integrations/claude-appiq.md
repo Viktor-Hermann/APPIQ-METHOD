@@ -1,239 +1,294 @@
-# Claude IDE Integration for /appiq Command
+# Claude IDE Integration - Universal APPIQ Method
 
-## Implementation for Claude Code
+## Implementation für Claude Code
 
-The `/appiq` command in Claude Code should be implemented as a native slash command that provides interactive mobile development workflow selection.
+Die APPIQ Method Commands in Claude Code unterstützen alle Projekttypen: Web, Desktop, Mobile und Backend Development mit intelligenter Projekt-Erkennung.
 
-## Command Definition
+## Verfügbare Commands
 
+### `/start` - Universal Project Launcher (EMPFOHLEN)
+```yaml
+command: /start
+description: Universal APPIQ Method Launcher mit intelligenter Projekt-Erkennung
+category: Development
+supported_projects: [web, desktop, mobile, backend]
+```
+
+**Verwendung:**
+```
+/start
+```
+
+**Features:**
+- 🌐 Web-Anwendungen (React, Vue, Angular, Next.js)
+- 💻 Desktop-Apps (Electron, Cross-Platform)
+- 📱 Mobile Apps (Flutter, React Native)
+- ⚙️ Backend Services (Node.js, Python, Java)
+- 🧠 Automatische Projekt-Erkennung
+- 📋 Geführte Workflow-Auswahl
+
+### `/appiq` - Universal Project Launcher (Legacy-Support)
 ```yaml
 command: /appiq
-description: Interactive APPIQ Method mobile development workflow launcher
-category: Mobile Development
-expansion_pack: bmad-mobile-app-dev
+description: Universeller APPIQ Method Launcher (erweitert von Mobile-only)
+category: Development
+supported_projects: [web, desktop, mobile, backend]
+legacy_support: true
 ```
 
-## Interactive Implementation
-
-### State Variables
-```typescript
-interface AppiqState {
-  projectType: 'greenfield' | 'brownfield' | null;
-  platform: 'flutter' | 'react-native' | null;
-  hasPrd: boolean | null;
-  step: 'project-type' | 'platform-selection' | 'platform-detection' | 'prd-check' | 'launch';
-}
+**Verwendung:**
+```
+/appiq
 ```
 
-### Step-by-Step Flow
+**Features:**
+- Identische Funktionalität wie `/start`
+- Vollständige Rückwärtskompatibilität
+- Unterstützt alle bestehenden Mobile Workflows
+- Expansion Pack Integration
 
-#### Step 1: Project Type Selection
-```typescript
-function showProjectTypeSelection() {
-  return `🚀 Welcome to APPIQ Method Mobile Development!
+## Interaktiver Workflow
 
-What type of mobile project are you working on?
+### Schritt 1: Projekt-Status
+```
+🚀 APPIQ Method Universal Launcher
 
-1. Greenfield - New mobile app development (Flutter or React Native)
-2. Brownfield - Enhancing existing mobile app
+Arbeiten wir an einem neuen oder bestehenden Projekt?
 
-Please respond with 1 or 2:`;
-}
+1. 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf
+2. 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas
 
-function handleProjectTypeResponse(input: string, state: AppiqState) {
-  if (input === '1') {
-    state.projectType = 'greenfield';
-    state.step = 'platform-selection';
-    return showPlatformSelection();
-  } else if (input === '2') {
-    state.projectType = 'brownfield';
-    state.step = 'platform-detection';
-    return showPlatformDetection();
-  } else {
-    return `❌ Invalid response. Please respond with 1 or 2:\n\n${showProjectTypeSelection()}`;
-  }
-}
+Antworte mit 1 oder 2:
 ```
 
-#### Step 2: Platform Selection (Greenfield)
-```typescript
-function showPlatformSelection() {
-  return `📱 Platform Selection for New Mobile App:
+### Schritt 2: Projekt-Typ Erkennung
+```
+📋 Lass mich verstehen, was wir bauen...
 
-Which mobile platform do you want to target?
+Was für eine Art von Anwendung ist das?
 
-1. Flutter - Cross-platform with Dart
-2. React Native - Cross-platform with React/JavaScript
-3. Let APPIQ Method recommend based on requirements
+1. 🌐 Web-Anwendung (läuft im Browser)
+2. 💻 Desktop-Anwendung (Electron, Windows/Mac App)
+3. 📱 Mobile App (iOS/Android)
+4. ⚙️ Backend/API Service (Server, Database)
+5. 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
 
-Please respond with 1, 2, or 3:`;
-}
-
-function handlePlatformSelection(input: string, state: AppiqState) {
-  if (input === '1') {
-    state.platform = 'flutter';
-    state.step = 'prd-check';
-    return showPrdCheck();
-  } else if (input === '2') {
-    state.platform = 'react-native';
-    state.step = 'prd-check';
-    return showPrdCheck();
-  } else if (input === '3') {
-    return showPlatformRecommendation();
-  } else {
-    return `❌ Invalid response. Please respond with 1, 2, or 3:\n\n${showPlatformSelection()}`;
-  }
-}
+Antworte mit 1, 2, 3, 4 oder 5:
 ```
 
-#### Step 3: Platform Detection (Brownfield)
-```typescript
-function showPlatformDetection() {
-  return `📱 Existing Mobile App Platform Detection:
+### Schritt 3: Smart Detection (Option 5)
+Automatische Analyse des Projekts basierend auf:
+- File-Struktur (package.json, pubspec.yaml, etc.)
+- Dependencies (React, Flutter, Express, etc.)
+- Projekt-Beschreibung (bei neuen Projekten)
 
-What platform is your existing mobile app built with?
+## Workflow-Zuordnung
 
-1. Flutter - Dart-based cross-platform app
-2. React Native - React/JavaScript-based app
-3. Not sure - Let APPIQ Method analyze the codebase
+### Greenfield (Neue Projekte)
+| Input | Workflow | Agent-Sequenz |
+|-------|----------|---------------|
+| Web-Anwendung | `greenfield-fullstack.yaml` | analyst → pm → ux-expert → architect → dev |
+| Desktop-App | `greenfield-fullstack.yaml` + Electron Context | analyst → pm → ux-expert → architect → dev |
+| Mobile App | Mobile Platform Selection → Flutter/RN Workflow | mobile-analyst → mobile-pm → mobile-architect → mobile-dev |
+| Backend Service | `greenfield-service.yaml` | analyst → pm → architect → dev |
 
-Please respond with 1, 2, or 3:`;
-}
+### Brownfield (Bestehende Projekte)
+| Input | Workflow | Agent-Sequenz |
+|-------|----------|---------------|
+| Web-Anwendung | `brownfield-fullstack.yaml` | analyst → architect → pm → dev |
+| Desktop-App | `brownfield-fullstack.yaml` + Electron Context | analyst → architect → pm → dev |
+| Mobile App | Platform Detection → Brownfield Mobile Workflow | mobile-analyst → mobile-architect → mobile-dev |
+| Backend Service | `brownfield-service.yaml` | analyst → architect → pm → dev |
 
-function handlePlatformDetection(input: string, state: AppiqState) {
-  if (input === '1') {
-    state.platform = 'flutter';
-    state.step = 'prd-check';
-    return showPrdCheck();
-  } else if (input === '2') {
-    state.platform = 'react-native';
-    state.step = 'prd-check';
-    return showPrdCheck();
-  } else if (input === '3') {
-    // Trigger codebase analysis
-    return analyzeCodebaseForPlatform();
-  } else {
-    return `❌ Invalid response. Please respond with 1, 2, or 3:\n\n${showPlatformDetection()}`;
-  }
-}
+## Automatische Projekt-Erkennung
+
+### File-basierte Erkennung (Brownfield)
+Claude Code analysiert automatisch:
+
+```javascript
+// Erkennungslogik
+if (hasFile("pubspec.yaml")) return "mobile-flutter";
+if (hasPackageDep("react-native")) return "mobile-react-native";
+if (hasPackageDep("electron")) return "desktop-electron";
+if (hasPackageDep(["react", "vue", "angular", "next"])) return "web-frontend";
+if (hasPackageDep(["express", "fastify", "koa"])) return "backend-nodejs";
+if (hasFile("requirements.txt") && hasPattern("flask|django|fastapi")) return "backend-python";
+if (hasFile(["pom.xml", "build.gradle"])) return "backend-java";
 ```
 
-#### Step 4: PRD Validation
-```typescript
-function showPrdCheck() {
-  return `📋 Checking for main_prd.md in your /docs/ folder...
+### Keyword-basierte Erkennung (Greenfield)
+Bei Projekt-Beschreibungen werden Keywords erkannt:
 
-Do you have a main_prd.md file in your /docs/ folder?
-(You should create this manually and place it there before proceeding)
-
-Please respond with yes or no:`;
-}
-
-async function handlePrdCheck(input: string, state: AppiqState) {
-  if (input.toLowerCase() === 'yes') {
-    // Verify file exists
-    const prdExists = await checkFileExists('/docs/main_prd.md');
-    if (prdExists) {
-      state.hasPrd = true;
-      state.step = 'launch';
-      return launchWorkflow(state);
-    } else {
-      return `❌ main_prd.md not found in /docs/ folder. Please create it first and try again.`;
-    }
-  } else if (input.toLowerCase() === 'no') {
-    return showPrdGuidance();
-  } else {
-    return `❌ Invalid response. Please respond with yes or no:\n\n${showPrdCheck()}`;
-  }
-}
+```javascript
+const keywordMapping = {
+  web: ["website", "web", "browser", "online", "webapp", "ecommerce", "portal"],
+  desktop: ["desktop", "electron", "windows", "mac", "app", "gui", "standalone"],
+  mobile: ["mobile", "ios", "android", "app store", "phone", "tablet"],
+  backend: ["api", "server", "backend", "database", "service", "microservice"]
+};
 ```
 
-#### Step 5: Workflow Launch
-```typescript
-function launchWorkflow(state: AppiqState) {
-  const workflowMap = {
-    'greenfield-flutter': 'mobile-greenfield-flutter.yaml',
-    'greenfield-react-native': 'mobile-greenfield-react-native.yaml',
-    'brownfield-flutter': 'mobile-brownfield-flutter.yaml',
-    'brownfield-react-native': 'mobile-brownfield-react-native.yaml'
-  };
-  
-  const workflowKey = `${state.projectType}-${state.platform}`;
-  const workflowFile = workflowMap[workflowKey];
-  
-  // Launch the appropriate workflow
-  return generateWorkflowLaunchMessage(state.projectType, state.platform, workflowFile);
-}
+## Context-spezifische Anpassungen
+
+### Desktop/Electron Context
+```yaml
+context_messages:
+  desktop: |
+    Fokus auf Electron Desktop-Anwendung:
+    - Plattformspezifische Optimierungen (Windows/Mac/Linux)
+    - Native APIs und System-Integration
+    - Performance-Optimierung für Desktop
+    - Auto-Update und Packaging-Strategien
 ```
 
-## Integration with Claude Code Features
-
-### File System Integration
-```typescript
-// Check if docs/main_prd.md exists
-async function checkFileExists(path: string): Promise<boolean> {
-  try {
-    await claude.filesystem.read(path);
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-
-// Create docs folder if it doesn't exist
-async function ensureDocsFolder(): Promise<void> {
-  try {
-    await claude.filesystem.createDirectory('/docs');
-  } catch (error) {
-    // Folder might already exist
-  }
-}
+### Web Application Context
+```yaml
+context_messages:
+  web: |
+    Fokus auf Full-Stack Web-Anwendung:
+    - Frontend Framework Integration (React/Vue/Angular)
+    - Backend API Design und Implementation
+    - Responsive Design und Mobile-First
+    - SEO und Performance-Optimierung
 ```
 
-### Agent Integration
-```typescript
-// Launch the first agent in the workflow
-function startWorkflowAgent(workflowType: string, platform: string) {
-  if (workflowType === 'greenfield') {
-    return `@analyst - Please begin with creating a mobile-focused project brief considering app store landscape, device capabilities, and mobile user behavior.`;
-  } else {
-    return `@analyst - Please classify the mobile enhancement scope. Can you describe the ${platform} app enhancement? Is this a small fix, a feature addition, or a major enhancement requiring architectural changes?`;
-  }
-}
+### Mobile Application Context
+```yaml
+context_messages:
+  mobile: |
+    Fokus auf Cross-Platform Mobile Development:
+    - Platform-spezifische UI/UX Guidelines
+    - App Store Optimization und Deployment
+    - Device-spezifische Features (Kamera, GPS, etc.)
+    - Performance auf verschiedenen Geräten
 ```
 
-### Context Management
-```typescript
-// Set workflow context for subsequent interactions
-function setWorkflowContext(projectType: string, platform: string) {
-  claude.context.set('active_workflow', `mobile-${projectType}-${platform}`);
-  claude.context.set('mobile_platform', platform);
-  claude.context.set('project_type', projectType);
-}
+### Backend Service Context
+```yaml
+context_messages:
+  backend: |
+    Fokus auf API und Backend Development:
+    - RESTful API Design und Documentation
+    - Database Design und Optimization
+    - Scalability und Performance
+    - Security Best Practices
 ```
 
-## Usage in Claude Code
+## Expansion Pack Integration
 
-Users can simply type `/appiq` in any Claude Code chat session and the interactive flow will begin. The command will:
+### Automatische Erkennung
+Claude Code erkennt automatisch installierte Expansion Packs:
 
-1. Present clear options with emojis for visual clarity
-2. Validate responses and provide helpful error messages
-3. Check file system for required files
-4. Launch the appropriate workflow automatically
-5. Start the first agent with proper context
+```yaml
+expansion_packs:
+  bmad-mobile-app-dev:
+    agents: [mobile-pm, mobile-architect, mobile-developer, mobile-qa]
+    workflows: [mobile-greenfield-flutter, mobile-brownfield-react-native]
+    
+  bmad-2d-game-dev:
+    agents: [game-designer, game-developer, game-architect]
+    workflows: [game-dev-greenfield, game-prototype]
+    
+  bmad-infrastructure-devops:
+    agents: [infra-devops-platform]
+    workflows: [infrastructure-deployment]
+```
 
-## Error Handling
+### Expansion Pack Commands
+Zusätzliche Commands werden bei verfügbaren Expansion Packs aktiviert:
 
-The implementation includes comprehensive error handling:
-- Invalid response validation
-- File existence checking
-- Graceful fallbacks for missing requirements
-- Clear guidance for setup steps
+```yaml
+conditional_commands:
+  - if: expansion_pack_installed("bmad-mobile-app-dev")
+    command: /mobile
+    description: Direct Mobile Development Launcher
+    
+  - if: expansion_pack_installed("bmad-2d-game-dev")
+    command: /game
+    description: Game Development Workflow Launcher
+```
 
-## Future Enhancements
+## Error Handling & Fallbacks
 
-The Claude integration can be extended to support:
-- Auto-detection of project structure
-- Integration with Claude's project management features
-- Workflow progress tracking
-- Custom workflow configurations
+### Unbekannte Projekttypen
+```yaml
+fallback_behavior:
+  unknown_project: |
+    🤔 Projekttyp nicht automatisch erkennbar.
+    
+    Lass uns das gemeinsam herausfinden:
+    1. Beschreibe kurz dein Projekt
+    2. Ich führe dich durch gezielte Fragen
+    3. Wir finden den passenden Workflow
+```
+
+### Missing Dependencies
+```yaml
+missing_dependencies:
+  message: |
+    ⚠️ Benötigte APPIQ Method Komponenten nicht gefunden.
+    
+    Installiere die APPIQ Method mit:
+    curl -fsSL https://github.com/Viktor-Hermann/APPIQ-METHOD/releases/latest/download/appiq_installer.sh | bash
+```
+
+## Best Practices für Claude Code
+
+### Performance Optimierungen
+```yaml
+performance:
+  lazy_loading: true  # Lade Workflows nur bei Bedarf
+  cache_detection: true  # Cache Projekt-Erkennung
+  batch_operations: true  # Batch File-System-Operationen
+```
+
+### User Experience
+```yaml
+ux_enhancements:
+  progress_indicators: true  # Zeige Fortschritt bei langen Operationen
+  clear_error_messages: true  # Verständliche Fehlermeldungen
+  context_preservation: true  # Behalte Kontext zwischen Schritten
+```
+
+### Integration mit Claude Features
+```yaml
+claude_integration:
+  file_analysis: true  # Nutze Claude's File-Analysis
+  code_understanding: true  # Leverag Code-Verständnis
+  natural_language: true  # Nutze NLP für Projekt-Beschreibungen
+```
+
+## Command Examples
+
+### Schneller Start für Experten
+```
+/start → 2 → 2 → Desktop Brownfield Workflow
+/appiq → 1 → 1 → Web Greenfield Workflow
+```
+
+### Mit Auto-Detection
+```
+/start → 2 → 5 → [Auto-Erkennung] → Passender Workflow
+```
+
+### Direkte Mobile Development (mit Expansion Pack)
+```
+/mobile → Flutter/React Native Selection → Mobile Workflow
+```
+
+## Testing & Validation
+
+### Test-Szenarien
+```yaml
+test_scenarios:
+  - new_react_web_app
+  - existing_electron_desktop
+  - flutter_mobile_project
+  - nodejs_backend_api
+  - unknown_project_type
+  - missing_appiq_installation
+```
+
+---
+
+**💡 Tipp für Claude Code Users:** Verwende `/start` für den einfachsten Einstieg oder `/appiq` falls du bereits mit der APPIQ Method vertraut bist. Beide Commands bieten identische, universelle Funktionalität für alle Projekttypen.

@@ -1,239 +1,421 @@
-# Cursor IDE Integration for /appiq Command
+# Cursor IDE Integration - Universal APPIQ Method
 
 ## Implementation for Cursor AI Code Editor
 
-The `/appiq` command in Cursor should be implemented as a chat-based command that provides interactive mobile development workflow selection.
+Die APPIQ Method Commands in Cursor unterstützen alle Projekttypen: Web, Desktop, Mobile und Backend Development mit intelligenter Projekt-Erkennung.
+
+## Verfügbare Commands
+
+### `/start` - Universal Project Launcher (EMPFOHLEN)
+```yaml
+command: /start
+description: Universal APPIQ Method Launcher mit intelligenter Projekt-Erkennung
+category: Development
+supported_projects: [web, desktop, mobile, backend]
+```
+
+### `/appiq` - Universal Project Launcher (Legacy-Support)
+```yaml
+command: /appiq
+description: Universeller APPIQ Method Launcher (erweitert von Mobile-only)
+category: Development
+supported_projects: [web, desktop, mobile, backend]
+legacy_support: true
+```
 
 ## Integration Approaches
 
 ### Approach 1: Chat Command (Recommended)
-Implement `/appiq` as a recognized chat command that triggers the interactive flow.
+Implementiere `/start` und `/appiq` als erkannte Chat Commands mit universeller Projekt-Unterstützung.
 
 ### Approach 2: Command Palette Integration
-Add APPIQ Method commands to Cursor's command palette for quick access.
+Hinzufügen der APPIQ Method Commands zur Cursor Command Palette für alle Projekttypen.
 
 ## Chat-Based Implementation
 
-### Command Recognition
-```typescript
-// Cursor chat command recognition
-if (message.startsWith('/appiq')) {
-  return initializeAppiqFlow();
-}
-```
-
-### Interactive Flow Implementation
-
-#### State Management
+### Universal State Management
 ```typescript
 interface CursorAppiqState {
   sessionId: string;
   projectType: 'greenfield' | 'brownfield' | null;
-  platform: 'flutter' | 'react-native' | null;
-  hasPrd: boolean | null;
+  applicationCategory: 'web' | 'desktop' | 'mobile' | 'backend' | 'auto-detect' | null;
+  platform?: 'flutter' | 'react-native' | 'electron' | 'react' | 'vue' | 'angular';
+  framework?: string;
   currentStep: AppiqStep;
   workspaceRoot: string;
+  detectedProject?: ProjectDetection;
 }
 
 enum AppiqStep {
+  PROJECT_STATUS = 'project-status',
   PROJECT_TYPE = 'project-type',
-  PLATFORM_SELECTION = 'platform-selection', 
-  PLATFORM_DETECTION = 'platform-detection',
-  PRD_CHECK = 'prd-check',
+  AUTO_DETECTION = 'auto-detection',
+  PLATFORM_SELECTION = 'platform-selection',
   WORKFLOW_LAUNCH = 'workflow-launch'
+}
+
+interface ProjectDetection {
+  type: 'web' | 'desktop' | 'mobile' | 'backend' | 'unknown';
+  framework: string;
+  platform?: string;
+  confidence: number;
+  indicators: string[];
 }
 ```
 
-#### Step Implementation
+### Universal Workflow Handler
 ```typescript
-class CursorAppiqHandler {
+class CursorUniversalAppiqHandler {
   private state: CursorAppiqState;
+  private fileSystem: CursorFileSystem;
+  private projectDetector: CursorProjectDetector;
   
   constructor(workspaceRoot: string) {
     this.state = {
       sessionId: generateSessionId(),
       projectType: null,
-      platform: null,
-      hasPrd: null,
-      currentStep: AppiqStep.PROJECT_TYPE,
+      applicationCategory: null,
+      currentStep: AppiqStep.PROJECT_STATUS,
       workspaceRoot
     };
+    this.fileSystem = new CursorFileSystem(workspaceRoot);
+    this.projectDetector = new CursorProjectDetector(workspaceRoot);
   }
   
   handleMessage(message: string): string {
     switch (this.state.currentStep) {
+      case AppiqStep.PROJECT_STATUS:
+        return this.handleProjectStatusSelection(message);
       case AppiqStep.PROJECT_TYPE:
         return this.handleProjectTypeSelection(message);
+      case AppiqStep.AUTO_DETECTION:
+        return this.handleAutoDetection(message);
       case AppiqStep.PLATFORM_SELECTION:
         return this.handlePlatformSelection(message);
-      case AppiqStep.PLATFORM_DETECTION:
-        return this.handlePlatformDetection(message);
-      case AppiqStep.PRD_CHECK:
-        return this.handlePrdCheck(message);
       default:
-        return this.showProjectTypeSelection();
+        return this.showProjectStatusSelection();
     }
   }
   
-  private handleProjectTypeSelection(input: string): string {
-    if (input === '1') {
-      this.state.projectType = 'greenfield';
-      this.state.currentStep = AppiqStep.PLATFORM_SELECTION;
-      return this.showPlatformSelection();
-    } else if (input === '2') {
-      this.state.projectType = 'brownfield';
-      this.state.currentStep = AppiqStep.PLATFORM_DETECTION;
-      return this.showPlatformDetection();
-    }
-    return this.showInvalidResponseError(this.showProjectTypeSelection());
+  private showProjectStatusSelection(): string {
+    return `🚀 **APPIQ Method Universal Launcher**
+
+Arbeiten wir an einem neuen oder bestehenden Projekt?
+
+**1.** 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf
+**2.** 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas
+
+Antworte mit **1** oder **2**:`;
   }
   
   private showProjectTypeSelection(): string {
-    return `🚀 **Welcome to APPIQ Method Mobile Development!**
+    return `📋 **Lass mich verstehen, was wir bauen...**
 
-What type of mobile project are you working on?
+Was für eine Art von Anwendung ist das?
 
-**1.** Greenfield - New mobile app development (Flutter or React Native)
-**2.** Brownfield - Enhancing existing mobile app
+**1.** 🌐 Web-Anwendung (läuft im Browser)
+**2.** 💻 Desktop-Anwendung (Electron, Windows/Mac App)
+**3.** 📱 Mobile App (iOS/Android)
+**4.** ⚙️ Backend/API Service (Server, Database)
+**5.** 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
 
-Please respond with **1** or **2**:`;
-  }
-  
-  private showPlatformSelection(): string {
-    return `📱 **Platform Selection for New Mobile App:**
-
-Which mobile platform do you want to target?
-
-**1.** Flutter - Cross-platform with Dart
-**2.** React Native - Cross-platform with React/JavaScript
-**3.** Let APPIQ Method recommend based on requirements
-
-Please respond with **1**, **2**, or **3**:`;
-  }
-  
-  private showPlatformDetection(): string {
-    return `📱 **Existing Mobile App Platform Detection:**
-
-What platform is your existing mobile app built with?
-
-**1.** Flutter - Dart-based cross-platform app
-**2.** React Native - React/JavaScript-based app
-**3.** Not sure - Let APPIQ Method analyze the codebase
-
-Please respond with **1**, **2**, or **3**:`;
+Antworte mit **1**, **2**, **3**, **4** oder **5**:`;
   }
 }
 ```
 
-### File System Integration
-
+### Intelligent Project Detection
 ```typescript
-// Cursor workspace file system integration
-class CursorFileSystem {
+class CursorProjectDetector {
   constructor(private workspaceRoot: string) {}
   
-  async checkMainPrdExists(): Promise<boolean> {
-    const prdPath = path.join(this.workspaceRoot, 'docs', 'main_prd.md');
-    try {
-      await vscode.workspace.fs.stat(vscode.Uri.file(prdPath));
-      return true;
-    } catch {
-      return false;
-    }
-  }
-  
-  async createDocsFolder(): Promise<void> {
-    const docsPath = path.join(this.workspaceRoot, 'docs');
-    const docsUri = vscode.Uri.file(docsPath);
-    try {
-      await vscode.workspace.fs.createDirectory(docsUri);
-    } catch {
-      // Folder might already exist
-    }
-  }
-  
-  async detectPlatform(): Promise<'flutter' | 'react-native' | 'unknown'> {
-    // Check for pubspec.yaml (Flutter)
-    const pubspecPath = path.join(this.workspaceRoot, 'pubspec.yaml');
-    try {
-      await vscode.workspace.fs.stat(vscode.Uri.file(pubspecPath));
-      return 'flutter';
-    } catch {}
+  async detectProject(): Promise<ProjectDetection> {
+    const indicators: string[] = [];
+    let type: ProjectDetection['type'] = 'unknown';
+    let framework = '';
+    let platform = '';
+    let confidence = 0;
     
-    // Check for package.json with React Native dependencies
-    const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
-    try {
-      const packageJsonUri = vscode.Uri.file(packageJsonPath);
-      const content = await vscode.workspace.fs.readFile(packageJsonUri);
-      const packageJson = JSON.parse(content.toString());
-      
-      if (packageJson.dependencies?.['react-native'] || 
-          packageJson.devDependencies?.['react-native']) {
-        return 'react-native';
+    // Flutter Detection
+    if (await this.hasFile('pubspec.yaml')) {
+      type = 'mobile';
+      framework = 'Flutter';
+      platform = 'flutter';
+      confidence = 95;
+      indicators.push('pubspec.yaml found');
+    }
+    
+    // Package.json Analysis
+    const packageJson = await this.readPackageJson();
+    if (packageJson) {
+      // Electron Detection
+      if (packageJson.dependencies?.electron || packageJson.devDependencies?.electron) {
+        type = 'desktop';
+        framework = 'Electron';
+        platform = 'electron';
+        confidence = 90;
+        indicators.push('electron dependency');
       }
-    } catch {}
+      
+      // React Native Detection
+      else if (this.hasReactNativeDeps(packageJson)) {
+        type = 'mobile';
+        framework = 'React Native';
+        platform = 'react-native';
+        confidence = 90;
+        indicators.push('react-native dependencies');
+      }
+      
+      // Web Framework Detection
+      else if (this.hasWebFramework(packageJson)) {
+        type = 'web';
+        const webFramework = this.detectWebFramework(packageJson);
+        framework = webFramework.name;
+        confidence = webFramework.confidence;
+        indicators.push(`${framework} dependencies`);
+      }
+      
+      // Backend Detection
+      else if (this.hasBackendFramework(packageJson)) {
+        type = 'backend';
+        const backendFramework = this.detectBackendFramework(packageJson);
+        framework = backendFramework.name;
+        confidence = backendFramework.confidence;
+        indicators.push(`${framework} dependencies`);
+      }
+    }
     
-    return 'unknown';
+    // Python Backend Detection
+    if (await this.hasFile('requirements.txt')) {
+      const pythonFramework = await this.detectPythonFramework();
+      if (pythonFramework) {
+        type = 'backend';
+        framework = pythonFramework;
+        confidence = 85;
+        indicators.push('Python requirements.txt');
+      }
+    }
+    
+    // Java Backend Detection
+    if (await this.hasFile('pom.xml') || await this.hasFile('build.gradle')) {
+      type = 'backend';
+      framework = await this.hasFile('pom.xml') ? 'Maven/Spring' : 'Gradle/Spring';
+      confidence = 80;
+      indicators.push('Java build configuration');
+    }
+    
+    return { type, framework, platform, confidence, indicators };
+  }
+  
+  private hasReactNativeDeps(packageJson: any): boolean {
+    return !!(packageJson.dependencies?.['react-native'] || 
+              packageJson.devDependencies?.['react-native'] ||
+              packageJson.dependencies?.['@react-native/metro-config']);
+  }
+  
+  private hasWebFramework(packageJson: any): boolean {
+    const webFrameworks = ['react', 'vue', 'angular', 'next', 'nuxt', 'svelte'];
+    return webFrameworks.some(fw => 
+      packageJson.dependencies?.[fw] || packageJson.devDependencies?.[fw]
+    );
+  }
+  
+  private detectWebFramework(packageJson: any): {name: string, confidence: number} {
+    if (packageJson.dependencies?.next || packageJson.devDependencies?.next) {
+      return { name: 'Next.js', confidence: 95 };
+    }
+    if (packageJson.dependencies?.react || packageJson.devDependencies?.react) {
+      return { name: 'React', confidence: 90 };
+    }
+    if (packageJson.dependencies?.vue || packageJson.devDependencies?.vue) {
+      return { name: 'Vue.js', confidence: 90 };
+    }
+    if (packageJson.dependencies?.['@angular/core']) {
+      return { name: 'Angular', confidence: 90 };
+    }
+    return { name: 'Unknown Web Framework', confidence: 50 };
+  }
+  
+  private hasBackendFramework(packageJson: any): boolean {
+    const backendFrameworks = ['express', 'fastify', 'koa', 'hapi', 'nest'];
+    return backendFrameworks.some(fw => 
+      packageJson.dependencies?.[fw] || packageJson.devDependencies?.[fw]
+    );
+  }
+  
+  private detectBackendFramework(packageJson: any): {name: string, confidence: number} {
+    if (packageJson.dependencies?.express) return { name: 'Express.js', confidence: 95 };
+    if (packageJson.dependencies?.fastify) return { name: 'Fastify', confidence: 95 };
+    if (packageJson.dependencies?.['@nestjs/core']) return { name: 'NestJS', confidence: 95 };
+    if (packageJson.dependencies?.koa) return { name: 'Koa.js', confidence: 90 };
+    return { name: 'Node.js Backend', confidence: 70 };
   }
 }
 ```
 
-### Workflow Launch Integration
-
+### Universal Workflow Launcher
 ```typescript
-class CursorWorkflowLauncher {
+class CursorUniversalWorkflowLauncher {
   constructor(private fileSystem: CursorFileSystem) {}
   
-  async launchWorkflow(projectType: string, platform: string): Promise<string> {
-    const workflowMap = {
-      'greenfield-flutter': 'mobile-greenfield-flutter',
-      'greenfield-react-native': 'mobile-greenfield-react-native',
-      'brownfield-flutter': 'mobile-brownfield-flutter',
-      'brownfield-react-native': 'mobile-brownfield-react-native'
+  async launchWorkflow(projectType: string, appCategory: string, platform?: string): Promise<string> {
+    const workflowMapping = {
+      // Greenfield Workflows
+      'greenfield-web': 'greenfield-fullstack.yaml',
+      'greenfield-desktop': 'greenfield-fullstack.yaml',
+      'greenfield-mobile-flutter': 'mobile-greenfield-flutter.yaml',
+      'greenfield-mobile-react-native': 'mobile-greenfield-react-native.yaml',
+      'greenfield-backend': 'greenfield-service.yaml',
+      
+      // Brownfield Workflows
+      'brownfield-web': 'brownfield-fullstack.yaml',
+      'brownfield-desktop': 'brownfield-fullstack.yaml',
+      'brownfield-mobile-flutter': 'mobile-brownfield-flutter.yaml',
+      'brownfield-mobile-react-native': 'mobile-brownfield-react-native.yaml',
+      'brownfield-backend': 'brownfield-service.yaml'
     };
     
-    const workflowKey = `${projectType}-${platform}`;
-    const workflowName = workflowMap[workflowKey];
+    const workflowKey = platform ? 
+      `${projectType}-${appCategory}-${platform}` : 
+      `${projectType}-${appCategory}`;
     
-    // Generate launch message
-    const launchMessage = this.generateLaunchMessage(projectType, platform, workflowName);
+    const workflowName = workflowMapping[workflowKey];
+    const contextMessage = this.getContextMessage(appCategory, platform);
     
-    // Set up workspace context
-    await this.setupWorkspaceContext(projectType, platform);
-    
-    return launchMessage;
+    return this.generateUniversalLaunchMessage(projectType, appCategory, platform, workflowName, contextMessage);
   }
   
-  private generateLaunchMessage(projectType: string, platform: string, workflowName: string): string {
-    const platformDisplay = platform === 'react-native' ? 'React Native' : 'Flutter';
-    const typeDisplay = projectType.charAt(0).toUpperCase() + projectType.slice(1);
+  private getContextMessage(appCategory: string, platform?: string): string {
+    const contextMap = {
+      web: "Full-Stack Web-Anwendung mit Frontend und Backend Komponenten",
+      desktop: "Electron Desktop-Anwendung mit plattformspezifischen Optimierungen",
+      mobile: platform === 'flutter' ? 
+        "Flutter Cross-Platform Mobile-Anwendung" : 
+        "React Native Cross-Platform Mobile-Anwendung",
+      backend: "API-Design und Datenarchitektur im Fokus"
+    };
     
-    return `✅ **Perfect! Launching ${typeDisplay} ${platformDisplay} Mobile Development Workflow...**
+    return contextMap[appCategory] || "Universeller Entwicklungsworkflow";
+  }
+  
+  private generateUniversalLaunchMessage(
+    projectType: string, 
+    appCategory: string, 
+    platform: string | undefined, 
+    workflowName: string, 
+    context: string
+  ): string {
+    const typeDisplay = projectType.charAt(0).toUpperCase() + projectType.slice(1);
+    const categoryDisplay = this.getCategoryDisplayName(appCategory, platform);
+    
+    return `✅ **Perfect! ${categoryDisplay} ${typeDisplay === 'Greenfield' ? 'Development' : 'Enhancement'} erkannt.**
 
-🎯 **Starting with:** \`${workflowName}.yaml\`
-📍 **First Agent:** analyst
-📂 **Expected Output:** \`docs/project-brief.md\`
+🎯 **Starte ${typeDisplay} Workflow für ${categoryDisplay}...**
+📍 **Fokus:** ${context}
+📂 **Workflow:** \`${workflowName}\`
+🎬 **Erster Agent:** analyst
 
-**The mobile development workflow will now guide you through:**
-1. Mobile-focused project brief
-2. Mobile-specific PRD creation 
-3. ${platformDisplay} platform validation
-4. Mobile UX design system
-5. ${platformDisplay} architecture planning
-6. Mobile security review
-7. Story creation and development
+**Der Workflow führt Sie durch:**
+${this.getWorkflowSteps(appCategory, projectType)}
 
 ---
 
-**@analyst** - Please begin with creating a mobile-focused project brief considering app store landscape, device capabilities, and mobile user behavior.`;
+**@analyst** - ${this.getAnalystInstructions(appCategory, projectType)}`;
   }
   
-  private async setupWorkspaceContext(projectType: string, platform: string): Promise<void> {
-    // Set workspace settings for the active workflow
-    const config = vscode.workspace.getConfiguration('appiq');
-    await config.update('activeWorkflow', `mobile-${projectType}-${platform}`, vscode.ConfigurationTarget.Workspace);
-    await config.update('mobilePlatform', platform, vscode.ConfigurationTarget.Workspace);
-    await config.update('projectType', projectType, vscode.ConfigurationTarget.Workspace);
+  private getCategoryDisplayName(category: string, platform?: string): string {
+    const displayMap = {
+      web: "Web-Anwendung",
+      desktop: "Desktop-Anwendung",
+      mobile: platform === 'flutter' ? "Flutter Mobile App" : "React Native Mobile App",
+      backend: "Backend Service"
+    };
+    
+    return displayMap[category] || "Anwendung";
+  }
+  
+  private getWorkflowSteps(category: string, projectType: string): string {
+    const isNew = projectType === 'greenfield';
+    
+    const stepsMap = {
+      web: isNew ? [
+        "1. Projekt-Brief und Marktanalyse",
+        "2. PRD für Web-Anwendung",
+        "3. UX/UI Spezifikation",
+        "4. Full-Stack Architektur",
+        "5. Story-basierte Entwicklung"
+      ] : [
+        "1. Analyse der bestehenden Web-Anwendung",
+        "2. Modernisierungs-Möglichkeiten identifizieren",
+        "3. Sichere Integration planen",
+        "4. Enhancement-Stories erstellen"
+      ],
+      
+      desktop: isNew ? [
+        "1. Desktop-App Konzeption",
+        "2. Electron-spezifische Requirements",
+        "3. Cross-Platform UI Design",
+        "4. Desktop-Architektur",
+        "5. Platform-spezifische Implementierung"
+      ] : [
+        "1. Analyse der Electron-Anwendung",
+        "2. Performance-Optimierungen identifizieren",
+        "3. Plattform-spezifische Verbesserungen",
+        "4. Feature-Enhancement Planung"
+      ],
+      
+      mobile: isNew ? [
+        "1. Mobile-fokussierter Projekt-Brief",
+        "2. Mobile-spezifische PRD",
+        "3. Platform-Validierung",
+        "4. Mobile UX Design",
+        "5. Mobile Architektur-Planung"
+      ] : [
+        "1. Mobile App Analyse",
+        "2. Platform-spezifische Optimierungen",
+        "3. App Store Compliance Review",
+        "4. Mobile Enhancement Stories"
+      ],
+      
+      backend: isNew ? [
+        "1. API und Service Konzeption",
+        "2. Backend Requirements Definition",
+        "3. Datenbank und Architektur Design",
+        "4. API Spezifikation",
+        "5. Service-orientierte Implementierung"
+      ] : [
+        "1. Backend Service Analyse",
+        "2. API Evolution Planung",
+        "3. Skalierungsoptimierungen",
+        "4. Service Enhancement Stories"
+      ]
+    };
+    
+    return (stepsMap[category] || ["1. Allgemeine Projekt-Analyse"]).join("\n");
+  }
+  
+  private getAnalystInstructions(category: string, projectType: string): string {
+    const isNew = projectType === 'greenfield';
+    
+    const instructionsMap = {
+      web: isNew ? 
+        "Bitte erstelle einen Projekt-Brief für die Web-Anwendung mit Fokus auf Frontend/Backend Integration." :
+        "Bitte analysiere die bestehende Web-Anwendung und identifiziere Modernisierungs-Möglichkeiten.",
+      
+      desktop: isNew ?
+        "Bitte erstelle einen Projekt-Brief für die Desktop-Anwendung mit Electron-spezifischen Anforderungen." :
+        "Bitte analysiere die bestehende Electron-Anwendung und identifiziere Verbesserungsmöglichkeiten.",
+      
+      mobile: isNew ?
+        "Bitte erstelle einen mobile-fokussierten Projekt-Brief unter Berücksichtigung von App Store Landschaft und mobile User Behavior." :
+        "Bitte analysiere die bestehende Mobile App und identifiziere platform-spezifische Optimierungen.",
+      
+      backend: isNew ?
+        "Bitte erstelle einen Projekt-Brief für den Backend Service mit Fokus auf API Design und Skalierbarkeit." :
+        "Bitte analysiere den bestehenden Backend Service und identifiziere Optimierungs-Möglichkeiten."
+    };
+    
+    return instructionsMap[category] || "Bitte beginne mit der Projekt-Analyse.";
   }
 }
 ```
@@ -246,34 +428,49 @@ class CursorWorkflowLauncher {
   "contributes": {
     "commands": [
       {
-        "command": "appiq.launchMobileWorkflow",
-        "title": "APPIQ: Launch Mobile Development Workflow",
+        "command": "appiq.start",
+        "title": "APPIQ: Universal Project Launcher",
         "category": "APPIQ Method"
       },
       {
-        "command": "appiq.greenfieldFlutter",
-        "title": "APPIQ: New Flutter App",
+        "command": "appiq.appiq",
+        "title": "APPIQ: Launch Project Workflow",
         "category": "APPIQ Method"
       },
       {
-        "command": "appiq.greenfieldReactNative",
-        "title": "APPIQ: New React Native App", 
+        "command": "appiq.greenfield.web",
+        "title": "APPIQ: New Web Application",
         "category": "APPIQ Method"
       },
       {
-        "command": "appiq.brownfieldFlutter",
-        "title": "APPIQ: Enhance Flutter App",
+        "command": "appiq.greenfield.desktop",
+        "title": "APPIQ: New Desktop Application",
         "category": "APPIQ Method"
       },
       {
-        "command": "appiq.brownfieldReactNative",
-        "title": "APPIQ: Enhance React Native App",
+        "command": "appiq.greenfield.mobile",
+        "title": "APPIQ: New Mobile Application",
+        "category": "APPIQ Method"
+      },
+      {
+        "command": "appiq.greenfield.backend",
+        "title": "APPIQ: New Backend Service",
+        "category": "APPIQ Method"
+      },
+      {
+        "command": "appiq.brownfield.enhance",
+        "title": "APPIQ: Enhance Existing Project",
         "category": "APPIQ Method"
       }
     ],
     "keybindings": [
       {
-        "command": "appiq.launchMobileWorkflow",
+        "command": "appiq.start",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s"
+      },
+      {
+        "command": "appiq.appiq",
         "key": "ctrl+alt+a",
         "mac": "cmd+alt+a"
       }
@@ -282,83 +479,38 @@ class CursorWorkflowLauncher {
 }
 ```
 
-### Command Implementations
-```typescript
-export function activate(context: vscode.ExtensionContext) {
-  // Main interactive launcher
-  const launchCommand = vscode.commands.registerCommand('appiq.launchMobileWorkflow', () => {
-    const panel = vscode.window.createWebviewPanel(
-      'appiqLauncher',
-      'APPIQ Mobile Development Launcher',
-      vscode.ViewColumn.One,
-      { enableScripts: true }
-    );
-    
-    panel.webview.html = createLauncherWebview();
-    setupWebviewMessageHandling(panel);
-  });
-  
-  // Direct workflow commands
-  const greenfieldFlutterCommand = vscode.commands.registerCommand('appiq.greenfieldFlutter', () => {
-    return launchDirectWorkflow('greenfield', 'flutter');
-  });
-  
-  const greenfieldReactNativeCommand = vscode.commands.registerCommand('appiq.greenfieldReactNative', () => {
-    return launchDirectWorkflow('greenfield', 'react-native');
-  });
-  
-  context.subscriptions.push(
-    launchCommand,
-    greenfieldFlutterCommand,
-    greenfieldReactNativeCommand
-  );
-}
-```
-
-## Chat Integration Best Practices
-
-### Message Formatting
-- Use **bold** for emphasis and options
-- Use emojis for visual clarity
-- Structure responses with clear sections
-- Provide numbered options for easy selection
-
-### Error Handling
-```typescript
-private showInvalidResponseError(originalPrompt: string): string {
-  return `❌ **Invalid response.** Please respond with one of the specified options.
-
-${originalPrompt}`;
-}
-
-private showPrdMissingError(): string {
-  return `❌ **main_prd.md not found** in /docs/ folder.
-
-**Please create your main Product Requirements Document first:**
-
-1. Create a \`/docs/\` folder in your project root
-2. Create a \`main_prd.md\` file with your project requirements  
-3. Place it at: \`/docs/main_prd.md\`
-4. Run \`/appiq\` again
-
-**Would you like guidance on creating a main_prd.md file?** (yes/no)`;
-}
-```
-
-### Progress Tracking
-```typescript
-private showProgress(currentStep: number, totalSteps: number, stepName: string): string {
-  return `**Progress:** ${currentStep}/${totalSteps} - ${stepName}`;
-}
-```
-
 ## Usage in Cursor
 
-Users can interact with the `/appiq` command in several ways:
+Users können mit der universellen APPIQ Method in verschiedenen Wegen interagieren:
 
-1. **Chat Command**: Type `/appiq` in the Cursor chat
-2. **Command Palette**: `Ctrl+Shift+P` → "APPIQ: Launch Mobile Development Workflow"
-3. **Keyboard Shortcut**: `Ctrl+Alt+A` (or `Cmd+Alt+A` on Mac)
-4. **Direct Commands**: Use specific workflow commands from the command palette
+1. **Chat Commands**: 
+   - `/start` für den empfohlenen universellen Launcher
+   - `/appiq` für den erweiterten Legacy-Launcher
 
-The implementation provides a seamless experience that integrates with Cursor's existing features while maintaining the interactive workflow selection process.
+2. **Command Palette**: `Ctrl+Shift+P` → "APPIQ: Universal Project Launcher"
+
+3. **Keyboard Shortcuts**: 
+   - `Ctrl+Alt+S` → `/start` Command
+   - `Ctrl+Alt+A` → `/appiq` Command
+
+4. **Direct Commands**: Spezifische Workflow-Commands für erfahrene Benutzer
+
+## Best Practices für Cursor Integration
+
+### Performance Optimierungen
+```typescript
+interface CursorPerformanceConfig {
+  lazyLoading: boolean;        // Lade Workflows nur bei Bedarf
+  cacheDetection: boolean;     // Cache Projekt-Erkennung
+  batchOperations: boolean;    // Batch File-System-Operationen
+  intelligentPreload: boolean; // Preload basierend auf Projekt-Patterns
+}
+```
+
+### User Experience Enhancements
+- **Progress Indicators**: Zeige Fortschritt bei Projekt-Erkennung
+- **Smart Suggestions**: Basierend auf erkannten Patterns
+- **Context Preservation**: Behalte Workflow-Kontext zwischen Sessions
+- **Error Recovery**: Intelligent fallback bei Detection-Fehlern
+
+Die Implementation bietet eine nahtlose Experience die sich in Cursor's bestehende Features integriert und alle Projekttypen mit intelligenter Erkennung unterstützt.

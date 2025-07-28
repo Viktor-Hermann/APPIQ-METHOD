@@ -1,196 +1,273 @@
-# /appiq - APPIQ Method Mobile Development Launcher
+# /appiq - Universal APPIQ Method Launcher
 
-**Quick Start**: `/appiq` - Interactive mobile development workflow launcher
+**Quick Start**: `/appiq` - Intelligenter universeller Projekt-Launcher für alle Entwicklungsarten
 
-## Overview
+## 🚀 Überblick
 
-The `/appiq` command provides an interactive way to launch the APPIQ Method mobile development workflow. It guides users through project type selection and automatically triggers the appropriate mobile development workflow based on their responses.
+Der `/appiq` Command ist Ihr universeller Einstiegspunkt in die APPIQ Method. Egal ob Sie an Web-Anwendungen, Desktop-Apps, Mobile Apps oder Backend Services arbeiten - dieser Command führt Sie durch einen einfachen, geführten Prozess zur Auswahl des richtigen Workflows für Ihr Projekt.
 
-## Command Usage
+## ✨ Unterstützte Projekttypen
+
+- 🌐 **Web-Anwendungen** (React, Vue, Angular, Next.js, Full-Stack)
+- 💻 **Desktop-Anwendungen** (Electron, Cross-Platform Desktop Apps)  
+- 📱 **Mobile Apps** (Flutter, React Native, Cross-Platform Mobile)
+- ⚙️ **Backend Services** (Node.js, Python, Java, API Development)
+- 🔄 **Legacy/Brownfield** (Modernisierung bestehender Systeme)
+
+## 🎯 Verwendung
 
 ```
 /appiq
 ```
 
-## Interactive Flow
+## 📋 Interaktiver Workflow-Auswahl-Prozess
 
-### Step 1: Project Type Selection
-The command will ask:
+### Schritt 1: Projekt-Status bestimmen
 ```
-🚀 Welcome to APPIQ Method Mobile Development!
+🚀 APPIQ Method Universal Launcher
 
-What type of mobile project are you working on?
+Arbeiten wir an einem neuen oder bestehenden Projekt?
 
-1. Greenfield - New mobile app development (Flutter or React Native)
-2. Brownfield - Enhancing existing mobile app
+1. 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf
+2. 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas
 
-Please respond with 1 or 2:
-```
-
-### Step 2: PRD Location Check
-After selection, it will check:
-```
-📋 Checking for main_prd.md in your /docs/ folder...
-
-Do you have a main_prd.md file in your /docs/ folder?
-(You should create this manually and place it there before proceeding)
-
-Please respond with yes or no:
+Antworte mit 1 oder 2:
 ```
 
-### Step 3: Platform Selection (Greenfield only)
-For new projects, additional platform selection:
+### Schritt 2: Projekttyp identifizieren
 ```
-📱 Platform Selection for New Mobile App:
+📋 Lass mich verstehen, was wir bauen...
 
-Which mobile platform do you want to target?
+Was für eine Art von Anwendung ist das?
 
-1. Flutter - Cross-platform with Dart
-2. React Native - Cross-platform with React/JavaScript
-3. Let APPIQ Method recommend based on requirements
+1. 🌐 Web-Anwendung (läuft im Browser)
+2. 💻 Desktop-Anwendung (Electron, Windows/Mac App)
+3. 📱 Mobile App (iOS/Android)
+4. ⚙️ Backend/API Service (Server, Database)
+5. 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
 
-Please respond with 1, 2, or 3:
+Antworte mit 1, 2, 3, 4 oder 5:
 ```
 
-### Step 4: Workflow Activation
-Based on responses, automatically triggers the appropriate workflow:
+### Schritt 3: Intelligente Projekt-Erkennung (Option 5)
 
-**Greenfield Projects:**
-- `mobile-greenfield-flutter.yaml` - New Flutter app
-- `mobile-greenfield-react-native.yaml` - New React Native app
+**Für neue Projekte (Greenfield):**
+```
+🔍 Lass uns gemeinsam herausfinden, was das beste für dein Projekt ist...
 
-**Brownfield Projects:**
-- `mobile-brownfield-flutter.yaml` - Existing Flutter app enhancement
-- `mobile-brownfield-react-native.yaml` - Existing React Native app enhancement
+Beschreibe kurz dein Projekt in 1-2 Sätzen:
+(z.B. "Eine Ecommerce-Website mit Admin-Panel" oder "Eine Todo-App für Windows")
 
-## Automatic Workflow Triggering
+Basierend auf deiner Beschreibung erkenne ich automatisch den Projekttyp.
+```
 
-The command will automatically:
+**Für bestehende Projekte (Brownfield):**
+```
+🔍 Analysiere dein bestehendes Projekt...
 
-1. **Validate prerequisites** - Check for main_prd.md existence
-2. **Set up mobile environment** - Initialize mobile-specific configurations
-3. **Load appropriate workflow** - Based on project type and platform selection
-4. **Start agent orchestration** - Begin with the first agent in the selected workflow
-5. **Provide guidance** - Show next steps and expected outputs
+Ich schaue mir deine Projekt-Struktur an:
+✓ Suche nach package.json, pubspec.yaml, requirements.txt
+✓ Erkenne Framework-Dependencies (React, Flutter, Express, etc.)
+✓ Analysiere Ordner-Struktur (android/, ios/, public/, src/)
 
-## Example Interaction
+Basierend darauf empfehle ich den optimalen Workflow.
+```
 
+## 🧠 Intelligente Workflow-Zuordnung
+
+### Greenfield Projekte (Neu)
+| Projekttyp | Workflow | Fokus-Bereich |
+|------------|----------|---------------|
+| 🌐 Web-App | `greenfield-fullstack.yaml` | Frontend + Backend Integration |
+| 💻 Desktop | `greenfield-fullstack.yaml` | Electron-spezifische Patterns |
+| 📱 Mobile | Mobile Platform Selection | Flutter/React Native Auswahl |
+| ⚙️ Backend | `greenfield-service.yaml` | API Design & Datenarchitektur |
+
+### Brownfield Projekte (Bestehend)
+| Projekttyp | Workflow | Fokus-Bereich |
+|------------|----------|---------------|
+| 🌐 Web-App | `brownfield-fullstack.yaml` | Sichere Integration & Modernisierung |
+| 💻 Desktop | `brownfield-fullstack.yaml` | Electron Upgrades & Features |
+| 📱 Mobile | Platform-spezifische Workflows | Flutter/React Native Enhancement |
+| ⚙️ Backend | `brownfield-service.yaml` | API Evolution & Skalierung |
+
+## 🔍 Automatische Projekt-Erkennung
+
+### File-basierte Erkennung (Brownfield)
+```javascript
+Erkennungslogik:
+├── package.json + "electron" → Desktop (Electron)
+├── package.json + "react-native" → Mobile (React Native)  
+├── pubspec.yaml → Mobile (Flutter)
+├── package.json + ("react"|"vue"|"angular"|"next") → Web
+├── package.json + ("express"|"fastify"|"koa") → Backend (Node.js)
+├── requirements.txt + Flask/Django patterns → Backend (Python)
+├── pom.xml oder build.gradle → Backend (Java)
+└── Fallback → Benutzer-geführte Auswahl
+```
+
+### Keyword-Erkennung (Greenfield)
+```javascript
+Keyword-Mapping:
+Web: ["website", "web", "browser", "online", "webapp", "ecommerce", "portal"]
+Desktop: ["desktop", "electron", "windows", "mac", "app", "gui", "standalone"]  
+Mobile: ["mobile", "ios", "android", "app store", "phone", "tablet", "cross-platform"]
+Backend: ["api", "server", "backend", "database", "service", "microservice", "rest"]
+```
+
+## 📱 Mobile-Spezifische Workflows (Legacy-Support)
+
+Für Mobile-Projekte wird eine zusätzliche Platform-Auswahl gestartet:
+
+### Greenfield Mobile
+```
+📱 Platform Selection für neue Mobile App:
+
+Welche mobile Plattform möchtest du verwenden?
+
+1. Flutter - Cross-platform mit Dart
+2. React Native - Cross-platform mit React/JavaScript
+3. Lass APPIQ Method basierend auf Requirements empfehlen
+
+Antworte mit 1, 2, oder 3:
+```
+
+### Brownfield Mobile
+```
+📱 Bestehende Mobile App Platform Detection:
+
+Erkannte Plattform: [Flutter/React Native]
+Verfügbare Enhancement-Workflows:
+- mobile-brownfield-flutter.yaml
+- mobile-brownfield-react-native.yaml
+
+Automatische Workflow-Auswahl basierend auf erkannter Plattform.
+```
+
+## 📝 Vollständige Beispiel-Interaktion
+
+### Beispiel 1: Neue E-Commerce Website
 ```
 User: /appiq
 
-🚀 Welcome to APPIQ Method Mobile Development!
-
-What type of mobile project are you working on?
-
-1. Greenfield - New mobile app development (Flutter or React Native)
-2. Brownfield - Enhancing existing mobile app
-
-Please respond with 1 or 2:
+🚀 APPIQ Method Universal Launcher
+Arbeiten wir an einem neuen oder bestehenden Projekt?
+1. 🆕 Neues Projekt (Greenfield)
+2. 🔧 Bestehendes Projekt (Brownfield)
 
 User: 1
 
-📱 Platform Selection for New Mobile App:
-
-Which mobile platform do you want to target?
-
-1. Flutter - Cross-platform with Dart
-2. React Native - Cross-platform with React/JavaScript
-3. Let APPIQ Method recommend based on requirements
-
-Please respond with 1, 2, or 3:
+📋 Lass mich verstehen, was wir bauen...
+Was für eine Art von Anwendung ist das?
+1. 🌐 Web-Anwendung
+2. 💻 Desktop-Anwendung  
+3. 📱 Mobile App
+4. ⚙️ Backend/API Service
+5. 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
 
 User: 1
 
-📋 Checking for main_prd.md in your /docs/ folder...
+🎯 Web-Anwendung ausgewählt!
 
-Do you have a main_prd.md file in your /docs/ folder?
-(You should create this manually and place it there before proceeding)
+✅ Starte Greenfield Full-Stack Workflow für Web-Anwendungen...
+📍 Fokus: Full-Stack Web-Anwendung mit Frontend und Backend Komponenten
+📂 Erster Agent: analyst (erstellt Projekt-Brief)
 
-Please respond with yes or no:
+Der Workflow führt Sie durch:
+1. Projekt-Brief und Marktanalyse
+2. PRD (Product Requirements Document) Erstellung
+3. UX/UI Spezifikation für Web-Interface
+4. Full-Stack Architektur (Frontend + Backend)
+5. Story-basierte Entwicklung
 
-User: yes
-
-✅ Perfect! Launching Greenfield Flutter Mobile Development Workflow...
-
-🎯 Starting with: mobile-greenfield-flutter.yaml
-📍 First Agent: analyst (creating project-brief.md)
-📂 Expected Output: docs/project-brief.md
-
-The mobile development workflow will now guide you through:
-1. Mobile-focused project brief
-2. Mobile-specific PRD creation 
-3. Flutter platform validation
-4. Mobile UX design system
-5. Flutter architecture planning
-6. Mobile security review
-7. Story creation and development
-
-@analyst - Please begin with creating a mobile-focused project brief considering app store landscape, device capabilities, and mobile user behavior.
+@analyst - Bitte beginne mit der Erstellung eines Projekt-Briefs für die Web-Anwendung...
 ```
 
-## Prerequisites
-
-Before running `/appiq`, ensure you have:
-
-1. **Project Structure**: A docs/ folder in your project root
-2. **main_prd.md**: Your main Product Requirements Document in docs/main_prd.md
-3. **APPIQ Method**: This tool installed and configured
-4. **Mobile Tools**: Flutter SDK or React Native environment set up
-
-## File Structure After Setup
-
+### Beispiel 2: Bestehende Electron Desktop App
 ```
-your-project/
-├── docs/
-│   ├── main_prd.md (manually created)
-│   ├── project-brief.md (generated)
-│   ├── mobile-prd.md (generated)
-│   ├── mobile-architecture.md (generated)
-│   └── ... (other workflow outputs)
-├── src/ or lib/ (your code)
-└── ... (project files)
+User: /appiq
+
+User: 2 (Bestehend)
+
+🔍 Analysiere dein bestehendes Projekt...
+
+Gefundene Indikatoren:
+✓ package.json mit "electron": "^25.0.0"
+✓ src/ Verzeichnis mit Electron-Main-Prozess
+✓ renderer/ Verzeichnis erkannt
+
+🎯 Erkannt: Desktop-Anwendung (Electron)
+
+✅ Starte Brownfield Full-Stack Workflow für Desktop-Anwendungen...
+📍 Fokus: Electron Desktop-Anwendung mit plattformspezifischen Optimierungen
+📂 Erster Agent: analyst (analysiert bestehende Desktop-App Struktur)
+
+Der Workflow führt Sie durch:
+1. Analyse der bestehenden Electron-Architektur
+2. Identifikation von Modernisierungs-Möglichkeiten
+3. Sicherheits- und Performance-Verbesserungen
+4. Feature-Enhancement Planung
+5. Story-basierte Implementierung
+
+@analyst - Bitte analysiere die bestehende Electron-Anwendung und identifiziere Verbesserungsmöglichkeiten...
 ```
 
-## Workflow Integration
+## 🔄 Integration mit APPIQ Method Ecosystem
 
-The `/appiq` command integrates with the complete APPIQ Method ecosystem:
+### Agent-Integration
+Nach der Workflow-Auswahl werden die passenden Agents aktiviert:
+- **analyst** - Projekt-Analyse und Brief-Erstellung
+- **pm** - PRD und Requirements Management
+- **architect** - System-Architektur Design  
+- **ux-expert** - UI/UX Design (bei Web/Desktop/Mobile)
+- **dev** - Code-Implementierung
+- **qa** - Quality Assurance und Testing
+- **sm** - Story Management und Workflow-Orchestration
 
-- **Agents**: All mobile-specific agents (mobile-pm, mobile-architect, mobile-developer, etc.)
-- **Templates**: Mobile-optimized templates for all document types
-- **Checklists**: Mobile development validation checklists
-- **Teams**: Pre-configured mobile development team structures
-- **Tasks**: Mobile-specific development tasks and utilities
+### Expansion Pack Support
+Der `/appiq` Command erkennt automatisch installierte Expansion Packs:
+- **bmad-mobile-app-dev** - Mobile Development Specialists
+- **bmad-2d-game-dev** - Game Development (Unity/Phaser)
+- **bmad-infrastructure-devops** - Infrastructure & DevOps
+- Weitere Expansion Packs werden automatisch erkannt
 
-## Error Handling
+## ⚡ Performance & Effizienz
 
-The command will provide helpful guidance for common issues:
+### Schnelle Auswahl für Experten
+```
+/appiq → 2 → 2 → ✅ Brownfield Desktop Workflow (3 Klicks)
+```
 
-- **Missing main_prd.md**: Guides user to create the file first
-- **Invalid responses**: Re-prompts with valid options
-- **Workflow conflicts**: Checks for existing workflows and handles gracefully
-- **Missing dependencies**: Validates Flutter/React Native environment
+### Intelligente Defaults
+- Häufig verwendete Kombinationen werden erkannt
+- Context aus vorherigen Sessions wird berücksichtigt
+- Projekt-Patterns werden gelernt und vorgeschlagen
 
-## Next Steps After Launch
+## 🆚 Command-Vergleich
 
-Once the workflow is triggered:
+| Command | Zweck | Zielgruppe |
+|---------|-------|------------|
+| `/appiq` | Universal Entry-Point | Alle Benutzer (Legacy-Name) |
+| `/start` | Universal Entry-Point | Neue Benutzer (Preferred) |
+| `*start` | bmad-orchestrator Direct | Power-User |
+| Direct Workflows | Spezifische Workflows | Experten |
 
-1. **Follow Agent Sequence**: Each agent will create specific deliverables
-2. **Save Outputs**: Copy generated documents to your docs/ folder as instructed
-3. **Review and Validate**: Use PO agent for document validation
-4. **Begin Development**: Start story implementation with mobile-developer agent
-5. **Quality Assurance**: Use mobile-qa agent for testing and review
+## 🔧 Backward Compatibility
 
-## Support and Troubleshooting
+Der `/appiq` Command behält vollständige Rückwärtskompatibilität zu Mobile-only Workflows:
+- Alle bestehenden Mobile-Workflows funktionieren weiterhin
+- Mobile-spezifische Documentation bleibt erhalten
+- Expansion Pack `bmad-mobile-app-dev` wird vollständig unterstützt
 
-For issues with the `/appiq` command:
-- Check that main_prd.md exists in docs/ folder
-- Verify APPIQ Method installation and configuration
-- Ensure mobile development environment is set up
-- Review workflow documentation for specific platform requirements
+## ✅ Vorteile der Universal-Version
+
+1. **Ein Befehl für alles** - Web, Desktop, Mobile, Backend
+2. **Intelligente Erkennung** - Automatische Projekt-Typ Detection
+3. **Geführter Prozess** - Keine komplexen Workflow-Namen lernen
+4. **Vollständige Abdeckung** - Alle APPIQ Method Capabilities
+5. **Legacy-Support** - Bestehende Mobile Workflows bleiben verfügbar
+6. **Erweiterbar** - Expansion Packs werden automatisch integriert
 
 ---
 
-**Related Commands:**
-- `/help` - General APPIQ Method help
-- View available workflows in `expansion-packs/bmad-mobile-app-dev/workflows/`
-- View mobile agents in `expansion-packs/bmad-mobile-app-dev/agents/`
+**💡 Tipp:** `/appiq` ist der bewährte, universelle Entry-Point für alle APPIQ Method Funktionen. Für völlig neue Benutzer wird `/start` empfohlen, aber beide Commands bieten identische Funktionalität.

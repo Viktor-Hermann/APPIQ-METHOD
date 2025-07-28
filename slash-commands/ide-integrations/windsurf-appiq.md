@@ -1,233 +1,356 @@
-# Windsurf IDE Integration for /appiq Command
+# Windsurf IDE Integration - Universal APPIQ Method
 
-## Implementation for Windsurf IDE
+## Implementation für Windsurf IDE
 
-The `/appiq` command in Windsurf should be implemented as a chat-based interactive command that integrates with Windsurf's AI assistant and project management features.
+Die APPIQ Method Commands in Windsurf unterstützen alle Projekttypen: Web, Desktop, Mobile und Backend Development mit intelligenter Projekt-Erkennung und nahtloser Integration in Windsurf's AI-powered Development Environment.
+
+## Verfügbare Commands
+
+### `/start` - Universal Project Launcher (EMPFOHLEN)
+```yaml
+command: /start
+description: Universal APPIQ Method Launcher mit intelligenter Projekt-Erkennung
+category: Development
+supported_projects: [web, desktop, mobile, backend]
+```
+
+### `/appiq` - Universal Project Launcher (Legacy-Support)
+```yaml
+command: /appiq
+description: Universeller APPIQ Method Launcher (erweitert von Mobile-only)
+category: Development
+supported_projects: [web, desktop, mobile, backend]
+legacy_support: true
+```
 
 ## Integration Strategy
 
 ### Chat-Based Implementation
-Windsurf's primary interaction model is through its AI chat interface, making it ideal for the interactive `/appiq` command flow.
+Windsurf's AI chat interface ist perfekt für den interaktiven APPIQ Method Workflow mit intelligenter Projekt-Erkennung.
 
-### Project Context Integration
-Leverage Windsurf's project understanding capabilities to automatically detect existing mobile codebases and provide contextual recommendations.
+### Universal Project Context Integration
+Leverages Windsurf's project understanding für automatische Detection aller Projekttypen (Web, Desktop, Mobile, Backend).
 
 ## Chat Command Implementation
 
-### Command Recognition Pattern
+### Universal Command Recognition
 ```typescript
-// Windsurf chat command detection
-const APPIQ_COMMAND_PATTERN = /^\/appiq(?:\s+(.*))?$/i;
+// Windsurf universal command detection
+const APPIQ_COMMAND_PATTERNS = {
+  start: /^\/start(?:\s+(.*))?$/i,
+  appiq: /^\/appiq(?:\s+(.*))?$/i
+};
 
 function handleChatMessage(message: string, context: WindsurfContext): WindsurfResponse {
-  const match = message.match(APPIQ_COMMAND_PATTERN);
-  if (match) {
-    return initializeAppiqWorkflow(context);
+  if (APPIQ_COMMAND_PATTERNS.start.test(message) || APPIQ_COMMAND_PATTERNS.appiq.test(message)) {
+    return initializeUniversalAppiqWorkflow(context);
   }
   return null;
 }
 ```
 
-### Interactive State Management
+### Universal State Management
 ```typescript
-interface WindsurfAppiqSession {
+interface WindsurfUniversalAppiqSession {
   sessionId: string;
   projectPath: string;
   projectContext: WindsurfProjectContext;
   state: {
     projectType: 'greenfield' | 'brownfield' | null;
-    platform: 'flutter' | 'react-native' | null;
-    hasPrd: boolean | null;
+    applicationCategory: 'web' | 'desktop' | 'mobile' | 'backend' | 'auto-detect' | null;
+    platform?: 'flutter' | 'react-native' | 'electron' | 'react' | 'vue' | 'angular';
+    framework?: string;
     currentStep: AppiqStep;
-    detectedPlatform?: string;
+    detectedProject?: ProjectDetection;
   };
   chatHistory: ChatMessage[];
 }
 
 enum AppiqStep {
-  WELCOME = 'welcome',
-  PROJECT_TYPE = 'project-type',
+  PROJECT_STATUS = 'project-status',
+  PROJECT_TYPE = 'project-type', 
+  AUTO_DETECTION = 'auto-detection',
   PLATFORM_SELECTION = 'platform-selection',
-  PLATFORM_DETECTION = 'platform-detection', 
-  PRD_VERIFICATION = 'prd-verification',
   WORKFLOW_LAUNCH = 'workflow-launch'
+}
+
+interface ProjectDetection {
+  type: 'web' | 'desktop' | 'mobile' | 'backend' | 'unknown';
+  framework: string;
+  platform?: string;
+  confidence: number;
+  indicators: string[];
 }
 ```
 
-### Step-by-Step Implementation
+### Universal Workflow Implementation
 
-#### Welcome and Project Analysis
+#### Welcome and Universal Project Analysis
 ```typescript
-class WindsurfAppiqHandler {
+class WindsurfUniversalAppiqHandler {
   constructor(private context: WindsurfContext) {}
   
   async initializeWorkflow(): Promise<WindsurfResponse> {
-    // Analyze current project structure
-    const projectAnalysis = await this.analyzeProject();
+    // Analyze current project structure for all types
+    const projectAnalysis = await this.analyzeUniversalProject();
     
-    const welcomeMessage = this.createWelcomeMessage(projectAnalysis);
+    const welcomeMessage = this.createUniversalWelcomeMessage(projectAnalysis);
     
     return {
       message: welcomeMessage,
       actions: [
         { type: 'highlight-files', files: this.getRelevantFiles(projectAnalysis) },
-        { type: 'set-context', context: { appiq_active: true } }
+        { type: 'set-context', context: { appiq_active: true, project_type: 'universal' } }
       ]
     };
   }
   
-  private createWelcomeMessage(analysis: ProjectAnalysis): string {
-    let message = `🚀 **Welcome to APPIQ Method Mobile Development!**\n\n`;
+  private createUniversalWelcomeMessage(analysis: UniversalProjectAnalysis): string {
+    let message = `🚀 **APPIQ Method Universal Launcher**\n\n`;
     
-    if (analysis.existingMobileApp) {
+    if (analysis.detectedProject) {
       message += `🔍 **Project Analysis Results:**\n`;
-      message += `- Detected: ${analysis.detectedPlatform} mobile app\n`;
-      message += `- Structure: ${analysis.projectStructure}\n\n`;
+      message += `- Detected: ${analysis.detectedProject.type} ${analysis.detectedProject.framework}\n`;
+      message += `- Confidence: ${Math.round(analysis.detectedProject.confidence * 100)}%\n`;
+      message += `- Indicators: ${analysis.detectedProject.indicators.join(', ')}\n\n`;
     }
     
-    message += `**What type of mobile project are you working on?**\n\n`;
-    message += `**1.** Greenfield - New mobile app development (Flutter or React Native)\n`;
-    message += `**2.** Brownfield - Enhancing existing mobile app\n\n`;
+    message += `Arbeiten wir an einem neuen oder bestehenden Projekt?\n\n`;
+    message += `**1.** 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf\n`;
+    message += `**2.** 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas\n\n`;
     
     if (analysis.recommendation) {
       message += `💡 **Recommendation:** ${analysis.recommendation}\n\n`;
     }
     
-    message += `Please respond with **1** or **2**:`;
+    message += `Antworte mit **1** oder **2**:`;
     
     return message;
   }
 }
 ```
 
-#### Project Analysis Integration
+#### Universal Project Analysis Integration
 ```typescript
-interface ProjectAnalysis {
-  existingMobileApp: boolean;
-  detectedPlatform?: 'flutter' | 'react-native' | 'native-ios' | 'native-android';
+interface UniversalProjectAnalysis {
+  detectedProject?: ProjectDetection;
   projectStructure: string;
   recommendation?: string;
   confidence: number;
+  supportedWorkflows: string[];
 }
 
-class WindsurfProjectAnalyzer {
-  async analyzeProject(projectPath: string): Promise<ProjectAnalysis> {
+class WindsurfUniversalProjectAnalyzer {
+  async analyzeUniversalProject(projectPath: string): Promise<UniversalProjectAnalysis> {
     const files = await this.scanProjectFiles(projectPath);
+    const detectedProject = await this.detectProjectType(files, projectPath);
     
-    // Check for Flutter
-    if (files.includes('pubspec.yaml')) {
+    if (detectedProject.type !== 'unknown') {
       return {
-        existingMobileApp: true,
-        detectedPlatform: 'flutter',
-        projectStructure: 'Flutter project with Dart',
-        recommendation: 'Continue with Flutter enhancement workflow',
-        confidence: 0.95
+        detectedProject,
+        projectStructure: this.getProjectStructureDescription(detectedProject),
+        recommendation: this.getRecommendation(detectedProject),
+        confidence: detectedProject.confidence,
+        supportedWorkflows: this.getSupportedWorkflows(detectedProject.type)
       };
     }
     
-    // Check for React Native
+    return {
+      projectStructure: 'Projekttyp nicht automatisch erkennbar',
+      recommendation: 'Wir führen Sie durch die manuelle Auswahl',
+      confidence: 0.5,
+      supportedWorkflows: ['universal-launcher']
+    };
+  }
+  
+  private async detectProjectType(files: string[], projectPath: string): Promise<ProjectDetection> {
+    const indicators: string[] = [];
+    
+    // Flutter Detection
+    if (files.includes('pubspec.yaml')) {
+      return {
+        type: 'mobile',
+        framework: 'Flutter',
+        platform: 'flutter',
+        confidence: 0.95,
+        indicators: ['pubspec.yaml', 'Dart project structure']
+      };
+    }
+    
+    // Package.json Analysis
     if (files.includes('package.json')) {
       const packageJson = await this.readPackageJson(projectPath);
+      
+      // Electron Detection
+      if (packageJson.dependencies?.electron || packageJson.devDependencies?.electron) {
+        return {
+          type: 'desktop',
+          framework: 'Electron',
+          platform: 'electron',
+          confidence: 0.90,
+          indicators: ['electron dependency', 'desktop app structure']
+        };
+      }
+      
+      // React Native Detection
       if (this.hasReactNativeDependencies(packageJson)) {
         return {
-          existingMobileApp: true,
-          detectedPlatform: 'react-native',
-          projectStructure: 'React Native project with JavaScript/TypeScript',
-          recommendation: 'Continue with React Native enhancement workflow',
-          confidence: 0.9
+          type: 'mobile',
+          framework: 'React Native',
+          platform: 'react-native',
+          confidence: 0.90,
+          indicators: ['react-native dependencies', 'mobile app structure']
+        };
+      }
+      
+      // Web Framework Detection
+      const webFramework = this.detectWebFramework(packageJson);
+      if (webFramework) {
+        return {
+          type: 'web',
+          framework: webFramework.name,
+          platform: webFramework.platform,
+          confidence: webFramework.confidence,
+          indicators: [`${webFramework.name} dependencies`, 'web app structure']
+        };
+      }
+      
+      // Backend Detection
+      const backendFramework = this.detectBackendFramework(packageJson);
+      if (backendFramework) {
+        return {
+          type: 'backend',
+          framework: backendFramework.name,
+          platform: backendFramework.platform,
+          confidence: backendFramework.confidence,
+          indicators: [`${backendFramework.name} dependencies`, 'backend service structure']
         };
       }
     }
     
-    // No mobile app detected
+    // Python Backend Detection
+    if (files.includes('requirements.txt')) {
+      const pythonFramework = await this.detectPythonFramework(projectPath);
+      if (pythonFramework) {
+        return {
+          type: 'backend',
+          framework: pythonFramework,
+          confidence: 0.85,
+          indicators: ['requirements.txt', 'Python backend structure']
+        };
+      }
+    }
+    
+    // Java Backend Detection
+    if (files.includes('pom.xml') || files.includes('build.gradle')) {
+      const javaFramework = files.includes('pom.xml') ? 'Maven/Spring' : 'Gradle/Spring';
+      return {
+        type: 'backend',
+        framework: javaFramework,
+        confidence: 0.80,
+        indicators: ['Java build configuration', 'backend service structure']
+      };
+    }
+    
     return {
-      existingMobileApp: false,
-      projectStructure: 'No mobile app structure detected',
-      recommendation: 'Start with Greenfield mobile development',
-      confidence: 0.8
+      type: 'unknown',
+      framework: 'Unknown',
+      confidence: 0,
+      indicators: []
     };
   }
 }
 ```
 
-#### Enhanced Platform Selection
+#### Universal Project Type Selection
 ```typescript
-private async handlePlatformSelection(input: string, session: WindsurfAppiqSession): Promise<WindsurfResponse> {
-  if (input === '1') {
-    session.state.platform = 'flutter';
-    return this.proceedToPrdCheck(session);
-  } else if (input === '2') {
-    session.state.platform = 'react-native';
-    return this.proceedToPrdCheck(session);
-  } else if (input === '3') {
-    return this.showPlatformRecommendation(session);
+private async handleProjectTypeSelection(input: string, session: WindsurfUniversalAppiqSession): Promise<WindsurfResponse> {
+  const validInputs = ['1', '2', '3', '4', '5'];
+  
+  if (!validInputs.includes(input)) {
+    return this.showInvalidResponse(this.createProjectTypeSelectionMessage());
   }
   
-  return this.showInvalidResponse(this.createPlatformSelectionMessage());
+  switch (input) {
+    case '1':
+      session.state.applicationCategory = 'web';
+      return this.proceedToWorkflowLaunch(session);
+    case '2':
+      session.state.applicationCategory = 'desktop';
+      return this.proceedToWorkflowLaunch(session);
+    case '3':
+      session.state.applicationCategory = 'mobile';
+      return this.handleMobilePlatformSelection(session);
+    case '4':
+      session.state.applicationCategory = 'backend';
+      return this.proceedToWorkflowLaunch(session);
+    case '5':
+      return this.showAutoDetection(session);
+  }
 }
 
-private async showPlatformRecommendation(session: WindsurfAppiqSession): Promise<WindsurfResponse> {
-  const analysis = await this.analyzePlatformRequirements(session.projectContext);
+private createProjectTypeSelectionMessage(): string {
+  return `📋 **Lass mich verstehen, was wir bauen...**
+
+Was für eine Art von Anwendung ist das?
+
+**1.** 🌐 Web-Anwendung (läuft im Browser)
+**2.** 💻 Desktop-Anwendung (Electron, Windows/Mac App)
+**3.** 📱 Mobile App (iOS/Android)
+**4.** ⚙️ Backend/API Service (Server, Database)
+**5.** 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
+
+Antworte mit **1**, **2**, **3**, **4** oder **5**:`;
+}
+
+private async showAutoDetection(session: WindsurfUniversalAppiqSession): Promise<WindsurfResponse> {
+  if (session.state.projectType === 'brownfield') {
+    // Brownfield: Analyze existing project
+    const detection = await this.analyzeExistingProject(session.projectPath);
+    session.state.detectedProject = detection;
+    
+    if (detection.type !== 'unknown') {
+      session.state.applicationCategory = detection.type;
+      if (detection.platform) {
+        session.state.platform = detection.platform;
+      }
+      
+      return {
+        message: `🎯 **Erkannt: ${this.getProjectTypeDisplayName(detection.type)} (${detection.framework})**\n\nConfidence: ${Math.round(detection.confidence * 100)}%\nIndicators: ${detection.indicators.join(', ')}\n\nSoll ich mit diesem Projekttyp fortfahren? (yes/no)`,
+        actions: [
+          { type: 'highlight-detected-files', files: this.getDetectionFiles(detection) }
+        ]
+      };
+    }
+  }
   
+  // Greenfield: Ask for description
   return {
-    message: `🤔 **Platform Recommendation Analysis**\n\n${analysis.reasoning}\n\n**Recommended Platform:** ${analysis.recommendedPlatform}\n\n**Do you want to proceed with ${analysis.recommendedPlatform}?** (yes/no)`,
+    message: `🔍 **Lass uns gemeinsam herausfinden, was das beste für dein Projekt ist...**
+
+Beschreibe kurz dein Projekt in 1-2 Sätzen:
+(z.B. "Eine E-Commerce Website mit Admin-Panel" oder "Eine Todo-App für Windows")
+
+Basierend auf deiner Beschreibung erkenne ich automatisch den Projekttyp.`,
     actions: [
-      { type: 'highlight-reasoning', reasoning: analysis.factors }
+      { type: 'set-input-mode', mode: 'project-description' }
     ]
   };
 }
 ```
 
-### File System Integration
+### Universal Workflow Launch with Windsurf Features
 
 ```typescript
-class WindsurfFileSystemHandler {
-  constructor(private windsurf: WindsurfAPI) {}
-  
-  async checkPrdExists(projectPath: string): Promise<boolean> {
-    try {
-      const prdPath = path.join(projectPath, 'docs', 'main_prd.md');
-      await this.windsurf.fs.access(prdPath);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-  
-  async createDocsStructure(projectPath: string): Promise<void> {
-    const docsPath = path.join(projectPath, 'docs');
-    await this.windsurf.fs.mkdir(docsPath, { recursive: true });
-  }
-  
-  async showPrdTemplate(projectPath: string): Promise<WindsurfResponse> {
-    const templatePath = path.join(projectPath, 'docs', 'main_prd_template.md');
+class WindsurfUniversalWorkflowLauncher {
+  async launchWorkflow(session: WindsurfUniversalAppiqSession): Promise<WindsurfResponse> {
+    const { projectType, applicationCategory, platform } = session.state;
     
-    const template = this.generatePrdTemplate();
-    await this.windsurf.fs.writeFile(templatePath, template);
-    
-    return {
-      message: `📋 **PRD Template Created**\n\nI've created a template at \`docs/main_prd_template.md\`.\n\nPlease:\n1. Review and customize the template\n2. Save it as \`docs/main_prd.md\`\n3. Run \`/appiq\` again`,
-      actions: [
-        { type: 'open-file', path: templatePath },
-        { type: 'focus-file', path: templatePath }
-      ]
-    };
-  }
-}
-```
-
-### Workflow Launch with Windsurf Features
-
-```typescript
-class WindsurfWorkflowLauncher {
-  async launchWorkflow(session: WindsurfAppiqSession): Promise<WindsurfResponse> {
-    const { projectType, platform } = session.state;
-    
-    const workflowConfig = this.getWorkflowConfig(projectType, platform);
-    const launchMessage = this.generateLaunchMessage(workflowConfig);
+    const workflowConfig = this.getUniversalWorkflowConfig(projectType, applicationCategory, platform);
+    const launchMessage = this.generateUniversalLaunchMessage(workflowConfig);
     
     // Set up Windsurf project context
-    await this.setupWindsurfContext(session, workflowConfig);
+    await this.setupWindsurfUniversalContext(session, workflowConfig);
     
     return {
       message: launchMessage,
@@ -240,71 +363,167 @@ class WindsurfWorkflowLauncher {
     };
   }
   
-  private generateLaunchMessage(config: WorkflowConfig): string {
-    return `✅ **Perfect! Launching ${config.displayName}...**
+  private getUniversalWorkflowConfig(projectType: string, category: string, platform?: string): UniversalWorkflowConfig {
+    const workflowMapping = {
+      // Greenfield Workflows
+      'greenfield-web': 'greenfield-fullstack.yaml',
+      'greenfield-desktop': 'greenfield-fullstack.yaml',
+      'greenfield-mobile-flutter': 'mobile-greenfield-flutter.yaml',
+      'greenfield-mobile-react-native': 'mobile-greenfield-react-native.yaml',
+      'greenfield-backend': 'greenfield-service.yaml',
+      
+      // Brownfield Workflows
+      'brownfield-web': 'brownfield-fullstack.yaml',
+      'brownfield-desktop': 'brownfield-fullstack.yaml',
+      'brownfield-mobile-flutter': 'mobile-brownfield-flutter.yaml',
+      'brownfield-mobile-react-native': 'mobile-brownfield-react-native.yaml',
+      'brownfield-backend': 'brownfield-service.yaml'
+    };
+    
+    const workflowKey = platform ? 
+      `${projectType}-${category}-${platform}` : 
+      `${projectType}-${category}`;
+    
+    const workflowFile = workflowMapping[workflowKey];
+    
+    return {
+      id: workflowFile,
+      displayName: this.getWorkflowDisplayName(projectType, category, platform),
+      firstAgent: 'analyst',
+      contextMessage: this.getContextMessage(category, platform),
+      steps: this.getWorkflowSteps(category, projectType),
+      relevantFiles: this.getRelevantFiles(category, platform)
+    };
+  }
+  
+  private generateUniversalLaunchMessage(config: UniversalWorkflowConfig): string {
+    return `✅ **Perfect! ${config.displayName} erkannt.**
 
-🎯 **Workflow:** \`${config.id}\`
-📍 **First Agent:** ${config.firstAgent}
-📂 **Expected Output:** \`${config.firstOutput}\`
+🎯 **Starte ${config.displayName}...**
+📍 **Fokus:** ${config.contextMessage}
+📂 **Workflow:** \`${config.id}\`
+🎬 **Erster Agent:** ${config.firstAgent}
 
-**📋 Workflow Overview:**
+**Der Workflow führt Sie durch:**
 ${config.steps.map((step, i) => `${i + 1}. ${step}`).join('\n')}
 
 ---
 
-**🤖 Starting Agent: @${config.firstAgent}**
-
-${config.firstAgentPrompt}`;
+**@${config.firstAgent}** - ${this.getAnalystInstructions(config)}`;
   }
   
-  private async setupWindsurfContext(session: WindsurfAppiqSession, config: WorkflowConfig): Promise<void> {
-    // Set Windsurf workspace context
+  private async setupWindsurfUniversalContext(session: WindsurfUniversalAppiqSession, config: UniversalWorkflowConfig): Promise<void> {
+    // Set Windsurf workspace context for all project types
     await this.windsurf.workspace.setContext({
       appiq_workflow: config.id,
-      mobile_platform: session.state.platform,
+      project_category: session.state.applicationCategory,
+      platform: session.state.platform,
       project_type: session.state.projectType,
       workflow_step: 1,
       expected_outputs: config.expectedOutputs
     });
     
-    // Create task tracking
+    // Create universal task tracking
     await this.windsurf.tasks.create({
-      title: `APPIQ Mobile Development - ${config.displayName}`,
+      title: `APPIQ Method - ${config.displayName}`,
       steps: config.steps.map(step => ({ description: step, completed: false })),
+      category: session.state.applicationCategory,
       dueDate: this.calculateEstimatedCompletion(config)
     });
+  }
+  
+  private getWorkflowDisplayName(projectType: string, category: string, platform?: string): string {
+    const typeDisplay = projectType.charAt(0).toUpperCase() + projectType.slice(1);
+    const categoryDisplayMap = {
+      web: "Web-Anwendung",
+      desktop: "Desktop-Anwendung", 
+      mobile: platform === 'flutter' ? "Flutter Mobile App" : "React Native Mobile App",
+      backend: "Backend Service"
+    };
+    
+    const categoryDisplay = categoryDisplayMap[category] || "Anwendung";
+    const actionType = typeDisplay === 'Greenfield' ? 'Development' : 'Enhancement';
+    
+    return `${categoryDisplay} ${actionType}`;
   }
 }
 ```
 
-### Windsurf-Specific Features
+### Universal Windsurf-Specific Features
 
-#### Smart File Navigation
+#### Smart File Navigation für alle Projekttypen
 ```typescript
-class WindsurfNavigationHelper {
-  async highlightRelevantFiles(workflowType: string, platform: string): Promise<string[]> {
+class WindsurfUniversalNavigationHelper {
+  async highlightRelevantFiles(category: string, platform?: string): Promise<string[]> {
     const relevantFiles = [];
     
-    if (platform === 'flutter') {
-      relevantFiles.push(
-        'pubspec.yaml',
-        'lib/main.dart',
-        'lib/**/*.dart',
-        'test/**/*.dart'
-      );
-    } else if (platform === 'react-native') {
-      relevantFiles.push(
-        'package.json',
-        'src/**/*.tsx',
-        'src/**/*.ts',
-        '__tests__/**/*.test.ts'
-      );
+    switch (category) {
+      case 'web':
+        relevantFiles.push(
+          'package.json',
+          'src/**/*.tsx',
+          'src/**/*.ts',
+          'src/**/*.jsx',
+          'src/**/*.js',
+          'public/**/*',
+          'components/**/*'
+        );
+        break;
+        
+      case 'desktop':
+        relevantFiles.push(
+          'package.json',
+          'src/**/*.tsx',
+          'src/**/*.ts',
+          'main.js',
+          'main.ts',
+          'electron/**/*'
+        );
+        break;
+        
+      case 'mobile':
+        if (platform === 'flutter') {
+          relevantFiles.push(
+            'pubspec.yaml',
+            'lib/main.dart',
+            'lib/**/*.dart',
+            'test/**/*.dart',
+            'android/**/*',
+            'ios/**/*'
+          );
+        } else if (platform === 'react-native') {
+          relevantFiles.push(
+            'package.json',
+            'src/**/*.tsx',
+            'src/**/*.ts',
+            '__tests__/**/*.test.ts',
+            'android/**/*',
+            'ios/**/*'
+          );
+        }
+        break;
+        
+      case 'backend':
+        relevantFiles.push(
+          'package.json',
+          'src/**/*.ts',
+          'src/**/*.js',
+          'requirements.txt',
+          'pom.xml',
+          'build.gradle',
+          'config/**/*',
+          'migrations/**/*'
+        );
+        break;
     }
     
+    // Common files for all project types
     relevantFiles.push(
-      'docs/main_prd.md',
       'docs/**/*.md',
-      'README.md'
+      'README.md',
+      '.env*',
+      'docker*',
+      'Dockerfile'
     );
     
     return relevantFiles;
@@ -312,103 +531,168 @@ class WindsurfNavigationHelper {
 }
 ```
 
-#### Progress Tracking Integration
+#### Universal Progress Tracking
 ```typescript
-class WindsurfProgressTracker {
-  async updateWorkflowProgress(step: string, completed: boolean): Promise<void> {
+class WindsurfUniversalProgressTracker {
+  async updateWorkflowProgress(step: string, completed: boolean, category: string): Promise<void> {
     await this.windsurf.progress.update({
-      workflowId: 'appiq-mobile-development',
+      workflowId: `appiq-${category}-development`,
       currentStep: step,
       completed,
-      nextActions: this.getNextActions(step)
+      nextActions: this.getNextActions(step, category)
     });
   }
   
-  async showProgressSidebar(): Promise<void> {
+  async showProgressSidebar(category: string): Promise<void> {
+    const categoryDisplayMap = {
+      web: 'Web Development',
+      desktop: 'Desktop Development',
+      mobile: 'Mobile Development',
+      backend: 'Backend Development'
+    };
+    
     await this.windsurf.sidebar.show('appiq-progress', {
-      title: 'APPIQ Mobile Development Progress',
-      content: this.generateProgressHTML()
+      title: `APPIQ Method ${categoryDisplayMap[category]} Progress`,
+      content: this.generateProgressHTML(category)
     });
   }
 }
 ```
 
-## Usage in Windsurf
+## Universal Usage in Windsurf
 
-### Chat-Based Interaction
+### Chat-Based Interaction Examples
+
+#### Web Application Example
 ```
-User: /appiq
+User: /start
 
-🚀 Welcome to APPIQ Method Mobile Development!
+🚀 APPIQ Method Universal Launcher
 
 🔍 Project Analysis Results:
-- Detected: React Native mobile app
-- Structure: React Native project with TypeScript
+- Detected: web React
+- Confidence: 90%
+- Indicators: react dependency, web app structure
 
-What type of mobile project are you working on?
+Arbeiten wir an einem neuen oder bestehenden Projekt?
 
-1. Greenfield - New mobile app development (Flutter or React Native)
-2. Brownfield - Enhancing existing mobile app
-
-💡 Recommendation: Continue with React Native enhancement workflow
-
-Please respond with 1 or 2:
+1. 🆕 Neues Projekt (Greenfield)
+2. 🔧 Bestehendes Projekt (Brownfield)
 
 User: 2
 
-✅ Perfect! Launching Brownfield React Native Mobile Enhancement Workflow...
+📋 Lass mich verstehen, was wir bauen...
 
-🎯 Workflow: mobile-brownfield-react-native
-📍 First Agent: analyst
-📂 Expected Output: docs/enhancement-analysis.md
+Was für eine Art von Anwendung ist das?
+
+1. 🌐 Web-Anwendung
+2. 💻 Desktop-Anwendung
+3. 📱 Mobile App
+4. ⚙️ Backend/API Service
+5. 🤔 Bin mir nicht sicher
+
+User: 1
+
+✅ Perfect! Web-Anwendung Enhancement erkannt.
+
+🎯 Starte Web-Anwendung Enhancement...
+📍 Fokus: Full-Stack Web-Anwendung mit Frontend und Backend Komponenten
+📂 Workflow: brownfield-fullstack.yaml
+🎬 Erster Agent: analyst
 
 [Windsurf opens relevant files and creates task tracking]
 ```
 
-### Integration with Windsurf Features
+#### Desktop Application Example
+```
+User: /appiq
 
-1. **Smart File Navigation**: Automatically highlights relevant files
-2. **Task Tracking**: Creates project tasks for workflow steps
-3. **Progress Monitoring**: Shows workflow progress in sidebar
-4. **Context Awareness**: Maintains project context across sessions
-5. **File Templates**: Generates and opens relevant templates
+User: 1 (Neues Projekt)
+User: 2 (Desktop-Anwendung)
 
-### Advanced Features
+✅ Perfect! Desktop-Anwendung Development erkannt.
 
-#### Auto-Detection Enhancement
+🎯 Starte Desktop-Anwendung Development...
+📍 Fokus: Electron Desktop-Anwendung mit plattformspezifischen Optimierungen
+📂 Workflow: greenfield-fullstack.yaml
+🎬 Erster Agent: analyst
+
+Der Workflow führt Sie durch:
+1. Desktop-App Konzeption
+2. Electron-spezifische Requirements
+3. Cross-Platform UI Design
+4. Desktop-Architektur
+5. Platform-spezifische Implementierung
+
+@analyst - Bitte erstelle einen Projekt-Brief für die Desktop-Anwendung...
+```
+
+### Integration mit Windsurf Features
+
+1. **Smart File Navigation**: Automatisch highlights relevante Files für alle Projekttypen
+2. **Universal Task Tracking**: Erstellt project tasks für alle Workflow-Typen
+3. **Progress Monitoring**: Zeigt Workflow-Progress für Web/Desktop/Mobile/Backend
+4. **Context Awareness**: Behält universellen Projekt-Kontext zwischen Sessions
+5. **Intelligent Templates**: Generiert und öffnet relevante Templates basierend auf Projekttyp
+
+### Advanced Universal Features
+
+#### Enhanced Auto-Detection für alle Projekttypen
 ```typescript
-// Enhanced project detection for Windsurf
-async detectProjectDetails(): Promise<ProjectDetails> {
+async detectUniversalProjectDetails(): Promise<UniversalProjectDetails> {
   const analysis = await this.windsurf.ai.analyzeProject({
-    includeFiles: ['package.json', 'pubspec.yaml', 'android/', 'ios/'],
-    analysisType: 'mobile-platform-detection'
+    includeFiles: ['package.json', 'pubspec.yaml', 'requirements.txt', 'pom.xml', 'build.gradle'],
+    analysisType: 'universal-project-detection'
   });
   
   return {
-    platform: analysis.detectedPlatform,
+    projectType: analysis.detectedType,
+    framework: analysis.framework,
+    platform: analysis.platform,
     confidence: analysis.confidence,
     recommendations: analysis.recommendations,
-    nextSteps: analysis.suggestedNextSteps
+    supportedWorkflows: analysis.availableWorkflows
   };
 }
 ```
 
-#### Intelligent Workflow Suggestions
+#### Intelligent Universal Workflow Suggestions
 ```typescript
-// Use Windsurf's AI to suggest optimal workflows
-async suggestWorkflow(projectContext: ProjectContext): Promise<WorkflowSuggestion> {
+async suggestUniversalWorkflow(projectContext: UniversalProjectContext): Promise<UniversalWorkflowSuggestion> {
   const suggestion = await this.windsurf.ai.suggest({
     context: projectContext,
-    domain: 'mobile-development',
+    domain: 'universal-development',
+    supportedTypes: ['web', 'desktop', 'mobile', 'backend'],
     goal: 'optimize-development-workflow'
   });
   
   return {
     recommendedWorkflow: suggestion.workflow,
+    projectCategory: suggestion.category,
     reasoning: suggestion.reasoning,
-    alternativeOptions: suggestion.alternatives
+    alternativeOptions: suggestion.alternatives,
+    estimatedDuration: suggestion.timeline
   };
 }
 ```
 
-This implementation provides a seamless integration with Windsurf's AI-powered development environment while maintaining the interactive workflow selection that makes the `/appiq` command effective across different IDEs.
+## Best Practices für Windsurf Integration
+
+### Performance Optimierungen
+```typescript
+interface WindsurfUniversalPerformanceConfig {
+  lazyLoading: boolean;          // Lade Workflows nur bei Bedarf
+  cacheDetection: boolean;       // Cache Universal-Projekt-Erkennung
+  batchOperations: boolean;      // Batch File-System-Operationen
+  intelligentPreload: boolean;   // Preload basierend auf Projekt-Patterns
+  universalContext: boolean;     // Universeller Context für alle Projekttypen
+}
+```
+
+### User Experience Enhancements
+- **Universal Progress Indicators**: Zeige Fortschritt für alle Projekttypen
+- **Smart Suggestions**: Basierend auf erkannten Universal-Patterns
+- **Context Preservation**: Behalte Universal-Workflow-Kontext zwischen Sessions
+- **Intelligent Error Recovery**: Universal fallback bei Detection-Fehlern für alle Projekttypen
+
+Diese Implementation bietet eine nahtlose Experience mit Windsurf's AI-powered Development Environment und unterstützt alle Projekttypen (Web, Desktop, Mobile, Backend) mit intelligenter Universal-Erkennung und optimaler Integration in bestehende Windsurf Features.
