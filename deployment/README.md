@@ -32,19 +32,27 @@ bash appiq_installer.sh
 ```
 your-project/
 ├── .appiq/                     # APPIQ Method core files
-│   ├── agents/                 # Mobile development agents
-│   │   ├── mobile-pm.md
-│   │   ├── mobile-architect.md
-│   │   ├── mobile-developer.md
-│   │   └── mobile-qa.md
-│   ├── workflows/              # Mobile development workflows
-│   │   ├── mobile-greenfield-flutter.yaml
-│   │   ├── mobile-greenfield-react-native.yaml
-│   │   ├── mobile-brownfield-flutter.yaml
-│   │   └── mobile-brownfield-react-native.yaml
-│   ├── templates/              # Document templates
-│   │   ├── mobile-prd-tmpl.yaml
-│   │   └── mobile-architecture-tmpl.yaml
+│   ├── bmad-core/              # Core agents and workflows
+│   │   ├── agents/             # Universal development agents
+│   │   │   ├── analyst.md
+│   │   │   ├── architect.md
+│   │   │   ├── dev.md
+│   │   │   ├── pm.md
+│   │   │   └── ux-expert.md
+│   │   ├── workflows/          # Universal development workflows
+│   │   │   ├── greenfield-fullstack.yaml    # Web/Desktop projects
+│   │   │   ├── brownfield-fullstack.yaml    # Web/Desktop projects
+│   │   │   ├── greenfield-service.yaml      # Backend projects
+│   │   │   └── brownfield-service.yaml      # Backend projects
+│   │   ├── templates/          # Document templates
+│   │   │   ├── prd-tmpl.yaml
+│   │   │   ├── architecture-tmpl.yaml
+│   │   │   └── project-brief-tmpl.yaml
+│   ├── expansion-packs/        # Specialized development packs
+│   │   └── bmad-mobile-app-dev/   # Mobile development expansion
+│   │       ├── agents/         # Mobile-specific agents
+│   │       ├── workflows/      # Mobile workflows (Flutter/React Native)
+│   │       └── templates/      # Mobile templates
 │   ├── config/                 # IDE configurations
 │   │   ├── project.json
 │   │   ├── claude.json

@@ -87,13 +87,13 @@ find_appiq_project() {
     return 1
 }
 
-# Interactive workflow launcher
+# Universal interactive workflow launcher
 launch_interactive_workflow() {
     local project_root="$1"
     
     echo -e "${CYAN}"
     echo "╔══════════════════════════════════════════════════════════════════╗"
-    echo "║                🚀 APPIQ METHOD - MOBILE DEVELOPMENT              ║"
+    echo "║                🚀 APPIQ METHOD - UNIVERSAL LAUNCHER              ║"
     echo "║                                                                  ║"
     echo "║                    Interactive Workflow Launcher                ║"
     echo "╚══════════════════════════════════════════════════════════════════╝"
@@ -102,16 +102,18 @@ launch_interactive_workflow() {
     echo -e "${BLUE}📍 Project: $(basename "$project_root")${NC}"
     echo ""
     
-    # Step 1: Project Type Selection
-    echo -e "${YELLOW}What type of mobile project are you working on?${NC}"
+    # Step 1: Project Status Selection
+    echo -e "${YELLOW}🚀 APPIQ Method Universal Launcher${NC}"
     echo ""
-    echo "1. Greenfield - New mobile app development (Flutter or React Native)"
-    echo "2. Brownfield - Enhancing existing mobile app"
+    echo "Arbeiten wir an einem neuen oder bestehenden Projekt?"
     echo ""
-    echo -n "Please respond with 1 or 2: "
-    read -r project_type
+    echo "1. 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf"
+    echo "2. 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas"
+    echo ""
+    echo -n "Antworte mit 1 oder 2: "
+    read -r project_status
     
-    case $project_type in
+    case $project_status in
         "1")
             project_type="greenfield"
             ;;
@@ -124,96 +126,128 @@ launch_interactive_workflow() {
             ;;
     esac
     
-    # Step 2: Platform Selection/Detection
+    # Step 2: Universal Project Type Selection
+    local app_category=""
     local platform=""
     
-    if [ "$project_type" = "greenfield" ]; then
-        echo ""
-        echo -e "${YELLOW}📱 Platform Selection for New Mobile App:${NC}"
-        echo ""
-        echo "Which mobile platform do you want to target?"
-        echo ""
-        echo "1. Flutter - Cross-platform with Dart"
-        echo "2. React Native - Cross-platform with React/JavaScript"
-        echo "3. Let APPIQ Method recommend based on requirements"
-        echo ""
-        echo -n "Please respond with 1, 2, or 3: "
-        read -r platform_choice
-        
-        case $platform_choice in
-            "1")
-                platform="flutter"
-                ;;
-            "2")
-                platform="react-native"
-                ;;
-            "3")
+    echo ""
+    echo -e "${YELLOW}📋 Lass mich verstehen, was wir bauen...${NC}"
+    echo ""
+    echo "Was für eine Art von Anwendung ist das?"
+    echo ""
+    echo "1. 🌐 Web-Anwendung (läuft im Browser)"
+    echo "2. 💻 Desktop-Anwendung (Electron, Windows/Mac App)"
+    echo "3. 📱 Mobile App (iOS/Android)"
+    echo "4. ⚙️ Backend/API Service (Server, Database)"
+    echo "5. 🤔 Bin mir nicht sicher - lass APPIQ entscheiden"
+    echo ""
+    echo -n "Antworte mit 1, 2, 3, 4 oder 5: "
+    read -r app_type_choice
+    
+    case $app_type_choice in
+        "1")
+            app_category="web"
+            platform="web"
+            ;;
+        "2")
+            app_category="desktop"
+            platform="electron"
+            ;;
+        "3")
+            app_category="mobile"
+            # Handle mobile platform selection
+            if [ "$project_type" = "greenfield" ]; then
                 echo ""
-                echo -e "${BLUE}🤔 Platform Recommendation Analysis:${NC}"
+                echo -e "${YELLOW}📱 Mobile Platform Selection:${NC}"
                 echo ""
+                echo "1. Flutter - Cross-platform with Dart"
+                echo "2. React Native - Cross-platform with React/JavaScript"
+                echo ""
+                echo -n "Antworte mit 1 oder 2: "
+                read -r mobile_platform_choice
                 
-                # Simple recommendation logic
-                if [ -f "$project_root/package.json" ]; then
-                    echo "• Existing JavaScript/Node.js expertise detected"
-                    echo "• Recommendation: React Native"
+                case $mobile_platform_choice in
+                    "1")
+                        platform="flutter"
+                        ;;
+                    "2")
+                        platform="react-native"
+                        ;;
+                    *)
+                        echo -e "${RED}❌ Invalid response.${NC}"
+                        return 1
+                        ;;
+                esac
+            else
+                # Brownfield mobile detection
+                if [ -f "$project_root/pubspec.yaml" ]; then
+                    echo "🎯 Flutter project detected!"
+                    platform="flutter"
+                elif [ -f "$project_root/package.json" ] && grep -q "react-native" "$project_root/package.json" 2>/dev/null; then
+                    echo "🎯 React Native project detected!"
                     platform="react-native"
                 else
-                    echo "• No existing platform preference detected"
-                    echo "• Recommendation: Flutter (better performance, single codebase)"
+                    echo "❓ Platform not detected. Assuming Flutter."
                     platform="flutter"
                 fi
-                
+            fi
+            ;;
+        "4")
+            app_category="backend"
+            platform="backend"
+            ;;
+        "5")
+            # Auto-detection logic
+            if [ "$project_type" = "brownfield" ]; then
                 echo ""
-                echo -n "Do you want to proceed with $platform? (y/n): "
-                read -r accept_recommendation
+                echo -e "${BLUE}🔍 Analysiere dein bestehendes Projekt...${NC}"
+                echo ""
                 
-                if [ "$accept_recommendation" != "y" ] && [ "$accept_recommendation" != "Y" ]; then
-                    echo "Please run the command again and choose manually."
-                    return 1
-                fi
-                ;;
-            *)
-                echo -e "${RED}❌ Invalid response. Please run the command again and choose 1, 2, or 3.${NC}"
-                return 1
-                ;;
-        esac
-    else
-        # Brownfield - detect existing platform
-        echo ""
-        echo -e "${YELLOW}📱 Existing Mobile App Platform Detection:${NC}"
-        echo ""
-        
-        if [ -f "$project_root/pubspec.yaml" ]; then
-            echo "🎯 Flutter project detected!"
-            platform="flutter"
-        elif [ -f "$project_root/package.json" ] && grep -q "react-native" "$project_root/package.json" 2>/dev/null; then
-            echo "🎯 React Native project detected!"
-            platform="react-native"
-        else
-            echo "❓ Platform not automatically detected."
-            echo ""
-            echo "What platform is your existing mobile app built with?"
-            echo ""
-            echo "1. Flutter - Dart-based cross-platform app"
-            echo "2. React Native - React/JavaScript-based app"
-            echo ""
-            echo -n "Please respond with 1 or 2: "
-            read -r platform_choice
-            
-            case $platform_choice in
-                "1")
+                if [ -f "$project_root/pubspec.yaml" ]; then
+                    echo "🎯 Flutter Mobile App erkannt!"
+                    app_category="mobile"
                     platform="flutter"
-                    ;;
-                "2")
-                    platform="react-native"
-                    ;;
-                *)
-                    echo -e "${RED}❌ Invalid response. Please run the command again.${NC}"
-                    return 1
-                    ;;
-            esac
-        fi
-    fi
+                elif [ -f "$project_root/package.json" ]; then
+                    if grep -q "electron" "$project_root/package.json" 2>/dev/null; then
+                        echo "🎯 Electron Desktop App erkannt!"
+                        app_category="desktop"
+                        platform="electron"
+                    elif grep -q "react-native" "$project_root/package.json" 2>/dev/null; then
+                        echo "🎯 React Native Mobile App erkannt!"
+                        app_category="mobile"
+                        platform="react-native"
+                    elif grep -q -E "(react|vue|angular|next)" "$project_root/package.json" 2>/dev/null; then
+                        echo "🎯 Web-Anwendung erkannt!"
+                        app_category="web"
+                        platform="web"
+                    elif grep -q -E "(express|fastify|koa)" "$project_root/package.json" 2>/dev/null; then
+                        echo "🎯 Backend Service erkannt!"
+                        app_category="backend"
+                        platform="backend"
+                    else
+                        echo "🎯 Node.js Backend Service erkannt!"
+                        app_category="backend"
+                        platform="backend"
+                    fi
+                elif [ -f "$project_root/requirements.txt" ]; then
+                    echo "🎯 Python Backend Service erkannt!"
+                    app_category="backend"
+                    platform="backend"
+                else
+                    echo "❓ Projekttyp nicht erkannt. Verwende Web-Anwendung."
+                    app_category="web"
+                    platform="web"
+                fi
+            else
+                echo "❓ Für neue Projekte bitte Projekttyp manuell wählen."
+                return 1
+            fi
+            ;;
+        *)
+            echo -e "${RED}❌ Invalid response. Please run the command again.${NC}"
+            return 1
+            ;;
+    esac
     
     # Step 3: PRD Validation
     echo ""
@@ -235,42 +269,136 @@ launch_interactive_workflow() {
         return 1
     fi
     
-    # Step 4: Workflow Launch
+    # Step 4: Universal Workflow Launch
     local workflow_file=""
-    case "${project_type}-${platform}" in
-        "greenfield-flutter")
-            workflow_file="mobile-greenfield-flutter.yaml"
+    local context_message=""
+    local workflow_steps=""
+    local analyst_instruction=""
+    
+    # Determine workflow file based on project type and category
+    case "${project_type}-${app_category}" in
+        "greenfield-web")
+            workflow_file="greenfield-fullstack.yaml"
+            context_message="Full-Stack Web-Anwendung mit Frontend und Backend Komponenten"
+            workflow_steps="1. Projekt-Brief und Marktanalyse
+2. PRD für Web-Anwendung
+3. UX/UI Spezifikation
+4. Full-Stack Architektur
+5. Story-basierte Entwicklung"
+            analyst_instruction="Bitte erstelle einen Projekt-Brief für die Web-Anwendung mit Fokus auf Frontend/Backend Integration."
             ;;
-        "greenfield-react-native")
-            workflow_file="mobile-greenfield-react-native.yaml"
+        "brownfield-web")
+            workflow_file="brownfield-fullstack.yaml"
+            context_message="Full-Stack Web-Anwendung mit Frontend und Backend Komponenten"
+            workflow_steps="1. Analyse der bestehenden Web-Anwendung
+2. Modernisierungs-Möglichkeiten identifizieren
+3. Sichere Integration planen
+4. Enhancement-Stories erstellen"
+            analyst_instruction="Bitte analysiere die bestehende Web-Anwendung und identifiziere Modernisierungs-Möglichkeiten."
             ;;
-        "brownfield-flutter")
-            workflow_file="mobile-brownfield-flutter.yaml"
+        "greenfield-desktop")
+            workflow_file="greenfield-fullstack.yaml"
+            context_message="Electron Desktop-Anwendung mit plattformspezifischen Optimierungen"
+            workflow_steps="1. Desktop-App Konzeption
+2. Electron-spezifische Requirements
+3. Cross-Platform UI Design
+4. Desktop-Architektur
+5. Platform-spezifische Implementierung"
+            analyst_instruction="Bitte erstelle einen Projekt-Brief für die Desktop-Anwendung mit Electron-spezifischen Anforderungen."
             ;;
-        "brownfield-react-native")
-            workflow_file="mobile-brownfield-react-native.yaml"
+        "brownfield-desktop")
+            workflow_file="brownfield-fullstack.yaml"
+            context_message="Electron Desktop-Anwendung mit plattformspezifischen Optimierungen"
+            workflow_steps="1. Analyse der bestehenden Electron-Anwendung
+2. Performance-Optimierungen identifizieren
+3. Plattform-spezifische Verbesserungen
+4. Feature-Enhancement Planung"
+            analyst_instruction="Bitte analysiere die bestehende Electron-Anwendung und identifiziere Verbesserungsmöglichkeiten."
+            ;;
+        "greenfield-mobile")
+            if [ "$platform" = "flutter" ]; then
+                workflow_file="mobile-greenfield-flutter.yaml"
+            else
+                workflow_file="mobile-greenfield-react-native.yaml"
+            fi
+            context_message="$(echo $platform | sed 's/-/ /g' | sed 's/\b\w/\U&/g') Cross-Platform Mobile-Anwendung"
+            workflow_steps="1. Mobile-fokussierter Projekt-Brief
+2. Mobile-spezifische PRD
+3. Platform-Validierung
+4. Mobile UX Design
+5. Mobile Architektur-Planung"
+            analyst_instruction="Bitte erstelle einen mobile-fokussierten Projekt-Brief unter Berücksichtigung von App Store Landschaft und mobile User Behavior."
+            ;;
+        "brownfield-mobile")
+            if [ "$platform" = "flutter" ]; then
+                workflow_file="mobile-brownfield-flutter.yaml"
+            else
+                workflow_file="mobile-brownfield-react-native.yaml"
+            fi
+            context_message="$(echo $platform | sed 's/-/ /g' | sed 's/\b\w/\U&/g') Cross-Platform Mobile-Anwendung"
+            workflow_steps="1. Mobile App Analyse
+2. Platform-spezifische Optimierungen
+3. App Store Compliance Review
+4. Mobile Enhancement Stories"
+            analyst_instruction="Bitte analysiere die bestehende Mobile App und identifiziere platform-spezifische Optimierungen."
+            ;;
+        "greenfield-backend")
+            workflow_file="greenfield-service.yaml"
+            context_message="API-Design und Datenarchitektur im Fokus"
+            workflow_steps="1. API und Service Konzeption
+2. Backend Requirements Definition
+3. Datenbank und Architektur Design
+4. API Spezifikation
+5. Service-orientierte Implementierung"
+            analyst_instruction="Bitte erstelle einen Projekt-Brief für den Backend Service mit Fokus auf API Design und Skalierbarkeit."
+            ;;
+        "brownfield-backend")
+            workflow_file="brownfield-service.yaml"
+            context_message="API-Design und Datenarchitektur im Fokus"
+            workflow_steps="1. Backend Service Analyse
+2. API Evolution Planung
+3. Skalierungsoptimierungen
+4. Service Enhancement Stories"
+            analyst_instruction="Bitte analysiere den bestehenden Backend Service und identifiziere Optimierungs-Möglichkeiten."
             ;;
     esac
     
+    # Display category name
+    local category_display=""
+    case $app_category in
+        "web") category_display="Web-Anwendung" ;;
+        "desktop") category_display="Desktop-Anwendung" ;;
+        "mobile") 
+            if [ "$platform" = "flutter" ]; then
+                category_display="Flutter Mobile App"
+            else
+                category_display="React Native Mobile App"
+            fi
+            ;;
+        "backend") category_display="Backend Service" ;;
+    esac
+    
+    local type_display=""
+    if [ "$project_type" = "greenfield" ]; then
+        type_display="Development"
+    else
+        type_display="Enhancement"
+    fi
+    
     echo ""
-    echo -e "${GREEN}✅ Perfect! Launching Mobile Development Workflow...${NC}"
+    echo -e "${GREEN}✅ Perfect! ${category_display} ${type_display} erkannt.${NC}"
     echo ""
-    echo -e "${CYAN}🎯 Starting with: ${workflow_file}${NC}"
-    echo -e "${CYAN}📍 First Agent: analyst${NC}"
-    echo -e "${CYAN}📂 Expected Output: docs/project-brief.md${NC}"
+    echo -e "${CYAN}🎯 Starte ${project_type} Workflow für ${category_display}...${NC}"
+    echo -e "${CYAN}📍 Fokus: ${context_message}${NC}"
+    echo -e "${CYAN}📂 Workflow: ${workflow_file}${NC}"
+    echo -e "${CYAN}🎬 Erster Agent: analyst${NC}"
     echo ""
-    echo -e "${YELLOW}The mobile development workflow will now guide you through:${NC}"
-    echo "1. Mobile-focused project brief"
-    echo "2. Mobile-specific PRD creation" 
-    echo "3. $(echo $platform | sed 's/-/ /g' | sed 's/\b\w/\U&/g') platform validation"
-    echo "4. Mobile UX design system"
-    echo "5. $(echo $platform | sed 's/-/ /g' | sed 's/\b\w/\U&/g') architecture planning"
-    echo "6. Mobile security review"
-    echo "7. Story creation and development"
+    echo -e "${YELLOW}Der Workflow führt Sie durch:${NC}"
+    echo "$workflow_steps"
     echo ""
     echo -e "${BLUE}════════════════════════════════════════════════════════════════════${NC}"
     echo ""
-    echo -e "${GREEN}@analyst${NC} - Please begin with creating a mobile-focused project brief considering app store landscape, device capabilities, and mobile user behavior."
+    echo -e "${GREEN}@analyst${NC} - ${analyst_instruction}"
     echo ""
     echo -e "${YELLOW}💡 Continue the workflow in your IDE (Claude, Cursor, Windsurf) for full agent interaction${NC}"
 }
@@ -347,23 +475,29 @@ main() {
             fi
             ;;
         "help"|"--help"|"-h")
-            echo -e "${CYAN}🚀 APPIQ Method - Global Terminal Command${NC}"
+            echo -e "${CYAN}🚀 APPIQ Method - Universal Global Terminal Command${NC}"
             echo ""
             echo -e "${YELLOW}Usage:${NC}"
-            echo "  appiq                 Launch interactive mobile development workflow"
+            echo "  appiq                 Launch interactive universal development workflow"
             echo "  appiq status          Show project status"
             echo "  appiq validate        Validate project setup"
             echo "  appiq help            Show this help"
             echo ""
             echo -e "${YELLOW}Examples:${NC}"
-            echo "  appiq                 # Start mobile development workflow"
+            echo "  appiq                 # Start universal development workflow"
             echo "  appiq status          # Check current project status"
             echo "  appiq validate        # Validate APPIQ setup"
+            echo ""
+            echo -e "${YELLOW}Supported Project Types:${NC}"
+            echo "• 🌐 Web Applications (React, Vue, Angular, Next.js)"
+            echo "• 💻 Desktop Applications (Electron, Cross-Platform)"
+            echo "• 📱 Mobile Apps (Flutter, React Native)"
+            echo "• ⚙️ Backend Services (Node.js, Python, Java)"
             echo ""
             echo -e "${YELLOW}Requirements:${NC}"
             echo "• Run in a directory with APPIQ Method installed"
             echo "• Have docs/main_prd.md with your project requirements"
-            echo "• Mobile development environment (Flutter SDK or React Native)"
+            echo "• Development environment for your project type"
             ;;
         *)
             echo -e "${RED}❌ Unknown command: $1${NC}"

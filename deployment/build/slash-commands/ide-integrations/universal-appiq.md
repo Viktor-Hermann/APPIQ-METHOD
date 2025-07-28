@@ -1,8 +1,8 @@
-# Universal IDE Integration for /appiq Command
+# Universal IDE Integration for APPIQ Method Commands
 
 ## Overview
 
-This document provides a universal implementation approach for the `/appiq` command that can be adapted to work with any IDE or AI assistant that supports chat-based interactions.
+This document provides a universal implementation approach for the APPIQ Method commands (`/start` and `/appiq`) that can be adapted to work with any IDE or AI assistant that supports chat-based interactions. Supports all project types: Web, Desktop, Mobile, and Backend.
 
 ## Universal Implementation Strategy
 
@@ -11,29 +11,31 @@ This document provides a universal implementation approach for the `/appiq` comm
 1. **Chat-Based Interface**: Works through standard chat/conversation interfaces
 2. **Session State Management**: Maintains conversation state across multiple messages
 3. **File System Agnostic**: Adapts to different file system access methods
-4. **Platform Detection**: Universal platform detection methods
+4. **Universal Project Detection**: Supports Web, Desktop, Mobile, and Backend projects
 5. **Fallback Support**: Graceful degradation when advanced features aren't available
 
 ### Universal Message Protocol
 
 #### Command Recognition
 ```
-Pattern: /appiq [optional-args]
-Triggers: Interactive mobile development workflow launcher
+Pattern: /start [optional-args] | /appiq [optional-args]
+Triggers: Interactive universal development workflow launcher
 Context: Any chat interface supporting text interaction
+Supported: Web, Desktop, Mobile, Backend projects
 ```
 
 #### State Management Format
 ```json
 {
   "session_id": "uuid",
-  "workflow": "appiq-mobile",
+  "workflow": "appiq-universal",
   "state": {
-    "step": "project-type|platform-selection|prd-check|launch",
+    "step": "project-status|project-type|auto-detection|platform-selection|workflow-launch",
     "project_type": "greenfield|brownfield|null",
-    "platform": "flutter|react-native|null", 
-    "has_prd": "true|false|null",
-    "detected_platform": "flutter|react-native|native|unknown"
+    "application_category": "web|desktop|mobile|backend|auto-detect|null",
+    "platform": "react|vue|angular|electron|flutter|react-native|nodejs|python|java|null",
+    "framework": "string|null",
+    "detected_project": "ProjectDetection|null"
   },
   "context": {
     "project_path": "/path/to/project",
@@ -45,57 +47,68 @@ Context: Any chat interface supporting text interaction
 
 ### Universal Interaction Flow
 
-#### Step 1: Welcome and Project Analysis
+#### Step 1: Project Status Selection
 ```markdown
-🚀 **Welcome to APPIQ Method Mobile Development!**
+🚀 **APPIQ Method Universal Launcher**
 
 [Optional: Project analysis results if capabilities allow]
 
-**What type of mobile project are you working on?**
+Arbeiten wir an einem neuen oder bestehenden Projekt?
 
-**1.** Greenfield - New mobile app development (Flutter or React Native)
-**2.** Brownfield - Enhancing existing mobile app
+**1.** 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf
+**2.** 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas
 
-Please respond with **1** or **2**:
+Antworte mit **1** oder **2**:
 ```
 
-#### Step 2: Platform Selection Logic
+#### Step 2: Project Type Selection
+```markdown
+📋 **Lass mich verstehen, was wir bauen...**
+
+Was für eine Art von Anwendung ist das?
+
+**1.** 🌐 Web-Anwendung (läuft im Browser)
+**2.** 💻 Desktop-Anwendung (Electron, Windows/Mac App)  
+**3.** 📱 Mobile App (iOS/Android)
+**4.** ⚙️ Backend/API Service (Server, Database)
+**5.** 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
+
+Antworte mit **1**, **2**, **3**, **4** oder **5**:
 ```
-IF project_type == "greenfield":
-    SHOW platform_selection_for_new_project
-ELSE IF project_type == "brownfield":
-    IF can_detect_platform:
-        SHOW detected_platform_confirmation
+
+#### Step 3: Auto-Detection Logic
+```
+IF application_category == "auto-detect":
+    IF project_type == "brownfield":
+        ANALYZE_EXISTING_PROJECT()
+        SHOW detected_project_confirmation
     ELSE:
-        SHOW platform_selection_for_existing_project
+        REQUEST_PROJECT_DESCRIPTION()
+        ANALYZE_DESCRIPTION()
+        SHOW recommended_project_type
+ELSE IF application_category == "mobile":
+    SHOW mobile_platform_selection
+ELSE:
+    PROCEED_TO_workflow_launch
 ```
 
-#### Step 3: PRD Validation
+#### Step 4: Universal Workflow Launch
 ```markdown
-📋 **Checking for main_prd.md in your /docs/ folder...**
+✅ **Perfect! [Project Category] [Development Type] erkannt.**
 
-Do you have a main_prd.md file in your /docs/ folder?
-(You should create this manually and place it there before proceeding)
+🎯 **Starte [Project Type] Workflow für [Project Category]...**
+📍 **Fokus:** [Context Message]
+📂 **Workflow:** `workflow-file.yaml`
+🎬 **Erster Agent:** analyst
 
-Please respond with **yes** or **no**:
-```
-
-#### Step 4: Workflow Launch
-```markdown
-✅ **Perfect! Launching [Workflow Name]...**
-
-🎯 **Starting with:** `workflow-file.yaml`
-📍 **First Agent:** agent-name
-📂 **Expected Output:** `expected-file.md`
-
-**The workflow will guide you through:**
-1. Step one
-2. Step two
-3. Step three...
+**Der Workflow führt Sie durch:**
+1. [Context-specific step 1]
+2. [Context-specific step 2]
+3. [Context-specific step 3]...
 
 ---
 
-**@agent-name** - [Agent-specific starting prompt]
+**@analyst** - [Context-specific analyst instruction]
 ```
 
 ## Universal Implementation Code
@@ -228,33 +241,45 @@ class UniversalPlatformDetector {
 ### Message Templates
 ```typescript
 class UniversalMessageTemplates {
-  static welcome(projectAnalysis?: ProjectAnalysis): string {
-    let message = `🚀 **Welcome to APPIQ Method Mobile Development!**\n\n`;
+  static welcome(projectAnalysis?: UniversalProjectAnalysis): string {
+    let message = `🚀 **APPIQ Method Universal Launcher**\n\n`;
     
-    if (projectAnalysis?.detected) {
+    if (projectAnalysis?.detectedProject) {
       message += `🔍 **Project Analysis:**\n`;
-      message += `- Detected: ${projectAnalysis.platform} mobile app\n`;
-      message += `- Confidence: ${Math.round(projectAnalysis.confidence * 100)}%\n\n`;
+      message += `- Detected: ${projectAnalysis.detectedProject.type} ${projectAnalysis.detectedProject.framework}\n`;
+      message += `- Confidence: ${Math.round(projectAnalysis.detectedProject.confidence * 100)}%\n`;
+      message += `- Indicators: ${projectAnalysis.detectedProject.indicators.join(', ')}\n\n`;
     }
     
-    message += `**What type of mobile project are you working on?**\n\n`;
-    message += `**1.** Greenfield - New mobile app development (Flutter or React Native)\n`;
-    message += `**2.** Brownfield - Enhancing existing mobile app\n\n`;
-    message += `Please respond with **1** or **2**:`;
+    message += `Arbeiten wir an einem neuen oder bestehenden Projekt?\n\n`;
+    message += `**1.** 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf\n`;
+    message += `**2.** 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas\n\n`;
+    message += `Antworte mit **1** oder **2**:`;
     
     return message;
   }
   
-  static platformSelection(): string {
-    return `📱 **Platform Selection for New Mobile App:**
+  static projectTypeSelection(): string {
+    return `📋 **Lass mich verstehen, was wir bauen...**
 
-Which mobile platform do you want to target?
+Was für eine Art von Anwendung ist das?
+
+**1.** 🌐 Web-Anwendung (läuft im Browser)
+**2.** 💻 Desktop-Anwendung (Electron, Windows/Mac App)
+**3.** 📱 Mobile App (iOS/Android)
+**4.** ⚙️ Backend/API Service (Server, Database)
+**5.** 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
+
+Antworte mit **1**, **2**, **3**, **4** oder **5**:`;
+  }
+
+  static mobilePlatformSelection(): string {
+    return `📱 **Mobile Platform Selection:**
 
 **1.** Flutter - Cross-platform with Dart
 **2.** React Native - Cross-platform with React/JavaScript
-**3.** Let APPIQ Method recommend based on requirements
 
-Please respond with **1**, **2**, or **3**:`;
+Antworte mit **1** oder **2**:`;
   }
   
   static platformDetection(detectedPlatform?: string): string {
@@ -286,14 +311,15 @@ Do you have a main_prd.md file in your /docs/ folder?
 Please respond with **yes** or **no**:`;
   }
   
-  static workflowLaunch(config: WorkflowConfig): string {
-    return `✅ **Perfect! Launching ${config.displayName}...**
+  static workflowLaunch(config: UniversalWorkflowConfig): string {
+    return `✅ **Perfect! ${config.displayName} erkannt.**
 
-🎯 **Starting with:** \`${config.filename}\`
-📍 **First Agent:** ${config.firstAgent}
-📂 **Expected Output:** \`${config.firstOutput}\`
+🎯 **Starte ${config.displayName}...**
+📍 **Fokus:** ${config.contextMessage}
+📂 **Workflow:** \`${config.filename}\`
+🎬 **Erster Agent:** ${config.firstAgent}
 
-**The mobile development workflow will now guide you through:**
+**Der Workflow führt Sie durch:**
 ${config.steps.map((step, i) => `${i + 1}. ${step}`).join('\n')}
 
 ---

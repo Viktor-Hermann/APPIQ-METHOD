@@ -26,13 +26,13 @@ mkdir -p "${COMMANDS_DIR}"
 # Create the /appiq slash command for Claude
 echo -e "${BLUE}📝 Creating /appiq slash command...${NC}"
 cat > "${COMMANDS_DIR}/appiq.md" << 'EOF'
-# /appiq - APPIQ Method Mobile Development Launcher
+# /appiq - APPIQ Method Universal Development Launcher
 
-**Quick Start**: `/appiq` - Interactive mobile development workflow launcher
+**Quick Start**: `/appiq` - Interactive universal development workflow launcher
 
 ## Overview
 
-The `/appiq` command provides an interactive way to launch the APPIQ Method mobile development workflow. It guides users through project type selection and automatically triggers the appropriate mobile development workflow based on their responses.
+The `/appiq` command provides an interactive way to launch the APPIQ Method universal development workflow. It guides users through project type selection and automatically triggers the appropriate development workflow for Web, Desktop, Mobile, or Backend projects based on their responses.
 
 ## Usage
 
@@ -44,110 +44,123 @@ The `/appiq` command provides an interactive way to launch the APPIQ Method mobi
 
 When you use `/appiq`, the system will interactively guide you through:
 
-### Step 1: Project Type Selection
+### Step 1: Project Status Selection
 ```
-🚀 Welcome to APPIQ Method Mobile Development!
+🚀 APPIQ Method Universal Launcher
 
-What type of mobile project are you working on?
+Arbeiten wir an einem neuen oder bestehenden Projekt?
 
-1. Greenfield - New mobile app development (Flutter or React Native)
-2. Brownfield - Enhancing existing mobile app
+1. 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf
+2. 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas
 
-Please respond with 1 or 2:
+Antworte mit 1 oder 2:
 ```
 
-### Step 2: Platform Selection (Greenfield) or Detection (Brownfield)
-
-**For Greenfield (New Projects):**
+### Step 2: Project Type Selection
 ```
-📱 Platform Selection for New Mobile App:
+📋 Lass mich verstehen, was wir bauen...
 
-Which mobile platform do you want to target?
+Was für eine Art von Anwendung ist das?
+
+1. 🌐 Web-Anwendung (läuft im Browser)
+2. 💻 Desktop-Anwendung (Electron, Windows/Mac App)
+3. 📱 Mobile App (iOS/Android)
+4. ⚙️ Backend/API Service (Server, Database)
+5. 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
+
+Antworte mit 1, 2, 3, 4 oder 5:
+```
+
+### Step 3: Auto-Detection or Platform Selection
+
+**For Mobile Projects (Option 3):**
+```
+📱 Mobile Platform Selection:
 
 1. Flutter - Cross-platform with Dart
 2. React Native - Cross-platform with React/JavaScript
-3. Let APPIQ Method recommend based on requirements
 
-Please respond with 1, 2, or 3:
+Antworte mit 1 oder 2:
 ```
 
-**For Brownfield (Existing Projects):**
-```
-📱 Existing Mobile App Platform Detection:
+**For Auto-Detection (Option 5):**
+- Brownfield projects: Analyzes existing project structure automatically
+- Greenfield projects: Requests project description for intelligent categorization
 
-What platform is your existing mobile app built with?
-
-1. Flutter - Dart-based cross-platform app
-2. React Native - React/JavaScript-based app
-3. Not sure - Let APPIQ Method analyze the codebase
-
-Please respond with 1, 2, or 3:
-```
-
-### Step 3: PRD Validation
-```
-📋 Checking for main_prd.md in your /docs/ folder...
-
-Do you have a main_prd.md file in your /docs/ folder?
-(You should create this manually and place it there before proceeding)
-
-Please respond with yes or no:
-```
-
-### Step 4: Workflow Launch
+### Step 4: Universal Workflow Launch
 
 Based on your responses, the system automatically launches the appropriate workflow:
 
-**Greenfield Workflows:**
+**Web Application Workflows:**
+- `greenfield-fullstack.yaml` - New web application development
+- `brownfield-fullstack.yaml` - Existing web application enhancement
+
+**Desktop Application Workflows:**
+- `greenfield-fullstack.yaml` - New desktop application development (Electron context)
+- `brownfield-fullstack.yaml` - Existing desktop application enhancement (Electron context)
+
+**Mobile Application Workflows:**
 - `mobile-greenfield-flutter.yaml` - New Flutter app development
 - `mobile-greenfield-react-native.yaml` - New React Native app development
-
-**Brownfield Workflows:**
 - `mobile-brownfield-flutter.yaml` - Existing Flutter app enhancement
 - `mobile-brownfield-react-native.yaml` - Existing React Native app enhancement
+
+**Backend Service Workflows:**
+- `greenfield-service.yaml` - New backend service development
+- `brownfield-service.yaml` - Existing backend service enhancement
 
 ## Implementation
 
 When `/appiq` is executed, it performs the following logic:
 
 ```javascript
-// Project type detection
-let projectType = await askUser("What type of mobile project? (1) Greenfield (2) Brownfield");
+// Project status detection
+let projectType = await askUser("Project Status? (1) Greenfield (2) Brownfield");
 
-let platform;
-if (projectType === "1") {
-    // Greenfield - ask for platform choice
-    platform = await askUser("Platform? (1) Flutter (2) React Native (3) Recommend");
-    if (platform === "3") {
-        platform = await recommendPlatform();
+// Application category detection
+let appCategory = await askUser("App Type? (1) Web (2) Desktop (3) Mobile (4) Backend (5) Auto-detect");
+
+let platform = null;
+if (appCategory === "3") {
+    // Mobile - ask for platform
+    platform = await askUser("Mobile Platform? (1) Flutter (2) React Native");
+} else if (appCategory === "5") {
+    // Auto-detection logic
+    if (projectType === "2") {
+        // Brownfield - analyze existing project
+        let detection = await analyzeProject();
+        appCategory = detection.type;
+        platform = detection.platform;
+    } else {
+        // Greenfield - request description
+        let description = await askUser("Describe your project briefly:");
+        let detection = await analyzeDescription(description);
+        appCategory = detection.type;
+        platform = detection.platform;
     }
-} else {
-    // Brownfield - detect or ask for platform
-    platform = await detectPlatform() || await askUser("Platform? (1) Flutter (2) React Native (3) Analyze");
-}
-
-// PRD validation
-let hasPrd = await checkFileExists("docs/main_prd.md");
-if (!hasPrd) {
-    await showPrdGuidance();
-    return;
 }
 
 // Launch appropriate workflow
-let workflowFile = getWorkflowFile(projectType, platform);
+let workflowFile = getUniversalWorkflowFile(projectType, appCategory, platform);
 await launchWorkflow(workflowFile);
 ```
 
-## Workflow Mapping
+## Universal Workflow Mapping
 
 The command maps user selections to specific workflow files:
 
-| Project Type | Platform | Workflow File |
-|--------------|----------|---------------|
-| Greenfield | Flutter | `mobile-greenfield-flutter.yaml` |
-| Greenfield | React Native | `mobile-greenfield-react-native.yaml` |
-| Brownfield | Flutter | `mobile-brownfield-flutter.yaml` |
-| Brownfield | React Native | `mobile-brownfield-react-native.yaml` |
+| Project Type | App Category | Platform | Workflow File |
+|--------------|-------------|----------|---------------|
+| Greenfield | Web | - | `greenfield-fullstack.yaml` |
+| Greenfield | Desktop | - | `greenfield-fullstack.yaml` (Electron context) |
+| Greenfield | Mobile | Flutter | `mobile-greenfield-flutter.yaml` |
+| Greenfield | Mobile | React Native | `mobile-greenfield-react-native.yaml` |  
+| Greenfield | Backend | - | `greenfield-service.yaml` |
+| Brownfield | Web | - | `brownfield-fullstack.yaml` |
+| Brownfield | Desktop | - | `brownfield-fullstack.yaml` (Electron context) |
+| Brownfield | Mobile | Flutter | `mobile-brownfield-flutter.yaml` |
+| Brownfield | Mobile | React Native | `mobile-brownfield-react-native.yaml` |
+| Brownfield | Backend | - | `brownfield-service.yaml` |
 
 ## Expected Workflow Launch
 

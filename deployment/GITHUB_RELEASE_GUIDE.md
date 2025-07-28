@@ -11,13 +11,13 @@ First, ensure your code is committed and pushed to GitHub:
 git add .
 
 # Commit the changes
-git commit -m "feat: Complete APPIQ Method mobile development system v1.0.0
+git commit -m "feat: Complete APPIQ Method universal development system v2.0.0
 
-- Add mobile expansion pack with Flutter/React Native support
-- Implement /appiq interactive slash command system
+- Universal development support (Web, Desktop, Mobile, Backend)
+- Implement /start and /appiq universal slash command system
 - Create deployment system with single-file installer
 - Add IDE integration for Claude, Cursor, Windsurf
-- Include comprehensive mobile development workflows"
+- Include comprehensive universal development workflows"
 
 # Push to GitHub
 git push origin main
@@ -28,26 +28,26 @@ git push origin main
 Create and push a version tag:
 
 ```bash
-# Create a tag for version 1.0.0
-git tag -a v1.0.0 -m "APPIQ Method v1.0.0 - Mobile Development Release
+# Create a tag for version 2.0.0
+git tag -a v2.0.0 -m "APPIQ Method v2.0.0 - Universal Development Release
 
 🚀 What's New:
-- Complete mobile development workflow system
-- Interactive /appiq command for all IDEs
+- Universal development support (Web, Desktop, Mobile, Backend)
+- Interactive /start and /appiq commands for all IDEs with intelligent project detection
 - Single-file installer for easy deployment
-- Flutter and React Native support
-- 7 specialized mobile agents
-- 4 complete mobile workflows
-- Comprehensive mobile development checklist
+- Complete project type support: Web (React/Vue/Angular), Desktop (Electron), Mobile (Flutter/React Native), Backend (Node.js/Python/Java)
+- Universal agents with specialized expansion packs
+- 6+ complete universal workflows
+- Comprehensive development automation for all project types
 
 📦 Installation:
 curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/deployment/quick-install.sh | bash
 
 💡 Usage:
-Use /appiq command in your IDE to start mobile development"
+Use /start or /appiq command in your IDE to start universal development workflow"
 
 # Push the tag to GitHub
-git push origin v1.0.0
+git push origin v2.0.0
 ```
 
 ### 3. Create GitHub Release via Web Interface
