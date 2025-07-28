@@ -158,6 +158,7 @@ persona:
     - Always remind users that commands require * prefix
 commands:
   help: Show this guide with available agents and workflows
+  start: Universal project launcher with smart detection and guided workflow selection
   chat-mode: Start conversational mode for detailed assistance
   kb-mode: Load full BMad knowledge base
   status: Show current context, active agent, and progress
@@ -179,6 +180,7 @@ help-display-template: |
 
   Core Commands:
   *help ............... Show this guide
+  *start .............. 🚀 Universal project launcher (RECOMMENDED FOR BEGINNERS)
   *chat-mode .......... Start conversational mode for detailed assistance
   *kb-mode ............ Load full BMad knowledge base
   *status ............. Show current context, active agent, and progress
@@ -240,6 +242,115 @@ workflow-guidance:
   - Adapt questions to the specific domain (e.g., game dev vs infrastructure vs web dev)
   - Only recommend workflows that actually exist in the current bundle
   - When *workflow-guidance is called, start an interactive session and list all available workflows with brief descriptions
+start-behavior:
+  step1-project-status:
+    question: |
+      🚀 APPIQ Method Universal Launcher
+
+      Arbeiten wir an einem neuen oder bestehenden Projekt?
+
+      1. 🆕 Neues Projekt (Greenfield) - Wir bauen von Grund auf
+      2. 🔧 Bestehendes Projekt (Brownfield) - Wir erweitern/verbessern etwas
+
+      Antworte mit 1 oder 2:
+    responses:
+      '1': new_project
+      '2': existing_project
+  step2-project-type:
+    question: |
+      📋 Lass mich verstehen, was wir bauen...
+
+      Was für eine Art von Anwendung ist das?
+
+      1. 🌐 Web-Anwendung (läuft im Browser)
+      2. 💻 Desktop-Anwendung (Electron, Windows/Mac App)
+      3. 📱 Mobile App (iOS/Android)
+      4. ⚙️ Backend/API Service (Server, Database)
+      5. 🤔 Bin mir nicht sicher - lass APPIQ entscheiden
+
+      Antworte mit 1, 2, 3, 4 oder 5:
+    responses:
+      '1': web_app
+      '2': desktop_app
+      '3': mobile_app
+      '4': backend_service
+      '5': auto_detect
+  workflow-mapping:
+    new_project:
+      web_app: greenfield-fullstack.yaml
+      desktop_app: greenfield-fullstack.yaml
+      mobile_app: mobile-platform-selection
+      backend_service: greenfield-service.yaml
+      auto_detect: project-description-analysis
+    existing_project:
+      web_app: brownfield-fullstack.yaml
+      desktop_app: brownfield-fullstack.yaml
+      mobile_app: mobile-platform-detection
+      backend_service: brownfield-service.yaml
+      auto_detect: project-structure-analysis
+  auto-detection:
+    new-project-analysis:
+      prompt: |
+        🔍 Lass uns gemeinsam herausfinden, was das beste für dein Projekt ist...
+
+        Beschreibe kurz dein Projekt in 1-2 Sätzen:
+        (z.B. "Eine Ecommerce-Website mit Admin-Panel" oder "Eine Todo-App für Windows")
+      keywords:
+        web:
+          - website
+          - web
+          - browser
+          - online
+          - webapp
+          - ecommerce
+          - cms
+        desktop:
+          - desktop
+          - electron
+          - windows
+          - mac
+          - app
+          - gui
+          - standalone
+        mobile:
+          - mobile
+          - ios
+          - android
+          - app store
+          - phone
+          - tablet
+        backend:
+          - api
+          - server
+          - backend
+          - database
+          - service
+          - microservice
+    existing-project-analysis:
+      message: |
+        🔍 Analysiere dein bestehendes Projekt...
+
+        Ich schaue mir deine Projekt-Struktur an...
+      file-patterns:
+        desktop:
+          - package.json + electron dependency
+        mobile-react-native:
+          - package.json + react-native dependency
+        mobile-flutter:
+          - pubspec.yaml present
+        web:
+          - package.json + (next|react|vue|angular)
+        backend-node:
+          - package.json + (express|fastify|koa)
+        backend-python:
+          - requirements.txt + (flask|django|fastapi)
+        backend-java:
+          - pom.xml or build.gradle
+  context-messages:
+    desktop: Fokus auf Electron Desktop-Anwendung mit plattformspezifischen Optimierungen
+    mobile: Plattform-Erkennung erforderlich (Flutter/React Native)
+    web: Full-Stack Web-Anwendung mit Frontend und Backend Komponenten
+    backend: API-Design und Datenarchitektur im Fokus
 dependencies:
   tasks:
     - advanced-elicitation.md
@@ -2591,18 +2702,25 @@ npx bmad-method install
 
 ## Core Configuration for Game Development (core-config.yaml)
 
-**New in V4**: The `bmad-core/core-config.yaml` file enables BMad to work seamlessly with any Unity project structure, providing maximum flexibility for game development.
+**New in V4**: The `expansion-packs/bmad-2d-unity-game-dev/core-config.yaml` file enables BMad to work seamlessly with any Unity project structure, providing maximum flexibility for game development.
 
 ### Game Development Configuration
 
-The expansion pack follows the standard BMad configuration patterns. Game-specific configurations would be added to your project's `core-config.yaml`:
+The expansion pack follows the standard BMad configuration patterns. Copy your core-config.yaml file to expansion-packs/bmad-2d-unity-game-dev/ and add Game-specific configurations to your project's `core-config.yaml`:
 
 ```yaml
-# Standard BMad configurations apply
-prdVersion: v4
-prdSharded: true
-architectureVersion: v4
-architectureSharded: true
+markdownExploder: true
+prd:
+  prdFile: docs/prd.md
+  prdVersion: v4
+  prdSharded: true
+  prdShardedLocation: docs/prd
+  epicFilePattern: epic-{n}*.md
+architecture:
+  architectureFile: docs/architecture.md
+  architectureVersion: v4
+  architectureSharded: true
+  architectureShardedLocation: docs/architecture
 gdd:
   gddVersion: v4
   gddSharded: true
@@ -2617,7 +2735,12 @@ gamearchitecture:
   gamearchitectureShardedLocation: docs/game-architecture
 gamebriefdocLocation: docs/game-brief.md
 levelDesignLocation: docs/level-design.md
-
+#Specify the location for your unity editor
+unityEditorLocation: /home/USER/Unity/Hub/Editor/VERSION/Editor/Unity
+customTechnicalDocuments: null
+devDebugLog: .ai/debug-log.md
+devStoryLocation: docs/stories
+slashPrefix: bmad2du
 #replace old devLoadAlwaysFiles with this once you have sharded your gamearchitecture document
 devLoadAlwaysFiles:
   - docs/game-architecture/9-coding-standards.md
@@ -14265,18 +14388,25 @@ npx bmad-method install
 
 ## Core Configuration for Game Development (core-config.yaml)
 
-**New in V4**: The `bmad-core/core-config.yaml` file enables BMad to work seamlessly with any Unity project structure, providing maximum flexibility for game development.
+**New in V4**: The `expansion-packs/bmad-2d-unity-game-dev/core-config.yaml` file enables BMad to work seamlessly with any Unity project structure, providing maximum flexibility for game development.
 
 ### Game Development Configuration
 
-The expansion pack follows the standard BMad configuration patterns. Game-specific configurations would be added to your project's `core-config.yaml`:
+The expansion pack follows the standard BMad configuration patterns. Copy your core-config.yaml file to expansion-packs/bmad-2d-unity-game-dev/ and add Game-specific configurations to your project's `core-config.yaml`:
 
 ```yaml
-# Standard BMad configurations apply
-prdVersion: v4
-prdSharded: true
-architectureVersion: v4
-architectureSharded: true
+markdownExploder: true
+prd:
+  prdFile: docs/prd.md
+  prdVersion: v4
+  prdSharded: true
+  prdShardedLocation: docs/prd
+  epicFilePattern: epic-{n}*.md
+architecture:
+  architectureFile: docs/architecture.md
+  architectureVersion: v4
+  architectureSharded: true
+  architectureShardedLocation: docs/architecture
 gdd:
   gddVersion: v4
   gddSharded: true
@@ -14291,7 +14421,12 @@ gamearchitecture:
   gamearchitectureShardedLocation: docs/game-architecture
 gamebriefdocLocation: docs/game-brief.md
 levelDesignLocation: docs/level-design.md
-
+#Specify the location for your unity editor
+unityEditorLocation: /home/USER/Unity/Hub/Editor/VERSION/Editor/Unity
+customTechnicalDocuments: null
+devDebugLog: .ai/debug-log.md
+devStoryLocation: docs/stories
+slashPrefix: bmad2du
 #replace old devLoadAlwaysFiles with this once you have sharded your gamearchitecture document
 devLoadAlwaysFiles:
   - docs/game-architecture/9-coding-standards.md
