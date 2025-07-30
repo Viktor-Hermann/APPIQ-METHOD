@@ -1,0 +1,41 @@
+name: "BMad Flutter Mobile Development"
+version: "1.0.0"
+description: "Flutter mobile app development with Clean Architecture, Cubit state management, and best practices"
+bmad_compatibility: "v4+"
+author: "BMad Team"
+
+dependencies:
+  core: "bmad-core"
+  
+features:
+  - flutter_clean_architecture
+  - cubit_state_management
+  - multi_language_support
+  - firebase_integration
+  - supabase_integration
+  - security_validation
+  - responsive_design
+  - testing_framework
+
+tech_stack_support:
+  frontend:
+    - Flutter
+    - Dart
+  state_management:
+    - Cubit/BLoC
+    - Riverpod (alternative)
+  backend_integration:
+    - Firebase
+    - Supabase
+    - REST APIs
+    - GraphQL
+  testing:
+    - Unit Testing
+    - Widget Testing
+    - Integration Testing
+    - Golden Tests
+  tools:
+    - Build Runner
+    - Freezed
+    - Injectable
+    - Get It

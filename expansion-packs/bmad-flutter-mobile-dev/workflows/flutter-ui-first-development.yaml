@@ -1,0 +1,220 @@
+workflow:
+  id: flutter-ui-first-development
+  name: Flutter UI-First Development Workflow
+  description: Specialized Flutter development workflow starting with UI design, then building Cubit, Domain, and Data layers progressively
+  version: 1.0
+  
+phases:
+  - id: planning
+    name: Planning & Analysis
+    description: Initial planning and requirement analysis
+    agents:
+      - analyst: Analyze requirements and create brief
+      - pm: Create product requirements and user stories
+      - ux-expert: Design user experience and wireframes
+      - architect: Create overall architecture and tech stack decisions
+      - po: Review and approve requirements
+    deliverables:
+      - Project brief
+      - Product Requirements Document (PRD)
+      - UX/UI specifications
+      - Flutter architecture document
+      - Technical specifications
+    
+  - id: ui-implementation
+    name: UI Implementation
+    description: Design and implement Flutter user interface
+    agents:
+      - flutter-ui-agent: 
+          role: Primary implementer
+          responsibilities:
+            - Design responsive Flutter UI
+            - Create custom widgets
+            - Implement Material Design 3
+            - Set up localization keys
+            - Ensure accessibility compliance
+            - Create UI documentation
+      - shared-components-agent:
+          role: Support
+          responsibilities:
+            - Identify reusable components
+            - Create shared widgets
+            - Establish design system
+    deliverables:
+      - Flutter pages and widgets
+      - Responsive layout implementation
+      - Localization keys and ARB files
+      - UI component documentation
+      - Accessibility compliance report
+    handoff_data:
+      - UI specifications and requirements
+      - Widget structure and hierarchy
+      - State requirements for Cubit layer
+      - User interaction flows
+      - Localization key definitions
+    
+  - id: state-management
+    name: State Management Implementation
+    description: Implement Cubit-based state management based on UI requirements
+    agents:
+      - flutter-cubit-agent:
+          role: Primary implementer
+          responsibilities:
+            - Analyze UI state requirements
+            - Implement Cubit classes
+            - Create state classes with Equatable
+            - Handle business logic coordination
+            - Implement error handling
+            - Create comprehensive tests
+    deliverables:
+      - Cubit implementations
+      - State classes with proper patterns
+      - Business logic coordination
+      - Error handling implementation
+      - Cubit unit tests
+    handoff_data:
+      - State management requirements
+      - Business logic specifications
+      - Data requirements for domain layer
+      - Error handling patterns
+      - Performance constraints
+    
+  - id: domain-implementation
+    name: Domain Layer Implementation
+    description: Implement business entities, use cases, and repository interfaces
+    agents:
+      - flutter-domain-agent:
+          role: Primary implementer
+          responsibilities:
+            - Design business entities
+            - Implement use cases with validation
+            - Create repository interfaces
+            - Define business rules
+            - Ensure Clean Architecture compliance
+            - Create domain layer tests
+    deliverables:
+      - Business entities with Equatable
+      - Use cases with business validation
+      - Repository interfaces
+      - Business rule implementations
+      - Domain layer unit tests
+    handoff_data:
+      - Entity definitions and relationships
+      - Use case specifications
+      - Repository interface requirements
+      - Business rule definitions
+      - Data access patterns
+    
+  - id: data-implementation
+    name: Data Layer Implementation
+    description: Implement data sources, repositories, and external integrations
+    agents:
+      - flutter-data-agent:
+          role: Primary implementer
+          responsibilities:
+            - Implement repository concrete classes
+            - Create remote and local data sources
+            - Set up API client configuration
+            - Implement data models with JSON serialization
+            - Add caching strategies
+            - Handle offline scenarios
+            - Create data layer tests
+    deliverables:
+      - Repository implementations
+      - Remote and local data sources
+      - API client setup
+      - Data models with Freezed
+      - Caching implementation
+      - Offline support
+      - Data layer tests
+    
+  - id: integration-testing
+    name: Integration & Testing
+    description: Integrate all layers and perform comprehensive testing
+    agents:
+      - qa:
+          role: Primary tester
+          responsibilities:
+            - Create integration tests
+            - Perform widget testing
+            - Validate user flows
+            - Test multi-language support
+            - Perform security testing
+            - Create test reports
+      - shared-components-agent:
+          role: Support
+          responsibilities:
+            - Test shared components
+            - Validate reusability
+            - Performance testing
+    deliverables:
+      - Integration test suite
+      - Widget test coverage
+      - Security validation report
+      - Performance benchmarks
+      - Multi-language testing
+      - Final test report
+    
+  - id: deployment-preparation
+    name: Deployment Preparation
+    description: Prepare app for production deployment
+    agents:
+      - sm:
+          role: Deployment coordinator
+          responsibilities:
+            - Configure build settings
+            - Set up CI/CD pipeline
+            - Prepare app store assets
+            - Security final validation
+            - Performance optimization
+            - Release preparation
+    deliverables:
+      - Production build configuration
+      - CI/CD pipeline setup
+      - App store preparation
+      - Security compliance report
+      - Performance optimization report
+      - Release documentation
+
+workflow_rules:
+  - Each phase must be completed before moving to the next
+  - UI Agent provides requirements to Cubit Agent
+  - Cubit Agent provides requirements to Domain Agent
+  - Domain Agent provides requirements to Data Agent
+  - All agents must follow standard workflow process
+  - Quality gates must be passed at each phase
+  - Security validation required at each layer
+  - All text must use localization keys
+  - Git commits required after each completed phase
+
+quality_gates:
+  - DRY: No code duplication across layers
+  - Readable: Clear code structure and documentation
+  - Maintainable: Modular architecture following Clean Architecture
+  - Performant: Efficient state management and UI rendering
+  - Testable: Comprehensive test coverage at all layers
+  - Secure: Security validation at each layer
+  - Localized: All text uses localization keys
+
+agent_coordination:
+  ui_to_cubit:
+    - State requirements specification
+    - User interaction patterns
+    - Loading and error states
+    - Navigation requirements
+  cubit_to_domain:
+    - Business logic requirements
+    - Entity specifications
+    - Use case definitions
+    - Validation rules
+  domain_to_data:
+    - Repository interface implementations
+    - Data model requirements
+    - API endpoint specifications
+    - Caching strategies
+
+mcp_integrations:
+  - sequential-thinking: For complex workflow analysis and decision making
+  - supabase: For Supabase backend integration
+  - firebase: For Firebase services integration
+  - dart: For Dart code analysis and generation

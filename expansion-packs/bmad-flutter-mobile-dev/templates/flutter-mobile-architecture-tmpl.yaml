@@ -1,0 +1,530 @@
+template:
+  id: flutter-mobile-architecture-template-v1
+  name: Flutter Mobile Architecture Document
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/flutter-architecture.md
+    title: "{{project_name}} Flutter Mobile Architecture Document"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: introduction
+    title: Introduction
+    instruction: |
+      Review provided documents including PRD, UX-UI Specification, and main Architecture Document. Focus on mobile-specific requirements and Flutter implementation details.
+    elicit: true
+    content: |
+      This document outlines the Flutter mobile architecture for {{project_name}}, following Clean Architecture principles with Cubit state management, dependency injection, and multi-language support.
+      
+      This architecture ensures scalable, testable, and maintainable mobile applications that can be released to production with confidence.
+    sections:
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track document versions and changes
+
+  - id: flutter-tech-stack
+    title: Flutter Tech Stack
+    instruction: Define the complete Flutter technology stack with specific versions and rationale.
+    elicit: true
+    sections:
+      - id: tech-stack-table
+        title: Technology Stack Table
+        type: table
+        columns: [Category, Technology, Version, Purpose, Rationale]
+        rows:
+          - ["Mobile Framework", "Flutter", "{{flutter_version}}", "Cross-platform mobile development", "{{flutter_rationale}}"]
+          - ["Language", "Dart", "{{dart_version}}", "Programming language", "{{dart_rationale}}"]
+          - ["State Management", "{{state_management}}", "{{version}}", "Application state management", "{{state_rationale}}"]
+          - ["Dependency Injection", "get_it + injectable", "{{di_version}}", "Dependency management", "{{di_rationale}}"]
+          - ["Code Generation", "freezed + json_serializable", "{{codegen_version}}", "Model and serialization generation", "{{codegen_rationale}}"]
+          - ["Networking", "dio", "{{dio_version}}", "HTTP client", "{{dio_rationale}}"]
+          - ["Local Storage", "{{local_storage}}", "{{storage_version}}", "Local data persistence", "{{storage_rationale}}"]
+          - ["Error Handling", "dartz", "{{dartz_version}}", "Functional error handling", "{{dartz_rationale}}"]
+          - ["Routing", "go_router", "{{router_version}}", "Navigation and routing", "{{router_rationale}}"]
+          - ["Localization", "flutter_localizations", "{{l10n_version}}", "Multi-language support", "{{l10n_rationale}}"]
+          - ["Backend Service", "{{backend_service}}", "{{backend_version}}", "Backend integration", "{{backend_rationale}}"]
+          - ["Authentication", "{{auth_service}}", "{{auth_version}}", "User authentication", "{{auth_rationale}}"]
+          - ["Testing Framework", "flutter_test + bloc_test", "{{test_version}}", "Unit and widget testing", "{{test_rationale}}"]
+          - ["Build Tool", "build_runner", "{{build_version}}", "Code generation", "{{build_rationale}}"]
+
+  - id: clean-architecture
+    title: Clean Architecture Implementation
+    instruction: Define the Clean Architecture layers and their responsibilities in Flutter context.
+    elicit: true
+    sections:
+      - id: architecture-layers
+        title: Architecture Layers
+        template: |
+          **Presentation Layer (UI)**
+          - Pages and Widgets for user interface
+          - Cubit for state management
+          - BlocConsumer/BlocBuilder for state consumption
+          
+          **Domain Layer (Business Logic)**
+          - Entities representing business objects
+          - Use Cases containing business rules
+          - Repository interfaces for data abstraction
+          
+          **Data Layer (External Concerns)**
+          - Repository implementations
+          - Data sources (remote and local)
+          - Models with JSON serialization
+          - API clients and local storage
+      
+      - id: architecture-diagram
+        title: Clean Architecture Diagram
+        type: mermaid
+        mermaid_type: graph
+        instruction: |
+          Create a Mermaid diagram showing the Clean Architecture layers and dependencies:
+          - UI Layer (Widgets, Pages, Cubits)
+          - Domain Layer (Entities, Use Cases, Repository Interfaces)
+          - Data Layer (Repository Implementations, Data Sources, Models)
+          - External (APIs, Databases, File System)
+
+  - id: project-structure
+    title: Project Structure
+    instruction: Define the exact Flutter project structure following Clean Architecture principles.
+    elicit: true
+    type: code
+    language: plaintext
+    template: |
+      lib/
+      ├── core/                    # Shared Core Functionality
+      │   ├── constants/          # API endpoints, app constants
+      │   ├── di/                # Dependency injection setup
+      │   │   ├── injection_container.dart
+      │   │   └── injection_container.config.dart
+      │   ├── error/             # Error handling (failures, exceptions)
+      │   │   ├── failures.dart
+      │   │   └── exceptions.dart
+      │   ├── network/           # Networking setup
+      │   │   ├── api_client.dart
+      │   │   └── network_info.dart
+      │   ├── local_storage/     # Local storage services
+      │   │   └── hive_service.dart
+      │   └── utils/             # Core utilities
+      │       ├── validators.dart
+      │       └── formatters.dart
+      ├── features/              # Feature-based modules
+      │   └── {{feature_name}}/    # Individual features
+      │       ├── data/          # Data layer
+      │       │   ├── datasources/   # Remote/Local data sources
+      │       │   │   ├── {{feature}}_remote_datasource.dart
+      │       │   │   └── {{feature}}_local_datasource.dart
+      │       │   ├── models/        # Data models
+      │       │   │   └── {{feature}}_model.dart
+      │       │   └── repositories/  # Repository implementations
+      │       │       └── {{feature}}_repository_impl.dart
+      │       ├── domain/        # Domain layer
+      │       │   ├── entities/      # Business entities
+      │       │   │   └── {{feature}}_entity.dart
+      │       │   ├── repositories/  # Repository interfaces
+      │       │   │   └── {{feature}}_repository.dart
+      │       │   └── usecases/     # Business use cases
+      │       │       ├── get_{{feature}}_usecase.dart
+      │       │       ├── create_{{feature}}_usecase.dart
+      │       │       └── update_{{feature}}_usecase.dart
+      │       └── presentation/  # Presentation layer
+      │           ├── cubit/        # State management
+      │           │   ├── {{feature}}_cubit.dart
+      │           │   └── {{feature}}_state.dart
+      │           ├── pages/        # UI pages/screens
+      │           │   ├── {{feature}}_list_page.dart
+      │           │   └── {{feature}}_detail_page.dart
+      │           └── widgets/      # Feature-specific widgets
+      │               └── {{feature}}_list_item.dart
+      ├── shared/                # Shared UI components
+      │   ├── theme/            # Theme management
+      │   │   ├── app_theme.dart
+      │   │   └── theme_cubit.dart
+      │   ├── widgets/          # Reusable widgets
+      │   │   ├── base_scaffold.dart
+      │   │   ├── loading_widget.dart
+      │   │   └── error_widget.dart
+      │   ├── constants/        # UI constants
+      │   │   └── app_constants.dart
+      │   └── utils/            # Shared utilities
+      │       ├── navigation_service.dart
+      │       └── dialog_service.dart
+      ├── l10n/                 # Localization
+      │   ├── app_en.arb        # English translations
+      │   ├── app_de.arb        # German translations
+      │   └── l10n.yaml         # Localization configuration
+      └── main.dart             # Application entry point
+
+  - id: state-management-architecture
+    title: State Management Architecture
+    instruction: Define the Cubit-based state management approach with detailed patterns.
+    elicit: true
+    sections:
+      - id: cubit-pattern
+        title: Cubit Pattern Implementation
+        type: code
+        language: dart
+        template: |
+          // State class with Equatable
+          class {{Feature}}State extends Equatable {
+            const {{Feature}}State({
+              this.status = {{Feature}}Status.initial,
+              this.{{feature}}s = const [],
+              this.selectedEntity,
+              this.message,
+            });
+
+            final {{Feature}}Status status;
+            final List<{{Feature}}Entity> {{feature}}s;
+            final {{Feature}}Entity? selectedEntity;
+            final String? message;
+
+            {{Feature}}State copyWith({
+              {{Feature}}Status? status,
+              List<{{Feature}}Entity>? {{feature}}s,
+              {{Feature}}Entity? selectedEntity,
+              String? message,
+            }) {
+              return {{Feature}}State(
+                status: status ?? this.status,
+                {{feature}}s: {{feature}}s ?? this.{{feature}}s,
+                selectedEntity: selectedEntity ?? this.selectedEntity,
+                message: message ?? this.message,
+              );
+            }
+
+            @override
+            List<Object?> get props => [status, {{feature}}s, selectedEntity, message];
+          }
+
+          enum {{Feature}}Status { initial, loading, success, failure }
+
+          // Cubit implementation
+          @injectable
+          class {{Feature}}Cubit extends Cubit<{{Feature}}State> {
+            {{Feature}}Cubit(this._useCase) : super(const {{Feature}}State());
+
+            final Get{{Feature}}sUseCase _useCase;
+
+            Future<void> get{{Feature}}s() async {
+              emit(state.copyWith(status: {{Feature}}Status.loading));
+
+              final result = await _useCase();
+              result.fold(
+                (failure) => emit(state.copyWith(
+                  status: {{Feature}}Status.failure,
+                  message: failure.message,
+                )),
+                ({{feature}}s) => emit(state.copyWith(
+                  status: {{Feature}}Status.success,
+                  {{feature}}s: {{feature}}s,
+                )),
+              );
+            }
+          }
+
+  - id: dependency-injection
+    title: Dependency Injection Setup
+    instruction: Define the dependency injection configuration using get_it and injectable.
+    elicit: true
+    sections:
+      - id: di-setup
+        title: DI Container Setup
+        type: code
+        language: dart
+        template: |
+          // injection_container.dart
+          import 'package:get_it/get_it.dart';
+          import 'package:injectable/injectable.dart';
+          import 'injection_container.config.dart';
+
+          final getIt = GetIt.instance;
+
+          @InjectableInit(
+            initializerName: 'init',
+            preferRelativeImports: true,
+            asExtension: true,
+          )
+          Future<void> configureDependencies() async => getIt.init();
+
+          // Usage in main.dart
+          void main() async {
+            WidgetsFlutterBinding.ensureInitialized();
+            await configureDependencies();
+            runApp(MyApp());
+          }
+
+  - id: localization-setup
+    title: Localization Setup
+    instruction: Define the multi-language support implementation with ARB files.
+    elicit: true
+    sections:
+      - id: l10n-config
+        title: Localization Configuration
+        type: code
+        language: yaml
+        template: |
+          # l10n.yaml
+          arb-dir: lib/l10n
+          template-arb-file: app_en.arb
+          output-localization-file: app_localizations.dart
+          output-class: AppLocalizations
+          
+      - id: arb-example
+        title: ARB File Example
+        type: code
+        language: json
+        template: |
+          // app_en.arb
+          {
+            "@@locale": "en",
+            "appTitle": "{{project_name}}",
+            "@appTitle": {
+              "description": "The title of the application"
+            },
+            "welcomeMessage": "Welcome, {userName}!",
+            "@welcomeMessage": {
+              "description": "Welcome message with user name",
+              "placeholders": {
+                "userName": {
+                  "type": "String",
+                  "example": "John"
+                }
+              }
+            },
+            "loading": "Loading...",
+            "error": "An error occurred",
+            "retry": "Retry",
+            "cancel": "Cancel",
+            "save": "Save",
+            "delete": "Delete",
+            "edit": "Edit"
+          }
+
+  - id: backend-integration
+    title: Backend Integration
+    instruction: Define the backend service integration (Firebase, Supabase, or custom API).
+    elicit: true
+    sections:
+      - id: api-client-setup
+        title: API Client Configuration
+        type: code
+        language: dart
+        template: |
+          // api_client.dart
+          @LazySingleton()
+          class ApiClient {
+            late final Dio _dio;
+
+            ApiClient() {
+              _dio = Dio(
+                BaseOptions(
+                  baseUrl: '{{api_base_url}}',
+                  connectTimeout: const Duration(seconds: 30),
+                  receiveTimeout: const Duration(seconds: 30),
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                  },
+                ),
+              );
+
+              _dio.interceptors.add(LogInterceptor());
+              _dio.interceptors.add(AuthInterceptor());
+            }
+
+            Future<Response> get(String path) => _dio.get(path);
+            Future<Response> post(String path, {dynamic data}) => _dio.post(path, data: data);
+            Future<Response> put(String path, {dynamic data}) => _dio.put(path, data: data);
+            Future<Response> delete(String path) => _dio.delete(path);
+          }
+
+  - id: testing-strategy
+    title: Testing Strategy
+    instruction: Define comprehensive testing approach for Flutter Clean Architecture.
+    elicit: true
+    sections:
+      - id: testing-pyramid
+        title: Testing Pyramid
+        template: |
+          **Unit Tests** (70%)
+          - Use Cases testing
+          - Repository testing
+          - Cubit testing
+          - Utility function testing
+          
+          **Widget Tests** (20%)
+          - Individual widget testing
+          - Widget interaction testing
+          - UI component testing
+          
+          **Integration Tests** (10%)
+          - End-to-end feature testing
+          - API integration testing
+          - Navigation flow testing
+
+      - id: test-examples
+        title: Test Examples
+        type: code
+        language: dart
+        template: |
+          // Use Case Test
+          void main() {
+            group('Get{{Feature}}sUseCase', () {
+              late {{Feature}}Repository mockRepository;
+              late Get{{Feature}}sUseCase useCase;
+
+              setUp(() {
+                mockRepository = Mock{{Feature}}Repository();
+                useCase = Get{{Feature}}sUseCase(mockRepository);
+              });
+
+              test('should return list of {{feature}}s when repository call is successful', () async {
+                // arrange
+                final {{feature}}List = [{{Feature}}Entity(id: '1', name: 'Test')];
+                when(() => mockRepository.get{{Feature}}s())
+                    .thenAnswer((_) async => Right({{feature}}List));
+
+                // act
+                final result = await useCase();
+
+                // assert
+                expect(result, Right({{feature}}List));
+                verify(() => mockRepository.get{{Feature}}s()).called(1);
+              });
+            });
+          }
+
+  - id: security-implementation
+    title: Security Implementation
+    instruction: Define security measures and best practices for Flutter mobile app.
+    elicit: true
+    sections:
+      - id: security-checklist
+        title: Security Checklist
+        template: |
+          **Data Security**
+          - [ ] Use flutter_secure_storage for sensitive data
+          - [ ] Implement certificate pinning for API calls
+          - [ ] Validate all user inputs
+          - [ ] Encrypt local database if needed
+          
+          **Authentication Security**
+          - [ ] Secure token storage
+          - [ ] Implement token refresh mechanism
+          - [ ] Handle authentication errors properly
+          - [ ] Implement biometric authentication if required
+          
+          **Network Security**
+          - [ ] Use HTTPS for all API calls
+          - [ ] Implement request/response logging (excluding sensitive data)
+          - [ ] Handle network errors securely
+          - [ ] Implement timeout configurations
+          
+          **Code Security**
+          - [ ] Obfuscate release builds
+          - [ ] Remove debug information from release
+          - [ ] Validate all external data
+          - [ ] Implement proper error handling
+
+  - id: performance-optimization
+    title: Performance Optimization
+    instruction: Define performance optimization strategies for Flutter app.
+    elicit: true
+    sections:
+      - id: performance-guidelines
+        title: Performance Guidelines
+        template: |
+          **Widget Performance**
+          - Use const constructors wherever possible
+          - Implement proper widget keys for list items
+          - Avoid rebuilding expensive widgets unnecessarily
+          - Use RepaintBoundary for complex widgets
+          
+          **State Management Performance**
+          - Keep state as local as possible
+          - Use proper Equatable implementation
+          - Avoid emitting identical states
+          - Implement proper loading states
+          
+          **Network Performance**
+          - Implement proper caching strategies
+          - Use image caching for network images
+          - Implement pagination for large data sets
+          - Handle offline scenarios gracefully
+          
+          **Memory Management**
+          - Dispose controllers and streams properly
+          - Use object pooling for frequently created objects
+          - Monitor memory usage in debug mode
+          - Implement proper error boundaries
+
+  - id: deployment-strategy
+    title: Deployment Strategy
+    instruction: Define the deployment process for iOS and Android.
+    elicit: true
+    sections:
+      - id: build-configuration
+        title: Build Configuration
+        template: |
+          **Android Configuration**
+          - Minimum SDK: {{min_sdk_version}}
+          - Target SDK: {{target_sdk_version}}
+          - Build variants: debug, release
+          - Signing configuration for release builds
+          - ProGuard/R8 obfuscation enabled
+          
+          **iOS Configuration**
+          - Minimum iOS version: {{min_ios_version}}
+          - Build configurations: Debug, Release
+          - Code signing for distribution
+          - App Transport Security configuration
+          
+          **CI/CD Pipeline**
+          - Automated testing on pull requests
+          - Automated builds for releases
+          - Code quality checks (linting, analysis)
+          - Security scanning
+          - Automated deployment to app stores
+
+  - id: development-workflow
+    title: Development Workflow
+    instruction: Define the standard development workflow for Flutter features.
+    elicit: true
+    sections:
+      - id: feature-development-process
+        title: Feature Development Process
+        template: |
+          **Standard Workflow**
+          1. Think through the problem and read existing codebase
+          2. Write implementation plan to tasks/todo.md with checkable items
+          3. Get plan verified before beginning work
+          4. Work on todo items marking them complete as you go
+          5. Provide high-level explanations of changes made
+          6. Keep changes simple - impact as little code as possible
+          7. Add review section to todo.md with summary
+          8. Make git commit after each fully finished task
+          
+          **Agent Workflow (UI → Cubit → Domain → Data)**
+          1. **UI Agent**: Design and implement user interface
+          2. **Cubit Agent**: Implement state management based on UI requirements
+          3. **Domain Agent**: Create business logic based on Cubit needs
+          4. **Data Agent**: Implement data layer based on domain requirements
+          5. **Shared Components Agent**: Extract reusable components
+          
+          **Quality Gates**
+          - All code follows DRY principles
+          - Code is readable and well-documented
+          - Architecture is maintainable and scalable
+          - Performance requirements are met
+          - All code is thoroughly tested
+          - Security requirements are satisfied
+          - All text uses localization keys
+
+  - id: checklist-results
+    title: Checklist Results Report
+    instruction: Execute flutter-architecture-checklist and populate results here.
