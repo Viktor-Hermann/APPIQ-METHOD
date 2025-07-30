@@ -10,7 +10,7 @@ Der neue APPIQ Smart Workflow macht die Verwendung von APPIQ so einfach wie mög
 
 ```bash
 # Direkt von GitHub installieren
-curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/appiq/tools/smart-installer.js | node
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js | node
 
 # Oder lokal (falls Sie das Repository geklont haben)
 node tools/smart-installer.js
