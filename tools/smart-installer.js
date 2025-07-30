@@ -12,6 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const { execSync } = require('child_process');
 
 class APPIQSmartInstaller {
@@ -250,10 +251,64 @@ class APPIQSmartInstaller {
   }
 
   async downloadFromGitHub() {
-    // This would implement downloading from GitHub
-    // For now, we'll assume local installation
-    console.log('🌐 GitHub download not implemented yet - using local files');
-    this.copyLocalFiles();
+    console.log('🌐 Downloading APPIQ files from GitHub...');
+    
+    try {
+      // Create temporary directory for download
+      const tempDir = path.join(os.tmpdir(), 'appiq-download');
+      if (fs.existsSync(tempDir)) {
+        fs.rmSync(tempDir, { recursive: true });
+      }
+      fs.mkdirSync(tempDir, { recursive: true });
+      
+      // Download and extract repository
+      const repoUrl = 'https://github.com/Viktor-Hermann/APPIQ-METHOD/archive/refs/heads/main.zip';
+      
+      console.log('📥 Downloading repository archive...');
+      execSync(`curl -L "${repoUrl}" -o "${path.join(tempDir, 'repo.zip')}"`, { stdio: 'ignore' });
+      
+      console.log('📦 Extracting files...');
+      execSync(`cd "${tempDir}" && unzip -q repo.zip`, { stdio: 'ignore' });
+      
+      // Copy files from extracted directory
+      const extractedDir = path.join(tempDir, 'APPIQ-METHOD-main');
+      
+      // Copy bmad-core
+      const sourceBmadCore = path.join(extractedDir, 'bmad-core');
+      if (fs.existsSync(sourceBmadCore)) {
+        this.copyDirectory(sourceBmadCore, this.bmadPath);
+      }
+      
+      // Copy expansion-packs
+      const sourceExpansionPacks = path.join(extractedDir, 'expansion-packs');
+      const targetExpansionPacks = path.join(this.projectRoot, 'expansion-packs');
+      if (fs.existsSync(sourceExpansionPacks)) {
+        this.copyDirectory(sourceExpansionPacks, targetExpansionPacks);
+      }
+      
+      // Copy common
+      const sourceCommon = path.join(extractedDir, 'common');
+      const targetCommon = path.join(this.projectRoot, 'common');
+      if (fs.existsSync(sourceCommon)) {
+        this.copyDirectory(sourceCommon, targetCommon);
+      }
+      
+      // Cleanup
+      fs.rmSync(tempDir, { recursive: true });
+      
+      console.log('✅ Files downloaded and extracted successfully');
+      
+    } catch (error) {
+      console.log('⚠️  GitHub download failed, falling back to local files...');
+      console.log(`Error: ${error.message}`);
+      
+      // Fallback: Try to use local files if available
+      if (fs.existsSync(path.join(__dirname, '..', 'bmad-core'))) {
+        this.copyLocalFiles();
+      } else {
+        throw new Error('Unable to download APPIQ files from GitHub and no local files available');
+      }
+    }
   }
 
   async installExpansionPacks() {
