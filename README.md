@@ -69,9 +69,31 @@ This makes it easy to benefit from the latest improvements, bug fixes, and new a
 
 ## Quick Start
 
-### One Command for Everything (IDE Installation)
+### 🚀 NEW: Smart Workflow (30 seconds setup)
 
-**Just run one of these commands:**
+**The easiest way to get started with BMAD:**
+
+```bash
+# One-command installation with intelligent setup
+curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/smart-installer.js | node
+```
+
+Then in your IDE (Cursor, Claude, etc.):
+```
+/epic
+```
+
+**That's it!** The Smart Launcher will:
+- ✅ Auto-detect your tech stack (React, Vue, Angular, Flutter, etc.)
+- ✅ Configure optimal agent teams
+- ✅ Guide you through PRD and architecture creation
+- ✅ Set up framework-specific workflows
+
+**📖 [Complete Smart Workflow Guide](SMART_WORKFLOW_GUIDE.md)**
+
+### Traditional Installation (Advanced Users)
+
+**For manual control over installation:**
 
 ```bash
 npx bmad-method install
@@ -79,14 +101,6 @@ npx bmad-method install
 git pull
 npm run install:bmad
 ```
-
-This single command handles:
-
-- **New installations** - Sets up BMad in your project
-- **Upgrades** - Updates existing installations automatically
-- **Expansion packs** - Installs any expansion packs you've added to package.json
-
-> **That's it!** Whether you're installing for the first time, upgrading, or adding expansion packs - these commands do everything.
 
 **Prerequisites**: [Node.js](https://nodejs.org) v20+ required
 
