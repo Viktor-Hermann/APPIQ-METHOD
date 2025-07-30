@@ -678,11 +678,11 @@ sections:
         type: code
         language: text
         template: |
-                  E2E Tests
-                 /        \
-            Integration Tests
-               /            \
-          Frontend Unit  Backend Unit
+          Testing Pyramid Structure:
+          
+          Level 3: E2E Tests (Few)
+          Level 2: Integration Tests (Some)  
+          Level 1: Unit Tests (Many - Frontend & Backend)
       - id: test-organization
         title: Test Organization
         sections:

@@ -316,20 +316,20 @@ class BMADSmartInstaller {
     
     if (this.config.projectType === 'greenfield') {
       console.log('📝 For new projects:');
-      console.log('   1. Start with: /epic');
-      console.log('   2. Follow the guided setup');
-      console.log('   3. Create your PRD and architecture');
-      console.log('');
+          console.log('   1. Start with: /appiq');
+    console.log('   2. Follow the guided setup');
+    console.log('   3. Create your PRD and architecture');
+    console.log('');
     } else {
       console.log('🔍 For existing projects:');
       console.log('   1. Run: /analyze');
       console.log('   2. Review recommendations');
-      console.log('   3. Start with: /epic');
+      console.log('   3. Start with: /appiq');
       console.log('');
     }
     
     console.log('💡 Available Commands:');
-    console.log('   /epic    - Start intelligent epic creation');
+    console.log('   /appiq   - Start intelligent project creation');
     console.log('   /story   - Create a new development story');
     console.log('   /analyze - Analyze current project');
     console.log('   /help    - Get context-aware help');
@@ -361,7 +361,7 @@ class BMADSmartInstaller {
     
     console.log('🎯 Next Steps:');
     console.log('   1. Open your IDE (Cursor, Claude, etc.)');
-    console.log('   2. Type /epic to start your first project');
+    console.log('   2. Type /appiq to start your first project');
     console.log('   3. Follow the intelligent guided workflow');
     console.log('');
     

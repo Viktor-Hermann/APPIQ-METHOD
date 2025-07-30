@@ -80,7 +80,7 @@ curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/sma
 
 Then in your IDE (Cursor, Claude, etc.):
 ```
-/epic
+/appiq
 ```
 
 **That's it!** The Smart Launcher will:

@@ -16,12 +16,12 @@ curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/sma
 node tools/smart-installer.js
 ```
 
-### 2. Epic starten
+### 2. AppIQ starten
 
 In Ihrem IDE (Cursor, Claude, etc.):
 
 ```
-/epic
+/appiq
 ```
 
 Das war's! Der Smart Launcher erkennt automatisch:
@@ -33,12 +33,12 @@ Das war's! Der Smart Launcher erkennt automatisch:
 
 ## 🎯 Intelligente Workflows
 
-### `/epic` - Smart Epic Creation
+### `/appiq` - Smart Project Creation
 
 Der intelligenteste Weg, ein neues Projekt oder Feature zu starten:
 
 ```
-/epic
+/appiq
 ```
 
 **Was passiert automatisch:**
@@ -113,7 +113,7 @@ Analysiert Ihr aktuelles Projekt und gibt Empfehlungen:
 
 **Workflow:**
 ```
-/epic → PRD Creation → Flutter Architecture → UI Design → Cubit Logic → Domain Layer → Data Layer
+/appiq → PRD Creation → Flutter Architecture → UI Design → Cubit Logic → Domain Layer → Data Layer
 ```
 
 ### 🌐 Web Development
@@ -266,8 +266,8 @@ curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/sma
 # 📊 Architektur: Component-based
 # 📊 Empfehlung: shadcn/ui Integration
 
-# 3. Epic für neues Feature
-/epic
+# 3. AppIQ für neues Feature
+/appiq
 
 # 4. Automatische Konfiguration:
 # ✅ Brownfield React Projekt
@@ -360,4 +360,4 @@ Der BMAD Smart Workflow transformiert komplexe AI-Agent-Orchestrierung in eine e
 - ✅ Security-First Development
 - ✅ Multi-Language Support
 
-**Bereit loszulegen? Starten Sie mit `/epic` und erleben Sie die Zukunft der AI-gestützten Entwicklung!** 🚀
+**Bereit loszulegen? Starten Sie mit `/appiq` und erleben Sie die Zukunft der AI-gestützten Entwicklung!** 🚀

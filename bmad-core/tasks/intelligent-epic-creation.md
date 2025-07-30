@@ -1,7 +1,7 @@
-# Intelligent Epic Creation Task
+# Intelligent AppIQ Project Creation Task
 
 ## 📋 Overview
-This task provides an intelligent, guided approach to epic creation that automatically detects project context and guides users through the optimal workflow.
+This task provides an intelligent, guided approach to project creation that automatically detects project context and guides users through the optimal workflow.
 
 ## 🎯 Task Objectives
 - Automatically detect project type (Greenfield vs Brownfield)
