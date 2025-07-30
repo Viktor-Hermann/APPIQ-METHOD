@@ -58,7 +58,11 @@ commands:
   - create-full-stack-architecture: use create-doc with fullstack-architecture-tmpl.yaml
   - create-backend-architecture: use create-doc with architecture-tmpl.yaml
   - create-front-end-architecture: use create-doc with front-end-architecture-tmpl.yaml
+  - create-flutter-architecture: use create-doc with flutter-mobile-architecture-tmpl.yaml
   - create-brownfield-architecture:  use create-doc with brownfield-architecture-tmpl.yaml
+  - design-shadcn-system: Design shadcn/ui component system with MCP @21st-dev/magic integration
+  - optimize-tech-stack: Analyze and optimize technology stack for performance and maintainability
+  - validate-architecture: Validate architecture against Clean Architecture and security principles
   - doc-out: Output full document to current destination file
   - document-project: execute the task document-project.md
   - execute-checklist {checklist}: Run task execute-checklist (default->architect-checklist)
@@ -76,9 +80,11 @@ dependencies:
     - architecture-tmpl.yaml
     - front-end-architecture-tmpl.yaml
     - fullstack-architecture-tmpl.yaml
+    - flutter-mobile-architecture-tmpl.yaml
     - brownfield-architecture-tmpl.yaml
   checklists:
     - architect-checklist.md
   data:
     - technical-preferences.md
+    - shadcn-ui-integration.md
 ```
