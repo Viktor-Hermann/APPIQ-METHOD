@@ -8,11 +8,27 @@ Der neue APPIQ Smart Workflow macht die Verwendung von APPIQ so einfach wie mög
 
 ### 1. Installation (Ein-Kommando-Installation)
 
+#### Option 1: Bash Script (Empfohlen)
 ```bash
-# Direkt von GitHub installieren
-curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js | node
+# Zuverlässigste Installationsmethode
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/install-appiq.sh | bash
+```
 
-# Oder lokal (falls Sie das Repository geklont haben)
+#### Option 2: Direkte Node.js Installation
+```bash
+# Download und Ausführung des Installers
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js -o installer.js && node installer.js && rm installer.js
+```
+
+#### Option 3: One-Liner (Erweitert)
+```bash
+# Einzelbefehl (zeigt möglicherweise keine Ausgabe auf manchen Systemen)
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js | node
+```
+
+#### Lokale Installation
+```bash
+# Falls Sie das Repository geklont haben
 node tools/smart-installer.js
 ```
 

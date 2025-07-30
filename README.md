@@ -73,8 +73,21 @@ This makes it easy to benefit from the latest improvements, bug fixes, and new a
 
 **The easiest way to get started with APPIQ:**
 
+#### Option 1: Bash Script (Recommended)
 ```bash
-# One-command installation with intelligent setup
+# Most reliable installation method
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/install-appiq.sh | bash
+```
+
+#### Option 2: Direct Node.js
+```bash
+# Download and run installer
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js -o installer.js && node installer.js && rm installer.js
+```
+
+#### Option 3: One-liner (Advanced)
+```bash
+# Single command (may not show output on some systems)
 curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js | node
 ```
 

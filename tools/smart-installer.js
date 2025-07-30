@@ -28,8 +28,15 @@ class APPIQSmartInstaller {
   }
 
   async install() {
+    // Ensure output is not buffered when piped
+    process.stdout.setEncoding('utf8');
+    process.stderr.setEncoding('utf8');
+    
     console.log('🚀 APPIQ Smart Installer v4.0.0');
     console.log('=====================================\n');
+    
+    // Force flush output
+    process.stdout.write('');
 
     try {
       // Phase 1: Environment Analysis
