@@ -1,21 +1,21 @@
-# BMad-Method: Universal AI Agent Framework
+# APPIQ-METHOD: Universal AI Agent Framework
 
 [![Version](https://img.shields.io/npm/v/bmad-method?color=blue&label=version)](https://www.npmjs.com/package/bmad-method)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Community-7289da?logo=discord&logoColor=white)](https://discord.gg/gk8jAdXWmj)
 
-Foundations in Agentic Agile Driven Development, known as the Breakthrough Method of Agile AI-Driven Development, yet so much more. Transform any domain with specialized AI expertise: software development, entertainment, creative writing, business strategy to personal wellness just to name a few.
+APPIQ-METHOD: Advanced Project Intelligence & Quality Method - Foundations in Agentic Agile Driven Development. Transform any domain with specialized AI expertise: software development, entertainment, creative writing, business strategy to personal wellness just to name a few.
 
 **[Subscribe to BMadCode on YouTube](https://www.youtube.com/@BMadCode?sub_confirmation=1)**
 
 **[Join our Discord Community](https://discord.gg/gk8jAdXWmj)** - A growing community for AI enthusiasts! Get help, share ideas, explore AI agents & frameworks, collaborate on tech projects, enjoy hobbies, and help each other succeed. Whether you're stuck on BMad, building your own agents, or just want to chat about the latest in AI - we're here for you! **Some mobile and VPN may have issue joining the discord, this is a discord issue - if the invite does not work, try from your own internet or another network, or non-VPN.**
 
-⭐ **If you find this project helpful or useful, please give it a star in the upper right hand corner!** It helps others discover BMad-Method and you will be notified of updates!
+⭐ **If you find this project helpful or useful, please give it a star in the upper right hand corner!** It helps others discover APPIQ-METHOD and you will be notified of updates!
 
 ## Overview
 
-**BMad Method's Two Key Innovations:**
+**APPIQ Method's Two Key Innovations:**
 
 **1. Agentic Planning:** Dedicated agents (Analyst, PM, Architect) collaborate with you to create detailed, consistent PRDs and Architecture documents. Through advanced prompt engineering and human-in-the-loop refinement, these planning agents produce comprehensive specifications that go far beyond generic AI task generation.
 
@@ -27,9 +27,9 @@ This two-phase approach eliminates both **planning inconsistency** and **context
 
 ## Quick Navigation
 
-### Understanding the BMad Workflow
+### Understanding the APPIQ Workflow
 
-**Before diving in, review these critical workflow diagrams that explain how BMad works:**
+**Before diving in, review these critical workflow diagrams that explain how APPIQ works:**
 
 1. **[Planning Workflow (Web UI)](bmad-core/user-guide.md#the-planning-workflow-web-ui)** - How to create PRD and Architecture documents
 2. **[Core Development Cycle (IDE)](bmad-core/user-guide.md#the-core-development-cycle-ide)** - How SM, Dev, and QA agents collaborate through story files
@@ -71,11 +71,11 @@ This makes it easy to benefit from the latest improvements, bug fixes, and new a
 
 ### 🚀 NEW: Smart Workflow (30 seconds setup)
 
-**The easiest way to get started with BMAD:**
+**The easiest way to get started with APPIQ:**
 
 ```bash
 # One-command installation with intelligent setup
-curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/smart-installer.js | node
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js | node
 ```
 
 Then in your IDE (Cursor, Claude, etc.):
