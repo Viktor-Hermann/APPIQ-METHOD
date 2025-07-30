@@ -239,6 +239,13 @@ class APPIQSmartInstaller {
     if (fs.existsSync(expansionPacksSource)) {
       this.copyDirectory(expansionPacksSource, expansionPacksTarget);
     }
+    
+    // Copy activate-appiq.js
+    const sourceActivator = path.join(__dirname, '..', 'activate-appiq.js');
+    const targetActivator = path.join(this.projectRoot, 'activate-appiq.js');
+    if (fs.existsSync(sourceActivator)) {
+      fs.copyFileSync(sourceActivator, targetActivator);
+    }
   }
 
   copyDirectory(source, target) {
@@ -301,6 +308,13 @@ class APPIQSmartInstaller {
       const targetCommon = path.join(this.projectRoot, 'common');
       if (fs.existsSync(sourceCommon)) {
         this.copyDirectory(sourceCommon, targetCommon);
+      }
+      
+      // Copy activate-appiq.js
+      const sourceActivator = path.join(extractedDir, 'activate-appiq.js');
+      const targetActivator = path.join(this.projectRoot, 'activate-appiq.js');
+      if (fs.existsSync(sourceActivator)) {
+        fs.copyFileSync(sourceActivator, targetActivator);
       }
       
       // Cleanup
