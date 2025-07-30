@@ -1,8 +1,8 @@
-# 🚀 BMAD Smart Workflow Guide
+# 🚀 APPIQ Smart Workflow Guide
 
 ## 📋 Overview
 
-Der neue BMAD Smart Workflow macht die Verwendung von BMAD so einfach wie möglich. Mit nur einem Befehl können Sie intelligente, kontextbewusste Entwicklungsworkflows starten, die automatisch Ihren Tech-Stack erkennen und Sie durch den optimalen Entwicklungsprozess führen.
+Der neue APPIQ Smart Workflow macht die Verwendung von APPIQ so einfach wie möglich. Mit nur einem Befehl können Sie intelligente, kontextbewusste Entwicklungsworkflows starten, die automatisch Ihren Tech-Stack erkennen und Sie durch den optimalen Entwicklungsprozess führen.
 
 ## ⚡ Quick Start (30 Sekunden)
 
@@ -10,7 +10,7 @@ Der neue BMAD Smart Workflow macht die Verwendung von BMAD so einfach wie mögli
 
 ```bash
 # Direkt von GitHub installieren
-curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/smart-installer.js | node
+curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/appiq/tools/smart-installer.js | node
 
 # Oder lokal (falls Sie das Repository geklont haben)
 node tools/smart-installer.js

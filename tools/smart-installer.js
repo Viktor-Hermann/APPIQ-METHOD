@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * BMAD Smart Installer
+ * APPIQ Smart Installer
  * 
  * Intelligent installation script that can be run directly from GitHub:
- * curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/smart-installer.js | node
+ * curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js | node
  * 
  * Or locally:
  * node tools/smart-installer.js
@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-class BMADSmartInstaller {
+class APPIQSmartInstaller {
   constructor() {
     this.projectRoot = process.cwd();
     this.bmadPath = path.join(this.projectRoot, 'bmad-core');
@@ -27,7 +27,7 @@ class BMADSmartInstaller {
   }
 
   async install() {
-    console.log('🚀 BMAD Smart Installer v4.0.0');
+    console.log('🚀 APPIQ Smart Installer v4.0.0');
     console.log('=====================================\n');
 
     try {
@@ -75,13 +75,13 @@ class BMADSmartInstaller {
       console.log('ℹ️  Not in a git repository');
     }
     
-    // Check for existing BMAD installation
+    // Check for existing APPIQ installation
     if (fs.existsSync(this.bmadPath)) {
       this.config.existingInstallation = true;
-      console.log('🔄 Existing BMAD installation detected');
+      console.log('🔄 Existing APPIQ installation detected');
     } else {
       this.config.existingInstallation = false;
-      console.log('🆕 New BMAD installation');
+      console.log('🆕 New APPIQ installation');
     }
     
     console.log('');
@@ -174,7 +174,7 @@ class BMADSmartInstaller {
   }
 
   async performInstallation() {
-    console.log('📥 Installing BMAD framework...');
+    console.log('📥 Installing APPIQ framework...');
     
     if (this.config.existingInstallation) {
       console.log('🔄 Updating existing installation...');
@@ -187,7 +187,7 @@ class BMADSmartInstaller {
         console.log('💾 Existing configuration backed up');
       }
     } else {
-      console.log('🆕 Installing fresh BMAD installation...');
+      console.log('🆕 Installing fresh APPIQ installation...');
     }
 
     // Download or copy BMAD files
@@ -200,9 +200,9 @@ class BMADSmartInstaller {
         await this.downloadFromGitHub();
       }
       
-      console.log('✅ BMAD core files installed');
+      console.log('✅ APPIQ core files installed');
     } catch (error) {
-      throw new Error(`Failed to install BMAD files: ${error.message}`);
+      throw new Error(`Failed to install APPIQ files: ${error.message}`);
     }
 
     // Install expansion packs based on detected tech stack
@@ -308,7 +308,7 @@ class BMADSmartInstaller {
   }
 
   async completionGuide() {
-    console.log('🎉 BMAD Installation Complete!');
+    console.log('🎉 APPIQ Installation Complete!');
     console.log('=====================================\n');
     
     console.log('🚀 Quick Start Guide:');
@@ -367,18 +367,18 @@ class BMADSmartInstaller {
     
     console.log('💬 Need Help?');
     console.log('   - Discord: https://discord.gg/gk8jAdXWmj');
-    console.log('   - GitHub: https://github.com/bmadcode/BMAD-METHOD');
+    console.log('   - GitHub: https://github.com/Viktor-Hermann/APPIQ-METHOD');
     console.log('   - YouTube: https://www.youtube.com/@BMadCode');
     console.log('');
     
-    console.log('Happy coding with BMAD! 🚀');
+    console.log('Happy coding with APPIQ! 🚀');
   }
 }
 
 // Run the installer if called directly
 if (require.main === module) {
-  const installer = new BMADSmartInstaller();
+  const installer = new APPIQSmartInstaller();
   installer.install().catch(console.error);
 }
 
-module.exports = BMADSmartInstaller;
+module.exports = APPIQSmartInstaller;
