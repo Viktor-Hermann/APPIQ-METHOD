@@ -1,0 +1,13 @@
+{
+  "version": "4.0.0",
+  "projectType": "greenfield",
+  "techStack": {
+    "frontend": null,
+    "backend": null,
+    "mobile": null,
+    "database": null,
+    "stateManagement": null
+  },
+  "installedAt": "2025-07-30T20:17:53.634Z",
+  "expansionPacks": []
+}
