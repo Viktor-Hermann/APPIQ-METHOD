@@ -1,11 +1,13 @@
-# APPIQ-METHOD: Universal AI Agent Framework
+# 🚀 APPIQ SOLUTION: Universal AI Agent Framework
 
-[![Version](https://img.shields.io/npm/v/bmad-method?color=blue&label=version)](https://www.npmjs.com/package/bmad-method)
+[![Version](https://img.shields.io/npm/v/appiq-solution?color=blue&label=version)](https://www.npmjs.com/package/appiq-solution)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Community-7289da?logo=discord&logoColor=white)](https://discord.gg/gk8jAdXWmj)
 
-APPIQ-METHOD: Advanced Project Intelligence & Quality Method - Foundations in Agentic Agile Driven Development. Transform any domain with specialized AI expertise: software development, entertainment, creative writing, business strategy to personal wellness just to name a few.
+**🎉 NEW: One-Command Installation with Smart MCP Integration!**
+
+APPIQ SOLUTION: Advanced Project Intelligence & Quality Solution - Built with ❤️ based on the amazing Bmad-Method. Transform any domain with specialized AI expertise: Flutter mobile development, modern web apps, fullstack solutions, and beyond.
 
 **[Subscribe to BMadCode on YouTube](https://www.youtube.com/@BMadCode?sub_confirmation=1)**
 
@@ -69,44 +71,49 @@ This makes it easy to benefit from the latest improvements, bug fixes, and new a
 
 ## Quick Start
 
-### 🚀 NEW: Smart Workflow (30 seconds setup)
+### 🚀 NEW: One-Command Installation (10 seconds setup)
 
-**The easiest way to get started with APPIQ:**
+**The simplest way to get started with APPIQ Solution:**
 
-#### Option 1: Bash Script (Recommended)
 ```bash
-# Most reliable installation method
-curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/install-appiq.sh | bash
+npx appiq-solution install
 ```
 
-#### Option 2: Direct Node.js
-```bash
-# Download and run installer
-curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js -o installer.js && node installer.js && rm installer.js
-```
+**That's it!** The Smart Installer will:
+- ✅ **Multi-IDE Support**: Configure Cursor, Claude Code, Windsurf, VS Code + Cline, and more
+- ✅ **Auto-detect Tech Stack**: Flutter, React, Vue, Next.js, Angular, Fullstack, API-only
+- ✅ **Smart MCP Integration**: Agents know which MCP servers they can use (no auto-config)
+- ✅ **Planning Workflow**: Project idea → Plan generation → Approval → Development
+- ✅ **Full BMAD Flow**: Document sharding, agent orchestration, development cycle
+- ✅ **Flutter Support**: Dart MCP Server integration, Clean Architecture, Cubit patterns
+- ✅ **Modern Web**: shadcn/ui, v0.dev, Tailwind CSS integration
+- ✅ **Security First**: No API keys stored or configured automatically
 
-#### Option 3: One-liner (Advanced)
-```bash
-# Single command (may not show output on some systems)
-curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js | node
-```
+### 🎯 **What MCPs are Available?**
+
+Your agents will know about these MCP servers (you configure them manually in your IDE):
+
+- **🧠 Sequential Thinking**: Complex problem solving
+- **🌐 Puppeteer**: Browser automation and testing  
+- **🔗 Claude Continuity**: Enhanced thread continuity
+- **💾 Extended Memory**: Enhanced AI memory capabilities
+- **✨ 21st.dev Magic**: UI builder like v0 in your IDE
+- **📱 Dart MCP**: Flutter/Dart development (auto-detected for Flutter projects)
+- **🔥 Firebase**: Auth, Firestore, Functions integration
+- **⚡ Supabase**: Database, auth, storage
+- **📚 Context7**: Up-to-date library documentation
+- **💳 Stripe**: Payment integration
 
 Then in your IDE (Cursor, Claude, etc.):
 ```
-/appiq
+@smart-launcher
 ```
-
-**That's it!** The Smart Launcher will:
-- ✅ Auto-detect your tech stack (React, Vue, Angular, Flutter, etc.)
-- ✅ Configure optimal agent teams
-- ✅ Guide you through PRD and architecture creation
-- ✅ Set up framework-specific workflows
 
 **📖 [Complete Smart Workflow Guide](SMART_WORKFLOW_GUIDE.md)**
 
-### Traditional Installation (Advanced Users)
+### Alternative: Traditional BMAD Installation
 
-**For manual control over installation:**
+**For the original BMAD-METHOD experience:**
 
 ```bash
 npx bmad-method install
@@ -116,6 +123,13 @@ npm run install:bmad
 ```
 
 **Prerequisites**: [Node.js](https://nodejs.org) v20+ required
+
+### 🔄 **Upgrading from BMAD-METHOD?**
+
+APPIQ Solution is fully compatible! You can:
+- ✅ **Keep existing projects** - APPIQ works alongside BMAD
+- ✅ **Use both installers** - `npx bmad-method install` for traditional, `npx appiq-solution install` for modern
+- ✅ **Migrate gradually** - Start new projects with APPIQ, keep existing with BMAD
 
 ### Fastest Start: Web UI Full Stack Team at your disposal (2 minutes)
 
@@ -135,7 +149,17 @@ npm run install:bmad # build and install all to a destination folder
 
 ## 🌟 Beyond Software Development - Expansion Packs
 
-BMad's natural language framework works in ANY domain. Expansion packs provide specialized AI agents for creative writing, business strategy, health & wellness, education, and more. Also expansion packs can expand the core BMad-Method with specific functionality that is not generic for all cases. [See the Expansion Packs Guide](docs/expansion-packs.md) and learn to create your own!
+Both APPIQ Solution and BMad's natural language framework work in ANY domain. Expansion packs provide specialized AI agents for:
+
+- **📱 Flutter Mobile Development** - Clean Architecture, Cubit, Dart MCP integration
+- **🎮 Game Development** - Unity 2D, Phaser.js game creation
+- **🏗️ DevOps & Infrastructure** - Platform engineering, deployment automation
+- **✍️ Creative Writing** - Story development, character creation
+- **💼 Business Strategy** - Planning, analysis, decision-making
+- **🏥 Health & Wellness** - Personal development, fitness planning
+- **🎓 Education** - Learning paths, curriculum development
+
+[See the Expansion Packs Guide](docs/expansion-packs.md) and learn to create your own!
 
 ## Codebase Flattener Tool
 

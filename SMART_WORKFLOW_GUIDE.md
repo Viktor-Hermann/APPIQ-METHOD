@@ -1,60 +1,66 @@
-# 🚀 APPIQ Smart Workflow Guide
+# 🚀 APPIQ SOLUTION Smart Workflow Guide
+*Built with ❤️ based on the amazing Bmad-Method*
 
 ## 📋 Overview
 
-Der neue APPIQ Smart Workflow macht die Verwendung von APPIQ so einfach wie möglich. Mit nur einem Befehl können Sie intelligente, kontextbewusste Entwicklungsworkflows starten, die automatisch Ihren Tech-Stack erkennen und Sie durch den optimalen Entwicklungsprozess führen.
+APPIQ Solution revolutioniert die AI-gestützte Entwicklung mit der einfachsten Installation aller Zeiten. Mit nur einem Befehl erhalten Sie intelligente, kontextbewusste Entwicklungsworkflows mit Smart MCP Integration, Multi-IDE Support und automatischer Tech-Stack-Erkennung.
 
-## ⚡ Quick Start (30 Sekunden)
+## ⚡ Quick Start (10 Sekunden)
 
-### 1. Installation (Ein-Kommando-Installation)
+### 1. One-Command Installation
 
-#### Option 1: Bash Script (Empfohlen)
 ```bash
-# Zuverlässigste Installationsmethode
-curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/install-appiq.sh | bash
+npx appiq-solution install
 ```
 
-#### Option 2: Direkte Node.js Installation
-```bash
-# Download und Ausführung des Installers
-curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js -o installer.js && node installer.js && rm installer.js
-```
+**Das war's!** Keine komplexen Scripts, keine manuellen Downloads - nur ein Befehl für alles.
 
-#### Option 3: One-Liner (Erweitert)
-```bash
-# Einzelbefehl (zeigt möglicherweise keine Ausgabe auf manchen Systemen)
-curl -fsSL https://raw.githubusercontent.com/Viktor-Hermann/APPIQ-METHOD/main/tools/smart-installer.js | node
-```
+**Was passiert automatisch:**
+- ✅ **Multi-IDE Setup**: Cursor, Claude Code, Windsurf, VS Code + Cline, Trae, Roo Code, Gemini CLI, GitHub Copilot
+- ✅ **Tech-Stack Detection**: Flutter, React, Vue, Next.js, Angular, Fullstack, API-only
+- ✅ **Project Planning**: Projektidee → Plan → Freigabe → Entwicklung
+- ✅ **Smart MCP Integration**: Agenten wissen, welche MCPs sie nutzen können (keine Auto-Konfiguration)
+- ✅ **Full BMAD Flow**: Document Sharding, Agent Orchestration, Development Cycle
+- ✅ **Security First**: Keine API-Keys gespeichert oder automatisch konfiguriert
 
-#### Lokale Installation
-```bash
-# Falls Sie das Repository geklont haben
-node tools/smart-installer.js
-```
-
-### 2. AppIQ starten
+### 2. APPIQ Solution starten
 
 In Ihrem IDE (Cursor, Claude, etc.):
 
 ```
-/appiq
+@smart-launcher
 ```
 
-Das war's! Der Smart Launcher erkennt automatisch:
+**Der Smart Launcher erkennt automatisch:**
 - ✅ Greenfield vs. Brownfield Projekt
-- ✅ Tech-Stack (React, Vue, Angular, Flutter, etc.)
+- ✅ Tech-Stack (Flutter, React, Vue, Next.js, Angular, etc.)
 - ✅ Backend-Services (Firebase, Supabase, Node.js)
 - ✅ Bestehende Architektur und Dokumentation
-- ✅ Optimale Agent-Konfiguration
+- ✅ Optimale Agent-Konfiguration mit MCP-Awareness
+
+### 🎯 **Verfügbare MCP Server (Agent-Awareness)**
+
+Ihre Agenten wissen über diese MCPs Bescheid (Sie konfigurieren sie manuell):
+
+- **🧠 Sequential Thinking**: Complex problem solving
+- **🌐 Puppeteer**: Browser automation and testing  
+- **🔗 Claude Continuity**: Enhanced thread continuity
+- **💾 Extended Memory**: Enhanced AI memory capabilities
+- **✨ 21st.dev Magic**: UI builder like v0 in your IDE
+- **📱 Dart MCP**: Flutter/Dart development (auto-detected for Flutter projects)
+- **🔥 Firebase**: Auth, Firestore, Functions integration
+- **⚡ Supabase**: Database, auth, storage
+- **📚 Context7**: Up-to-date library documentation
+- **💳 Stripe**: Payment integration
 
 ## 🎯 Intelligente Workflows
 
-### `/appiq` - Smart Project Creation
+### `@smart-launcher` - Intelligent Project Creation
 
 Der intelligenteste Weg, ein neues Projekt oder Feature zu starten:
 
 ```
-/appiq
+@smart-launcher
 ```
 
 **Was passiert automatisch:**
@@ -257,49 +263,57 @@ interface ProjectContext {
 
 ### Neues Flutter Projekt
 ```bash
-# 1. Installation
-curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/smart-installer.js | node
+# 1. Installation (10 Sekunden)
+npx appiq-solution install
 
 # 2. In Cursor/Claude
-/epic
+@smart-launcher
 
 # 3. Folgen Sie dem intelligenten Workflow:
 # ✅ Greenfield Flutter Projekt erkannt
+# ✅ Dart MCP Server Integration vorgeschlagen
 # ✅ PRD-Erstellung gestartet
 # ✅ Flutter Architecture Template gewählt
 # ✅ UI-First Workflow konfiguriert
-# ✅ 5 Flutter Agents aktiviert
+# ✅ 5 Flutter Agents aktiviert mit MCP-Awareness
 ```
 
 ### Bestehende React App erweitern
 ```bash
-# 1. In bestehender React App
-/analyze
+# 1. Installation in bestehender React App
+npx appiq-solution install
 
-# 2. Analyse-Ergebnisse:
+# 2. Analyse mit Smart Launcher
+@smart-launcher
+
+# 3. Automatische Analyse-Ergebnisse:
 # 📊 React + TypeScript erkannt
 # 📊 Redux Toolkit State Management
 # 📊 Architektur: Component-based
-# 📊 Empfehlung: shadcn/ui Integration
-
-# 3. AppIQ für neues Feature
-/appiq
+# 📊 Empfehlung: shadcn/ui + v0.dev Integration
+# 📊 MCP Recommendations: @21st-dev/magic, Context7
 
 # 4. Automatische Konfiguration:
 # ✅ Brownfield React Projekt
 # ✅ Bestehende Architektur respektiert
 # ✅ shadcn/ui Components verfügbar
-# ✅ MCP @21st-dev/magic aktiviert
+# ✅ Agenten wissen über @21st-dev/magic MCP Bescheid
+# ✅ Sichere MCP-Integration (keine Auto-Konfiguration)
 ```
 
 ## 🚀 Erweiterte Features
 
-### MCP Tool Integration
+### Smart MCP Integration (Agent-Awareness)
 - **@21st-dev/magic**: shadcn/ui Komponenten-Generierung
-- **Supabase MCP**: Backend Integration und Management
+- **Supabase MCP**: Backend Integration und Management  
 - **Firebase MCP**: Firebase Services Integration
 - **Sequential Thinking**: Komplexe Problem-Analyse
-- **Dart MCP**: Flutter Code-Analyse
+- **Dart MCP**: Flutter Code-Analyse (automatisch für Flutter-Projekte)
+- **Puppeteer MCP**: Browser-Automatisierung für QA
+- **Context7 MCP**: Aktuelle Library-Dokumentation
+- **Extended Memory MCP**: Erweiterte AI-Memory-Fähigkeiten
+
+**🔒 Sicherheitsfeature**: Keine automatische Konfiguration von API-Keys oder Secrets!
 
 ### Expansion Packs
 - 📱 **Flutter Mobile Development**: Vollständige Flutter-Unterstützung
@@ -329,7 +343,7 @@ curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/sma
 
 ### Von v3 zu v4 Smart Workflow
 
-**Alt (komplex):**
+**Alt (BMAD-METHOD komplex):**
 ```bash
 # 1. Manuelle Installation
 npx bmad-method install
@@ -339,41 +353,49 @@ npx bmad-method install
 # 4. Separate Architektur-Erstellung
 # 5. Manuelle Story-Erstellung
 # 6. Komplexe Agent-Koordination
+# 7. Manuelle MCP-Konfiguration
 ```
 
-**Neu (einfach):**
+**Neu (APPIQ SOLUTION einfach):**
 ```bash
-# 1. Smart Installation
-curl -fsSL https://raw.githubusercontent.com/bmadcode/BMAD-METHOD/main/tools/smart-installer.js | node
+# 1. One-Command Installation
+npx appiq-solution install
 
-# 2. Ein Befehl für alles
-/epic
+# 2. Ein Agent für alles
+@smart-launcher
 
 # 3. Intelligente Führung durch gesamten Workflow
 # ✅ Automatische Tech-Stack Erkennung
+# ✅ Multi-IDE Support (8+ IDEs)
+# ✅ Smart MCP Integration (Agent-Awareness)
 # ✅ Kontextbewusste Agent-Auswahl
 # ✅ Integrierte Quality Gates
-# ✅ Smart Workflow Orchestration
+# ✅ Security-First Approach
+# ✅ Planning → Approval → Development Workflow
 ```
 
 **Vorteile:**
-- 🚀 **90% weniger Setup-Zeit**
-- 🎯 **Intelligente Automatisierung**
-- 🛡️ **Integrierte Qualitätssicherung**
-- 🌍 **Multi-Framework Support**
-- 🧠 **Context-Aware Workflows**
+- 🚀 **95% weniger Setup-Zeit** (10 Sekunden vs. 5+ Minuten)
+- 🎯 **Intelligente Automatisierung** mit Smart MCP Integration
+- 🛡️ **Security-First Approach** (keine API-Keys im Code)
+- 🌍 **Multi-IDE & Multi-Framework Support** (8+ IDEs, Flutter, React, Vue...)
+- 🧠 **Context-Aware Workflows** mit Agent-MCP-Zuordnung
+- 📱 **Modern Tech Stack Support** (Dart MCP, shadcn/ui, v0.dev)
 
 ---
 
 ## 🎉 Fazit
 
-Der BMAD Smart Workflow transformiert komplexe AI-Agent-Orchestrierung in eine einfache, intelligente Entwicklungserfahrung. Mit nur einem Befehl (`/epic`) erhalten Sie:
+APPIQ Solution transformiert komplexe AI-Agent-Orchestrierung in die einfachste, sicherste Entwicklungserfahrung. Mit nur einem Befehl (`npx appiq-solution install`) und einem Agent (`@smart-launcher`) erhalten Sie:
 
-- ✅ Automatische Projekt-Analyse
-- ✅ Intelligente Agent-Konfiguration
-- ✅ Framework-spezifische Workflows
-- ✅ Integrierte Qualitätssicherung
-- ✅ Security-First Development
-- ✅ Multi-Language Support
+- ✅ **One-Command Installation** - Keine komplexen Scripts
+- ✅ **Multi-IDE Support** - 8+ IDEs automatisch konfiguriert
+- ✅ **Smart MCP Integration** - Agenten wissen, welche MCPs sie nutzen können
+- ✅ **Security-First** - Keine API-Keys automatisch gespeichert
+- ✅ **Full BMAD Flow** - Planning → Approval → Development
+- ✅ **Modern Tech Stacks** - Flutter, React, Vue, shadcn/ui, v0.dev
+- ✅ **Framework-spezifische Workflows** - Clean Architecture, Cubit, etc.
 
-**Bereit loszulegen? Starten Sie mit `/appiq` und erleben Sie die Zukunft der AI-gestützten Entwicklung!** 🚀
+**Bereit loszulegen? Starten Sie mit `npx appiq-solution install` und erleben Sie die Zukunft der sicheren, intelligenten AI-gestützten Entwicklung!** 🚀
+
+*Built with ❤️ based on the amazing Bmad-Method*

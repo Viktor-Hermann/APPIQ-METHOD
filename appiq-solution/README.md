@@ -1,14 +1,25 @@
-# 🚀 Appiq Solution - Super Einfache KI-Agent Installation
-
+# 🚀 APPIQ SOLUTION - The Ultimate AI Agent Framework
 *Built with ❤️ based on the amazing Bmad-Method*
 
-## ⚡ One-Command Installation
+[![Version](https://img.shields.io/npm/v/appiq-solution?color=blue&label=version)](https://www.npmjs.com/package/appiq-solution)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Security](https://img.shields.io/badge/Security-First-green.svg)](README.md)
+
+## ⚡ One-Command Installation (10 Seconds)
 
 ```bash
 npx appiq-solution install
 ```
 
-**Das war's!** 🎯 Kein komplizierter Setup mehr.
+**Das war's!** 🎯 Die einfachste AI-Agent Installation der Welt.
+
+### 🆕 **Was ist neu in v1.0.7?**
+- ✅ **Security-First**: Keine API-Keys im Code gespeichert
+- ✅ **Multi-IDE Support**: 8+ IDEs automatisch konfiguriert
+- ✅ **Smart MCP Integration**: Agenten wissen, welche MCPs sie nutzen können
+- ✅ **Planning Workflow**: Projektidee → Plan → Freigabe → Entwicklung
+- ✅ **Flutter Support**: Dart MCP, Clean Architecture, Cubit patterns
+- ✅ **Modern Web**: shadcn/ui, v0.dev, Tailwind CSS integration
 
 ## 🎮 Was passiert automatisch?
 
@@ -17,13 +28,23 @@ npx appiq-solution install
 - ✅ **Analysiert:** Bestehenden Code, Dokumentation, Tech-Stack
 - ✅ **Empfiehlt:** Optimalen Workflow für Ihr Projekt
 
-### 2. **🛠️ IDE-Integration (One-Click)**
+### 2. **🛠️ Multi-IDE Integration (8+ IDEs)**
 - ✅ **Cursor** → `.cursor/rules/` mit `.mdc` Dateien
-- ✅ **Claude Code** → `.claude/commands/Appiq/` mit `.md` Dateien
+- ✅ **Claude Code CLI** → Gemini CLI-kompatible Konfiguration
 - ✅ **Windsurf** → `.windsurf/rules/` mit `.md` Dateien
 - ✅ **VS Code + Cline** → `.clinerules/` mit `.md` Dateien
+- ✅ **Trae** → `.trae/` Konfiguration
+- ✅ **Roo Code** → `.roo/` Konfiguration
+- ✅ **Gemini CLI** → `.gemini/settings.json`
+- ✅ **GitHub Copilot** → VS Code Settings Integration
 
-### 3. **📁 Automatische Datei-Organisation**
+### 3. **🔌 Smart MCP Integration (Security-First)**
+- ✅ **Agent-Awareness**: Agenten wissen, welche MCPs sie nutzen können
+- ✅ **Keine Auto-Konfiguration**: Sie konfigurieren MCPs manuell in Ihrer IDE
+- ✅ **Keine API-Keys**: Sichere Integration ohne Secrets im Code
+- ✅ **Flutter-Optimiert**: Dart MCP automatisch erkannt für Flutter-Projekte
+
+### 4. **📁 Automatische Datei-Organisation**
 
 **Neue Projekte (Greenfield):**
 ```
@@ -50,27 +71,44 @@ your-existing-project/
 
 ## 🚀 Super Einfache Nutzung
 
-### Schritt 1: Installation
+### Schritt 1: Installation (10 Sekunden)
 ```bash
 npx appiq-solution install
 ```
 
-### Schritt 2: Agent laden (Cursor Beispiel)
+### Schritt 2: Starten Sie den Smart Launcher
 ```bash
-# Appiq Launcher ist bereits in .cursor/rules/smart-launcher.mdc
-# Einfach in Cursor sagen: "Agiere als Appiq Launcher"
+# In Ihrer IDE (Cursor, Claude Code, Windsurf, etc.):
+@smart-launcher
 ```
 
-### Schritt 3: One-Command Start
+### Schritt 3: Folgen Sie dem intelligenten Workflow
 ```bash
-# Für NEUE Projekte:
-/start
-
-# Für BESTEHENDE Projekte:
-/analyze
+# Das System führt Sie automatisch durch:
+# 1. Projektidee eingeben
+# 2. Tech-Stack auswählen (oder automatisch erkennen)
+# 3. IDE(s) auswählen (Multi-Select möglich!)
+# 4. Plan generieren lassen
+# 5. Plan freigeben
+# 6. Entwicklung starten mit optimalen Agents
 ```
 
-**Das war's!** 🎉 Das System führt Sie automatisch durch alles.
+**Das war's!** 🎉 Alles andere passiert automatisch.
+
+## 🎯 **Verfügbare MCP Server (Agent-Awareness)**
+
+Ihre Agenten wissen über diese MCPs Bescheid (Sie konfigurieren sie manuell):
+
+- **🧠 Sequential Thinking**: Complex problem solving
+- **🌐 Puppeteer**: Browser automation and testing  
+- **🔗 Claude Continuity**: Enhanced thread continuity
+- **💾 Extended Memory**: Enhanced AI memory capabilities
+- **✨ 21st.dev Magic**: UI builder like v0 in your IDE
+- **📱 Dart MCP**: Flutter/Dart development (auto-detected for Flutter projects)
+- **🔥 Firebase**: Auth, Firestore, Functions integration
+- **⚡ Supabase**: Database, auth, storage
+- **📚 Context7**: Up-to-date library documentation
+- **💳 Stripe**: Payment integration
 
 ## 🎯 One-Click Workflows
 
@@ -97,17 +135,20 @@ npx appiq-solution install
 
 ## 💡 Warum Appiq Solution?
 
-### ❌ **Vorher (Kompliziert):**
+### ❌ **Vorher (BMAD-METHOD komplex):**
 - ✗ Komplexer Web-Client Setup
-- ✗ Unklare Anweisungen
+- ✗ Manuelle Agent-Auswahl
+- ✗ Separate MCP-Konfiguration
 - ✗ Viele manuelle Schritte
-- ✗ Verwirrende Datei-Organisation
+- ✗ Unklare IDE-Integration
 
-### ✅ **Jetzt (Super Einfach):**
+### ✅ **Jetzt (APPIQ SOLUTION einfach):**
 - ✅ **Ein Kommando:** `npx appiq-solution install`
-- ✅ **Automatische Erkennung:** Greenfield/Brownfield
-- ✅ **Klare Anweisungen:** Wo gehört was hin
-- ✅ **One-Click Workflows:** Alles automatisiert
+- ✅ **Multi-IDE Support:** 8+ IDEs automatisch konfiguriert
+- ✅ **Smart MCP Integration:** Agent-Awareness ohne Auto-Config
+- ✅ **Security-First:** Keine API-Keys im Code
+- ✅ **Planning Workflow:** Projektidee → Plan → Freigabe → Entwicklung
+- ✅ **Modern Tech Stacks:** Flutter, React, Vue, shadcn/ui, v0.dev
 
 ## 🆘 Hilfe & Support
 
@@ -158,5 +199,28 @@ $ npx appiq-solution install
 **So einfach ist das!** 🚀
 
 ---
-*Appiq Solution - Entwicklung war nie einfacher.*
-*Built with ❤️ based on Bmad-Method*
+
+## 🔗 **Links & Resources**
+
+- **📦 NPM Package**: [https://www.npmjs.com/package/appiq-solution](https://www.npmjs.com/package/appiq-solution)
+- **📖 Smart Workflow Guide**: [SMART_WORKFLOW_GUIDE.md](../SMART_WORKFLOW_GUIDE.md)
+- **🏗️ Original BMAD-METHOD**: [https://github.com/bmadcode/BMAD-METHOD](https://github.com/bmadcode/BMAD-METHOD)
+- **💬 Discord Community**: [https://discord.gg/gk8jAdXWmj](https://discord.gg/gk8jAdXWmj)
+
+## 🎉 **Fazit**
+
+APPIQ Solution ist die einfachste, sicherste und modernste Art, AI-Agenten für die Entwicklung zu nutzen. Mit nur einem Befehl erhalten Sie:
+
+- ✅ **One-Command Installation** - 10 Sekunden Setup
+- ✅ **Multi-IDE Support** - 8+ IDEs automatisch konfiguriert
+- ✅ **Smart MCP Integration** - Security-First Approach
+- ✅ **Modern Tech Stacks** - Flutter, React, Vue, shadcn/ui, v0.dev
+- ✅ **Full BMAD Flow** - Planning → Approval → Development
+
+**Bereit loszulegen?**
+```bash
+npx appiq-solution install
+```
+
+*APPIQ Solution - Die Zukunft der AI-gestützten Entwicklung.*  
+*Built with ❤️ based on the amazing Bmad-Method*
