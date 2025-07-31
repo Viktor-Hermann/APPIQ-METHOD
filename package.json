@@ -1,6 +1,6 @@
 {
   "name": "appiq-solution",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "🚀 Super einfache KI-Agent Installation mit One-Click Workflows - Built with ❤️ based on Bmad-Method",
   "main": "tools/appiq-installer.js",
   "bin": {
