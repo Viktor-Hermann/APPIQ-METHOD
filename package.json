@@ -1,7 +1,7 @@
 {
   "name": "appiq-solution",
-  "version": "1.3.0",
-  "description": "🚀 Super einfache KI-Agent Installation mit One-Click Workflows - Built with ❤️ based on Bmad-Method",
+  "version": "1.4.0",
+  "description": "🚀 Super einfache KI-Agent Installation mit One-Click Workflows für Web, Mobile (Flutter) & Backend - Built with ❤️ based on Bmad-Method",
   "main": "tools/appiq-installer.js",
   "bin": {
     "appiq-solution": "./tools/appiq-installer.js"
@@ -16,6 +16,10 @@
     "project-management",
     "greenfield",
     "brownfield",
+    "flutter",
+    "mobile-development",
+    "clean-architecture",
+    "material-design",
     "cursor",
     "claude-code",
     "windsurf"

@@ -9,9 +9,9 @@ const path = require('path');
 const program = new Command();
 
 program
-  .name('bmad-build')
-  .description('BMad-Method build tool for creating web bundles')
-  .version('4.0.0');
+  .name("bmad-build")
+  .description("BMad-Method build tool for creating web bundles")
+  .version("1.4.0");
 
 program
   .command('build')

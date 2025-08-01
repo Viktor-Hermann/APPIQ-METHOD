@@ -1,0 +1,330 @@
+document:
+  type: Flutter Mobile Product Requirements Document
+  version: 1.0
+  output_file: flutter-prd.md
+
+metadata:
+  product_name: "[Product Name]"
+  version: "[Version]"
+  created_date: "[Date]"
+  author: "[PM Name]"
+  stakeholders: "[Key Stakeholders]"
+  target_platforms: 
+    - iOS (minimum version 12.0)
+    - Android (minimum SDK 21)
+  flutter_version: "[Flutter Version]"
+  architecture: "Clean Architecture with Feature-based Structure"
+
+sections:
+  - name: executive_summary
+    title: "📱 Executive Summary"
+    prompt: |
+      Provide a concise overview of the Flutter mobile application including:
+      - Core value proposition for mobile users
+      - Primary target audience and mobile usage patterns
+      - Key mobile-specific features and capabilities
+      - Business objectives and success metrics
+      - Market opportunity in mobile space
+
+  - name: mobile_context
+    title: "📲 Mobile Context & Market Analysis"
+    prompt: |
+      Define the mobile-specific context:
+      - Mobile market analysis and competitive landscape
+      - Target user mobile behavior patterns
+      - Device usage scenarios (phone, tablet, offline/online)
+      - Platform-specific considerations (iOS vs Android)
+      - App store positioning and discovery strategy
+
+  - name: user_personas
+    title: "👤 Mobile User Personas"
+    prompt: |
+      Define mobile-specific user personas including:
+      - Primary mobile user types and demographics
+      - Mobile usage patterns and device preferences
+      - User journey on mobile devices
+      - Pain points in current mobile solutions
+      - Mobile-specific needs and expectations
+
+  - name: feature_requirements
+    title: "🎯 Feature Requirements (Flutter Clean Architecture)"
+    prompt: |
+      Organize features using Flutter's feature-based architecture:
+      
+      ## Core Features
+      For each major feature, define:
+      
+      ### [Feature Name] Feature
+      **Business Logic (Domain Layer):**
+      - Entities: [Define business entities]
+      - Use Cases: [Define business use cases]
+      - Repository Interfaces: [Define data contracts]
+      - Business Rules: [Define validation rules]
+      
+      **Data Management (Data Layer):**
+      - Data Sources: [Remote APIs, Local storage]
+      - Models: [JSON serialization models with Freezed]
+      - Repository Implementations: [Data access implementations]
+      - Caching Strategy: [Offline/online data handling]
+      
+      **User Interface (Presentation Layer):**
+      - Pages/Screens: [List all screens for this feature]
+      - Widgets: [Reusable UI components]
+      - State Management: [Cubit states and events]
+      - Navigation: [Route definitions and deep linking]
+      
+      **Localization:**
+      - Translation Keys: [All text content keys]
+      - Supported Languages: [List of supported locales]
+      
+      **Testing Requirements:**
+      - Unit Tests: [Business logic testing]
+      - Widget Tests: [UI component testing]
+      - Integration Tests: [End-to-end user flows]
+
+  - name: ui_ux_requirements
+    title: "🎨 UI/UX Requirements (Material Design 3)"
+    prompt: |
+      Define Material Design 3 mobile UI requirements:
+      
+      **Design System:**
+      - Material Design 3 theme and color scheme
+      - Typography scale and text styles
+      - Component library and design tokens
+      - Dark/Light theme support
+      
+      **Responsive Design:**
+      - Phone layouts (small screens)
+      - Tablet layouts (large screens)
+      - Orientation handling (portrait/landscape)
+      - Accessibility requirements (WCAG compliance)
+      
+      **Navigation Patterns:**
+      - Bottom navigation or navigation rail
+      - App bar configurations
+      - Drawer navigation (if applicable)
+      - Deep linking and routing structure
+      
+      **Mobile-Specific Interactions:**
+      - Touch gestures and swipe patterns
+      - Pull-to-refresh implementations
+      - Loading states and error handling UI
+      - Offline state indicators
+
+  - name: technical_requirements
+    title: "⚙️ Technical Requirements"
+    prompt: |
+      Define Flutter-specific technical requirements:
+      
+      **Flutter Architecture:**
+      - Clean Architecture implementation
+      - Feature-based folder structure
+      - Dependency injection with GetIt/Injectable
+      - State management with Cubit/BLoC
+      
+      **Core Dependencies:**
+      - flutter_bloc for state management
+      - get_it + injectable for dependency injection
+      - freezed + json_serializable for models
+      - dio for networking
+      - hive for local storage
+      - go_router for navigation
+      - equatable for value equality
+      
+      **Performance Requirements:**
+      - App startup time targets
+      - Screen transition performance
+      - Memory usage constraints
+      - Battery optimization considerations
+      
+      **Platform Integration:**
+      - Device capabilities (camera, location, etc.)
+      - Push notifications
+      - In-app purchases (if applicable)
+      - Native platform features
+
+  - name: backend_integration
+    title: "🔌 Backend Integration"
+    prompt: |
+      Define backend integration requirements:
+      
+      **API Requirements:**
+      - RESTful API endpoints specification
+      - Authentication and authorization flows
+      - Data synchronization patterns
+      - Real-time data updates (WebSocket/Server-Sent Events)
+      
+      **Data Models:**
+      - JSON structure definitions
+      - Data validation requirements
+      - Error response formats
+      - Pagination and filtering patterns
+      
+      **Offline Capabilities:**
+      - Local data caching strategy
+      - Offline-first functionality
+      - Data synchronization on reconnection
+      - Conflict resolution patterns
+
+  - name: security_requirements
+    title: "🔒 Security Requirements"
+    prompt: |
+      Define mobile security requirements:
+      
+      **Data Protection:**
+      - Sensitive data encryption (flutter_secure_storage)
+      - Biometric authentication integration
+      - Session management and token refresh
+      - Certificate pinning for API calls
+      
+      **Input Validation:**
+      - Form validation patterns
+      - Sanitization of user inputs
+      - Protection against injection attacks
+      - File upload security
+      
+      **Privacy Compliance:**
+      - GDPR/CCPA compliance requirements
+      - User consent management
+      - Data retention policies
+      - Analytics and tracking permissions
+
+  - name: localization_requirements
+    title: "🌍 Localization & Accessibility"
+    prompt: |
+      Define internationalization requirements:
+      
+      **Multi-Language Support:**
+      - Supported languages and locales
+      - Text direction support (LTR/RTL)
+      - Date, time, and number formatting
+      - Currency and unit localization
+      
+      **Accessibility:**
+      - Screen reader support
+      - Voice navigation
+      - High contrast mode
+      - Font size scaling
+      - Keyboard navigation support
+
+  - name: performance_metrics
+    title: "📊 Performance & Success Metrics"
+    prompt: |
+      Define measurable success criteria:
+      
+      **Technical Performance:**
+      - App launch time: [Target in milliseconds]
+      - Screen transition time: [Target]
+      - API response time: [Acceptable ranges]
+      - Memory usage: [Maximum limits]
+      - Battery consumption: [Optimization targets]
+      
+      **Business Metrics:**
+      - User engagement metrics
+      - Conversion rates
+      - User retention rates
+      - App store ratings targets
+      - Feature adoption rates
+
+  - name: development_phases
+    title: "🚀 Development Phases"
+    prompt: |
+      Define development phases using Flutter feature-based approach:
+      
+      **Phase 1: Core Foundation**
+      - Project setup and architecture
+      - Authentication and user management
+      - Core navigation structure
+      - Basic UI components and theme
+      
+      **Phase 2: Essential Features**
+      - [List core features with priorities]
+      - Each feature includes all layers (data/domain/presentation)
+      - Basic testing implementation
+      
+      **Phase 3: Advanced Features**
+      - [List advanced features]
+      - Performance optimizations
+      - Advanced animations and interactions
+      
+      **Phase 4: Polish & Launch**
+      - Comprehensive testing
+      - App store preparation
+      - Performance optimization
+      - Launch strategy
+
+  - name: constraints_assumptions
+    title: "⚠️ Constraints & Assumptions"
+    prompt: |
+      Document constraints and assumptions:
+      
+      **Technical Constraints:**
+      - Flutter version compatibility
+      - Minimum device requirements
+      - Third-party SDK limitations
+      - App store guidelines compliance
+      
+      **Business Constraints:**
+      - Budget limitations
+      - Timeline constraints
+      - Resource availability
+      - Regulatory requirements
+      
+      **Assumptions:**
+      - User device capabilities
+      - Network connectivity assumptions
+      - Backend service availability
+      - Third-party service reliability
+
+  - name: acceptance_criteria
+    title: "✅ Acceptance Criteria"
+    prompt: |
+      Define clear acceptance criteria for each feature:
+      
+      **Feature Completion Criteria:**
+      - All layers implemented (data/domain/presentation)
+      - Unit tests coverage > 80%
+      - Widget tests for all UI components
+      - Integration tests for user flows
+      - Localization keys implemented
+      - Accessibility compliance verified
+      - Performance benchmarks met
+      
+      **Quality Gates:**
+      - DRY: No code duplication
+      - Readable: Clear code structure
+      - Maintainable: Modular architecture
+      - Performant: Meets performance targets
+      - Testable: Comprehensive test coverage
+      - Secure: Security validation passed
+      - Localized: Multi-language support
+
+instructions:
+  pre_fill: |
+    Before starting this PRD:
+    1. Review any existing project documentation
+    2. Understand the target audience and mobile usage patterns
+    3. Research competitor mobile apps and market positioning
+    4. Consider Flutter's capabilities and limitations
+    5. Plan for feature-based architecture from the beginning
+
+  post_completion: |
+    After completing this PRD:
+    1. Validate with stakeholders and mobile UX experts
+    2. Review technical feasibility with Flutter developers  
+    3. Ensure alignment with business objectives
+    4. Plan for architecture document creation
+    5. Prepare for feature-based story creation by Scrum Master
+    6. Save as docs/flutter-prd.md for development team reference
+
+  quality_checklist:
+    - "All features mapped to Flutter's clean architecture layers"
+    - "Material Design 3 principles incorporated"
+    - "Responsive design considerations included"
+    - "Localization requirements defined"
+    - "Performance metrics are measurable"
+    - "Security requirements are comprehensive"
+    - "Accessibility compliance addressed"
+    - "Backend integration patterns defined"
+    - "Testing strategy covers all layers"
+    - "Development phases are realistic and feature-based"

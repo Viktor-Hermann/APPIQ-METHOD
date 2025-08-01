@@ -11,6 +11,7 @@ workflow:
     - enterprise-app
     - prototype
     - mvp
+    - flutter-mobile-app
 
   sequence:
     - agent: analyst
@@ -23,14 +24,35 @@ workflow:
     - agent: pm
       creates: prd.md
       requires: project-brief.md
-      notes: "Creates PRD from project brief using prd-tmpl. SAVE OUTPUT: Copy final prd.md to your project's docs/ folder."
+      notes: |
+        Creates PRD from project brief using prd-tmpl (or flutter-mobile-prd-tmpl for Flutter projects).
+        
+        For Flutter mobile apps:
+        - Use flutter-mobile-prd-tmpl.yaml template
+        - Focus on feature-based architecture requirements
+        - Include Material Design 3 specifications
+        - Define mobile-specific performance criteria
+        - Plan Clean Architecture layers (data/domain/presentation)
+        
+        SAVE OUTPUT: Copy final prd.md to your project's docs/ folder.
 
     - agent: ux-expert
       creates: front-end-spec.md
       requires: prd.md
       optional_steps:
         - user_research_prompt
-      notes: "Creates UI/UX specification using front-end-spec-tmpl. SAVE OUTPUT: Copy final front-end-spec.md to your project's docs/ folder."
+      notes: |
+        Creates UI/UX specification using front-end-spec-tmpl (or flutter-ui-spec-tmpl for Flutter projects).
+        
+        For Flutter mobile apps:
+        - Use flutter-ui-spec-tmpl.yaml template
+        - Design with Material Design 3 principles
+        - Plan responsive layouts for phone/tablet
+        - Define custom widget specifications
+        - Include accessibility and localization requirements
+        - Consider mobile-specific user interactions
+        
+        SAVE OUTPUT: Copy final front-end-spec.md to your project's docs/ folder.
 
     - agent: ux-expert
       creates: v0_prompt (optional)
@@ -46,7 +68,21 @@ workflow:
       optional_steps:
         - technical_research_prompt
         - review_generated_ui_structure
-      notes: "Creates comprehensive architecture using fullstack-architecture-tmpl. If user generated UI with v0/Lovable, can incorporate the project structure into architecture. May suggest changes to PRD stories or new stories. SAVE OUTPUT: Copy final fullstack-architecture.md to your project's docs/ folder."
+      notes: |
+        Creates comprehensive architecture using fullstack-architecture-tmpl (or flutter-mobile-architecture-tmpl for Flutter projects).
+        
+        For Flutter mobile apps:
+        - Use flutter-mobile-architecture-tmpl.yaml template
+        - Define Clean Architecture with feature-based structure
+        - Plan Cubit state management architecture
+        - Specify dependency injection setup
+        - Include testing strategy across all layers
+        - Define performance and security considerations
+        
+        If user generated UI with v0/Lovable, can incorporate the project structure into architecture.
+        May suggest changes to PRD stories or new stories.
+        
+        SAVE OUTPUT: Copy final fullstack-architecture.md to your project's docs/ folder.
 
     - agent: pm
       updates: prd.md (if needed)
@@ -90,8 +126,9 @@ workflow:
       repeats: for_each_epic
       notes: |
         Story creation cycle:
-        - SM Agent (New Chat): @sm → *create
+        - SM Agent (New Chat): @sm → *create (or *create-flutter-story for Flutter projects)
         - Creates next story from sharded docs
+        - For Flutter: Uses flutter-story-tmpl.yaml with all three architecture layers
         - Story starts in "Draft" status
 
     - agent: analyst/pm
@@ -111,7 +148,14 @@ workflow:
       creates: implementation_files
       requires: story.md
       notes: |
-        Dev Agent (New Chat): @dev
+        Dev Agent (New Chat): @dev (or Flutter-specific agents for complex features)
+        
+        For Flutter projects:
+        - Use @flutter-ui-agent for presentation layer
+        - Use @flutter-cubit-agent for state management  
+        - Use @flutter-domain-agent for business logic
+        - Use @flutter-data-agent for data layer
+        - Or use general @dev with Flutter expertise
         - Implements approved story
         - Updates File List with all changes
         - Marks story as "Review" when complete

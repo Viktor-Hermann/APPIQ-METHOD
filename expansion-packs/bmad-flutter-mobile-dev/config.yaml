@@ -1,5 +1,5 @@
 name: "BMad Flutter Mobile Development"
-version: "1.0.0"
+version: "1.4.0"
 description: "Flutter mobile app development with Clean Architecture, Cubit state management, and best practices"
 bmad_compatibility: "v4+"
 author: "BMad Team"

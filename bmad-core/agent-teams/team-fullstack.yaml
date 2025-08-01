@@ -1,7 +1,7 @@
 bundle:
   name: Team Fullstack
   icon: 🚀
-  description: Team capable of full stack, front end only, or service development.
+  description: Team capable of full stack, front end only, service development, and Flutter mobile apps.
 agents:
   - bmad-orchestrator
   - analyst
@@ -9,6 +9,15 @@ agents:
   - ux-expert
   - architect
   - po
+  - sm
+  - dev
+  - qa
+  # Flutter mobile agents (when expansion pack is loaded)
+  - flutter-ui-agent
+  - flutter-cubit-agent
+  - flutter-domain-agent
+  - flutter-data-agent
+  - shared-components-agent
 workflows:
   - brownfield-fullstack.yaml
   - brownfield-service.yaml
@@ -16,3 +25,4 @@ workflows:
   - greenfield-fullstack.yaml
   - greenfield-service.yaml
   - greenfield-ui.yaml
+  - flutter-ui-first-development.yaml

@@ -1,0 +1,114 @@
+bundle:
+  name: Team Flutter Mobile
+  icon: 📱
+  description: Specialized team for Flutter mobile app development with Clean Architecture, Material Design 3, and feature-based structure.
+  
+agents:
+  - bmad-orchestrator
+  - analyst
+  - pm
+  - ux-expert
+  - architect
+  - po
+  - sm
+  - dev
+  - qa
+  # Flutter-specific agents from expansion pack
+  - flutter-ui-agent
+  - flutter-cubit-agent
+  - flutter-domain-agent
+  - flutter-data-agent
+  - shared-components-agent
+
+workflows:
+  - brownfield-fullstack.yaml
+  - greenfield-fullstack.yaml
+  - flutter-ui-first-development.yaml
+
+expansion_packs:
+  - bmad-flutter-mobile-dev
+
+capabilities:
+  - Flutter Clean Architecture implementation
+  - Material Design 3 mobile UI
+  - Feature-based development structure
+  - Cubit state management
+  - Comprehensive testing (unit/widget/integration)
+  - Multi-language localization
+  - Responsive design (phone/tablet)
+  - Performance optimization
+  - Accessibility compliance
+  - Platform-specific integrations
+
+tech_stack:
+  frontend:
+    - Flutter (Dart)
+    - Material Design 3
+  state_management:
+    - Cubit/BLoC pattern
+    - Equatable for value equality
+  architecture:
+    - Clean Architecture
+    - Feature-based folder structure
+  data:
+    - Freezed for data models
+    - JSON serialization
+    - Repository pattern
+  dependency_injection:
+    - GetIt + Injectable
+  networking:
+    - Dio HTTP client
+    - API integration
+  local_storage:
+    - Hive database
+    - Secure storage
+  navigation:
+    - GoRouter
+    - Deep linking
+  testing:
+    - Unit tests
+    - Widget tests
+    - Integration tests
+    - Golden tests
+  tools:
+    - Build Runner
+    - Code generation
+    - Performance profiling
+
+project_types:
+  - flutter-mobile-app
+  - cross-platform-app
+  - mobile-first-pwa
+  - enterprise-mobile
+  - consumer-mobile-app
+
+workflow_specialization:
+  ui_first_development:
+    sequence:
+      - UI/UX design and wireframes
+      - Flutter presentation layer implementation
+      - State management with Cubit
+      - Domain layer business logic
+      - Data layer and API integration
+      - Testing and quality assurance
+      - Performance optimization
+
+quality_standards:
+  - DRY: Reusable widgets and business logic
+  - Readable: Clear code structure and naming
+  - Maintainable: Modular feature-based architecture
+  - Performant: Optimized for mobile performance
+  - Testable: Comprehensive test coverage
+  - Secure: Security validation at all layers
+  - Localized: Multi-language support required
+  - Accessible: WCAG compliance for mobile
+
+when_to_use:
+  - Building Flutter mobile applications
+  - Cross-platform mobile development
+  - Material Design 3 implementation
+  - Feature-based architecture projects
+  - Clean Architecture mobile apps
+  - Mobile-first responsive applications
+  - Enterprise mobile solutions
+  - Consumer mobile applications

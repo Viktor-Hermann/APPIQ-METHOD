@@ -1,0 +1,376 @@
+document:
+  type: Flutter Feature Story
+  version: 1.0
+  output_file: flutter-story.md
+
+metadata:
+  story_id: "[STORY-ID]"
+  feature_name: "[Feature Name]"
+  story_title: "[Story Title]"
+  created_date: "[Date]"
+  author: "[Scrum Master Name]"
+  priority: "[High/Medium/Low]"
+  estimate: "[Story Points]"
+  flutter_layers: 
+    - presentation
+    - domain  
+    - data
+  architecture: "Clean Architecture"
+
+sections:
+  - name: story_header
+    title: "📱 Flutter Feature Story"
+    prompt: |
+      ## Story: [Story Title]
+      
+      **Story ID:** [STORY-ID]
+      **Feature:** [Feature Name]
+      **Priority:** [High/Medium/Low]
+      **Estimate:** [Story Points]
+      **Status:** Draft
+      
+      **Flutter Architecture Layers:**
+      - ✅ Presentation Layer (UI/Cubit)
+      - ✅ Domain Layer (Entities/UseCases)
+      - ✅ Data Layer (Models/Repositories)
+
+  - name: user_story
+    title: "👤 User Story"
+    prompt: |
+      Write the user story in standard format:
+      
+      **As a** [type of user]
+      **I want** [goal/functionality]
+      **So that** [benefit/value]
+      
+      **Mobile Context:**
+      - Device usage scenario (phone/tablet, portrait/landscape)
+      - User interaction patterns (touch, swipe, navigation)
+      - Offline/online behavior expectations
+      - Performance and responsiveness requirements
+
+  - name: acceptance_criteria
+    title: "✅ Acceptance Criteria"
+    prompt: |
+      Define clear, testable acceptance criteria:
+      
+      **Functional Criteria:**
+      1. [Specific functionality requirement]
+      2. [User interaction behavior]
+      3. [Data handling requirement]
+      4. [Navigation and routing behavior]
+      
+      **UI/UX Criteria:**
+      1. Material Design 3 compliance verified
+      2. Responsive layout works on phone and tablet
+      3. Dark/light theme support implemented
+      4. Accessibility requirements met (WCAG AA)
+      5. Smooth animations and transitions
+      
+      **Technical Criteria:**
+      1. Clean Architecture layers properly separated
+      2. Cubit state management implemented correctly
+      3. Error handling covers all scenarios
+      4. Loading states provide appropriate feedback
+      5. Localization keys used (no static text)
+      
+      **Performance Criteria:**
+      1. Screen loads within [X] milliseconds
+      2. Smooth 60fps animations
+      3. Memory usage stays within acceptable limits
+      4. Battery impact minimized
+
+  - name: flutter_tasks
+    title: "🎯 Flutter Implementation Tasks"
+    prompt: |
+      Break down implementation by Flutter architecture layers:
+      
+      ## Presentation Layer Tasks
+      **UI Implementation:**
+      - [ ] Create feature pages/screens with Material 3 design
+      - [ ] Implement custom widgets and components
+      - [ ] Set up responsive layouts for phone/tablet
+      - [ ] Add animations and micro-interactions
+      - [ ] Implement accessibility features (Semantics, etc.)
+      
+      **State Management (Cubit):**
+      - [ ] Create Cubit class with business logic coordination
+      - [ ] Define State classes with Equatable
+      - [ ] Implement state transitions and error handling
+      - [ ] Add loading, success, and error states
+      - [ ] Connect UI to Cubit with BlocBuilder/BlocListener
+      
+      **Navigation & Routing:**
+      - [ ] Define routes and navigation paths
+      - [ ] Implement deep linking (if required)
+      - [ ] Add navigation transitions
+      - [ ] Handle back navigation and gestures
+      
+      ## Domain Layer Tasks
+      **Business Entities:**
+      - [ ] Create entity classes with Equatable
+      - [ ] Define entity relationships and properties
+      - [ ] Implement copyWith methods for immutability
+      - [ ] Add entity validation rules
+      
+      **Use Cases:**
+      - [ ] Implement use case classes with @injectable
+      - [ ] Add business logic and validation
+      - [ ] Define Either<Failure, Success> return types
+      - [ ] Create use case unit tests
+      
+      **Repository Interfaces:**
+      - [ ] Define repository abstract classes
+      - [ ] Specify method signatures and return types
+      - [ ] Document expected behavior and contracts
+      
+      ## Data Layer Tasks
+      **Data Models:**
+      - [ ] Create model classes with @freezed annotation
+      - [ ] Add JSON serialization with json_serializable
+      - [ ] Implement model to entity conversion methods
+      - [ ] Handle API field mapping with @JsonKey
+      
+      **Repository Implementations:**
+      - [ ] Implement concrete repository classes
+      - [ ] Add dependency injection with @LazySingleton
+      - [ ] Implement data source coordination
+      - [ ] Add error handling and data transformation
+      
+      **Data Sources:**
+      - [ ] Create remote data source for API calls
+      - [ ] Implement local data source for caching
+      - [ ] Add network connectivity handling
+      - [ ] Implement offline-first functionality (if required)
+      
+      ## Localization & Theming
+      - [ ] Add all text content to ARB files
+      - [ ] Implement right-to-left (RTL) support
+      - [ ] Verify dark/light theme compatibility
+      - [ ] Test with different locale settings
+      
+      ## Testing Tasks
+      - [ ] Write unit tests for domain layer (entities, use cases)
+      - [ ] Create unit tests for data layer (repositories, models)
+      - [ ] Implement widget tests for UI components
+      - [ ] Add Cubit/state management tests
+      - [ ] Create integration tests for user flows
+      - [ ] Verify accessibility with testing tools
+
+  - name: technical_details
+    title: "⚙️ Technical Implementation Details"
+    prompt: |
+      Provide technical guidance for developers:
+      
+      **Flutter Dependencies Required:**
+      ```yaml
+      dependencies:
+        flutter_bloc: ^8.1.6
+        get_it: ^8.0.2
+        injectable: ^2.5.0
+        freezed_annotation: ^2.4.4
+        json_annotation: ^4.9.0
+        equatable: ^2.0.7
+        dartz: ^0.10.1
+        dio: ^5.7.0
+        hive: ^2.2.3
+        go_router: ^14.0.0
+      
+      dev_dependencies:
+        build_runner: ^2.4.13
+        injectable_generator: ^2.6.2
+        freezed: ^2.5.7
+        json_serializable: ^6.8.0
+        bloc_test: ^9.1.7
+        mocktail: ^1.0.4
+      ```
+      
+      **File Structure:**
+      ```
+      lib/features/[feature_name]/
+      ├── data/
+      │   ├── datasources/
+      │   │   ├── [feature]_local_datasource.dart
+      │   │   └── [feature]_remote_datasource.dart
+      │   ├── models/
+      │   │   ├── [model_name]_model.dart
+      │   │   ├── [model_name]_model.freezed.dart
+      │   │   └── [model_name]_model.g.dart
+      │   └── repositories/
+      │       └── [feature]_repository_impl.dart
+      ├── domain/
+      │   ├── entities/
+      │   │   └── [entity_name]_entity.dart
+      │   ├── repositories/
+      │   │   └── [feature]_repository.dart
+      │   └── usecases/
+      │       ├── get_[items]_usecase.dart
+      │       ├── create_[item]_usecase.dart
+      │       └── update_[item]_usecase.dart
+      └── presentation/
+          ├── cubit/
+          │   ├── [feature]_cubit.dart
+          │   └── [feature]_state.dart
+          ├── pages/
+          │   ├── [feature]_list_page.dart
+          │   └── [feature]_detail_page.dart
+          └── widgets/
+              ├── [custom_widget]_widget.dart
+              └── [feature]_item_widget.dart
+      ```
+      
+      **Key Implementation Patterns:**
+      - Use `const` constructors for performance
+      - Implement proper widget keys for testing
+      - Follow Material Design 3 guidelines
+      - Use BlocBuilder for state-dependent UI
+      - Use BlocListener for side effects (navigation, snackbars)
+      - Implement proper error boundaries
+      - Add loading indicators for async operations
+
+  - name: testing_requirements
+    title: "🧪 Testing Requirements"
+    prompt: |
+      Define comprehensive testing approach:
+      
+      **Unit Tests (Domain Layer):**
+      - Test all entity copyWith methods and equality
+      - Test use case business logic and validation
+      - Test repository interface contracts
+      - Mock dependencies for isolated testing
+      - Target: 100% coverage for business logic
+      
+      **Unit Tests (Data Layer):**
+      - Test model JSON serialization/deserialization
+      - Test repository implementations
+      - Test data source implementations
+      - Mock HTTP clients and local storage
+      - Test error handling and edge cases
+      
+      **Widget Tests (Presentation Layer):**
+      - Test all custom widgets in isolation
+      - Test page widgets with different states
+      - Test user interactions (tap, swipe, input)
+      - Test accessibility semantics
+      - Mock Cubit dependencies
+      
+      **Cubit Tests:**
+      - Test all state transitions
+      - Test error handling and recovery
+      - Test loading states and timing
+      - Use bloc_test for comprehensive coverage
+      - Mock use case dependencies
+      
+      **Integration Tests:**
+      - Test complete user flows end-to-end
+      - Test navigation between screens
+      - Test data persistence and retrieval
+      - Test offline/online scenarios
+      - Test performance under load
+
+  - name: dev_notes
+    title: "📝 Development Notes"
+    prompt: |
+      Additional guidance and considerations:
+      
+      **Performance Considerations:**
+      - Use ListView.builder for large lists
+      - Implement image caching for network images
+      - Optimize widget build methods
+      - Use keys for widget identity and performance
+      - Profile memory usage during development
+      
+      **Accessibility Implementation:**
+      - Add Semantics widgets for screen readers
+      - Ensure minimum touch target sizes (44x44)
+      - Provide meaningful content descriptions
+      - Test with TalkBack/VoiceOver
+      - Support high contrast and large fonts
+      
+      **Localization Guidelines:**
+      - Never use hardcoded strings in UI
+      - Use context-aware translation keys
+      - Handle text expansion/contraction
+      - Test with RTL languages
+      - Format dates, numbers, and currencies correctly
+      
+      **Code Quality Standards:**
+      - DRY: Reuse widgets and business logic
+      - Readable: Clear naming and code structure
+      - Maintainable: Modular and loosely coupled
+      - Performant: Optimized for mobile devices
+      - Testable: Easy to test in isolation
+
+  - name: definition_of_done
+    title: "✅ Definition of Done"
+    prompt: |
+      Story completion checklist:
+      
+      **Implementation Complete:**
+      - [ ] All tasks marked as complete
+      - [ ] All architecture layers implemented
+      - [ ] UI matches design specifications
+      - [ ] Material Design 3 compliance verified
+      - [ ] Responsive design works on all screen sizes
+      
+      **Code Quality:**
+      - [ ] Code follows Flutter best practices
+      - [ ] No hardcoded strings (all localized)
+      - [ ] Error handling implemented
+      - [ ] Loading states provide feedback
+      - [ ] Accessibility requirements met
+      
+      **Testing Complete:**
+      - [ ] Unit tests written and passing (>80% coverage)
+      - [ ] Widget tests written and passing
+      - [ ] Cubit tests written and passing
+      - [ ] Integration tests written and passing
+      - [ ] Manual testing on different devices
+      
+      **Performance Verified:**
+      - [ ] No memory leaks detected
+      - [ ] Smooth animations (60fps)
+      - [ ] Acceptable loading times
+      - [ ] Battery usage optimized
+      
+      **Documentation:**
+      - [ ] Code commented where necessary
+      - [ ] API documentation updated
+      - [ ] File list maintained
+      - [ ] Change log updated
+      
+      **Review Process:**
+      - [ ] Code review completed
+      - [ ] Design review approved
+      - [ ] QA testing passed
+      - [ ] Accessibility testing completed
+      - [ ] Performance benchmarks met
+
+instructions:
+  pre_fill: |
+    Before creating this Flutter story:
+    1. Review Flutter PRD and architecture documents
+    2. Understand the specific feature requirements
+    3. Consider the target users and usage patterns
+    4. Plan the implementation across all three layers
+    5. Identify dependencies and integration points
+
+  post_completion: |
+    After completing this Flutter story:
+    1. Review with product owner and tech lead
+    2. Validate technical approach and estimates
+    3. Ensure all acceptance criteria are testable
+    4. Confirm resource availability and timeline
+    5. Prepare for developer handoff with clear documentation
+
+  quality_checklist:
+    - "Story follows standard user story format"
+    - "Acceptance criteria are specific and testable"
+    - "Tasks are broken down by Flutter architecture layers"
+    - "Technical details provide clear implementation guidance"
+    - "Testing requirements are comprehensive"
+    - "Definition of done is complete and measurable"
+    - "Performance and accessibility requirements included"
+    - "Localization requirements specified"
+    - "Code quality standards defined"
+    - "Integration points identified and documented"

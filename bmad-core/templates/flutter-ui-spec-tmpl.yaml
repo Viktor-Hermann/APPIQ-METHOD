@@ -1,0 +1,415 @@
+document:
+  type: Flutter UI/UX Specification
+  version: 1.0
+  output_file: flutter-ui-spec.md
+
+metadata:
+  project_name: "[Project Name]"
+  feature_name: "[Feature Name]"
+  version: "[UI Spec Version]"
+  created_date: "[Date]"
+  designer: "[UX Designer Name]"
+  flutter_version: "[Flutter Version]"
+  material_design_version: "Material Design 3"
+  platforms: 
+    - iOS
+    - Android
+
+sections:
+  - name: design_overview
+    title: "🎨 Design Overview"
+    prompt: |
+      Provide comprehensive UI/UX overview:
+      
+      **Design Philosophy:**
+      - Material Design 3 implementation approach
+      - Brand integration with Material You principles
+      - User-centered design considerations
+      - Mobile-first responsive strategy
+      
+      **Target Platforms:**
+      - iOS specific design adaptations
+      - Android Material Design compliance
+      - Cross-platform consistency requirements
+      - Platform-specific interaction patterns
+
+  - name: user_flows
+    title: "🔄 User Flows & Navigation"
+    prompt: |
+      Define user journey and navigation patterns:
+      
+      **Primary User Flows:**
+      [For each major user flow, define:]
+      - Entry points and triggers
+      - Step-by-step navigation path
+      - Decision points and branching
+      - Success and error scenarios
+      - Exit points and completion states
+      
+      **Navigation Architecture:**
+      - App navigation structure (tabs, drawer, etc.)
+      - Deep linking and routing patterns
+      - Back navigation and gesture handling
+      - Navigation state management
+      
+      **Micro-interactions:**
+      - Button press feedback
+      - Loading state transitions
+      - Form validation feedback
+      - Success/error message patterns
+
+  - name: responsive_layout
+    title: "📱 Responsive Layout Design"
+    prompt: |
+      Define responsive design for different screen sizes:
+      
+      **Phone Layouts (Small Screens):**
+      - Portrait mode layouts (320-414px width)
+      - Landscape mode adaptations
+      - Single-column content arrangement
+      - Bottom navigation implementation
+      
+      **Tablet Layouts (Large Screens):**
+      - Portrait tablet layouts (768px+ width)
+      - Landscape tablet layouts
+      - Multi-column content arrangements
+      - Navigation rail implementation
+      
+      **Adaptive Components:**
+      - Responsive grid systems
+      - Flexible typography scaling
+      - Adaptive spacing and padding
+      - Context-aware component behavior
+
+  - name: material_design_system
+    title: "🎯 Material Design 3 System"
+    prompt: |
+      Define Material Design 3 implementation:
+      
+      **Color System:**
+      - Primary color palette (Material You)
+      - Secondary and tertiary colors
+      - Surface and background colors
+      - Error, warning, and success colors
+      - Dark and light theme variants
+      
+      **Typography Scale:**
+      - Display styles (Large, Medium, Small)
+      - Headline styles (Large, Medium, Small)
+      - Title styles (Large, Medium, Small)
+      - Body styles (Large, Medium, Small)
+      - Label styles (Large, Medium, Small)
+      
+      **Component Specifications:**
+      [For each component, define:]
+      - Material 3 implementation
+      - State variations (enabled, disabled, hover, pressed)
+      - Size variants and responsive behavior
+      - Custom styling requirements
+      - Animation and transition specifications
+
+  - name: feature_screens
+    title: "📋 Feature Screens Specification"
+    prompt: |
+      Define each screen in the Flutter feature:
+      
+      ## [Feature Name] Screens
+      
+      ### [Screen Name] Screen
+      **Purpose:** [Screen function and user goal]
+      
+      **Layout Structure:**
+      - AppBar configuration
+      - Body content arrangement
+      - Bottom navigation/FAB placement
+      - Safe area considerations
+      
+      **Widget Hierarchy:**
+      ```
+      Scaffold
+      ├── AppBar
+      │   ├── Leading widget
+      │   ├── Title widget
+      │   └── Actions widgets
+      ├── Body
+      │   └── [Define widget tree structure]
+      ├── BottomNavigationBar (if applicable)
+      └── FloatingActionButton (if applicable)
+      ```
+      
+      **State Management:**
+      - Initial loading state UI
+      - Success state content
+      - Error state handling
+      - Empty state design
+      - Loading indicators and progress
+      
+      **Responsive Behavior:**
+      - Phone layout adaptations
+      - Tablet layout changes
+      - Orientation handling
+      
+      **Localization Requirements:**
+      - Text content keys
+      - Right-to-left (RTL) support
+      - Cultural adaptations
+      
+      **Accessibility:**
+      - Semantic labels and hints
+      - Focus management
+      - Screen reader support
+      - High contrast support
+
+  - name: custom_widgets
+    title: "🧩 Custom Widget Specifications"
+    prompt: |
+      Define reusable custom widgets:
+      
+      ### [Widget Name] Widget
+      **Purpose:** [Widget function and reusability scope]
+      
+      **API Design:**
+      ```dart
+      class [WidgetName] extends StatelessWidget {
+        const [WidgetName]({
+          Key? key,
+          required this.property1,
+          this.property2,
+          // Define all required and optional properties
+        }) : super(key: key);
+        
+        final String property1;
+        final int? property2;
+      }
+      ```
+      
+      **Visual Specifications:**
+      - Default appearance and styling
+      - State variations (normal, pressed, disabled)
+      - Size and spacing requirements
+      - Animation and transition behavior
+      
+      **Responsive Behavior:**
+      - Adaptation to different screen sizes
+      - Content overflow handling
+      - Breakpoint-specific changes
+      
+      **Theming Integration:**
+      - Theme property usage
+      - Dark/light mode support
+      - Material 3 compliance
+
+  - name: animations_interactions
+    title: "✨ Animations & Interactions"
+    prompt: |
+      Define animation and interaction patterns:
+      
+      **Screen Transitions:**
+      - Page route animations
+      - Hero animations between screens
+      - Shared element transitions
+      - Custom transition specifications
+      
+      **Micro-animations:**
+      - Button press animations
+      - Loading spinner implementations
+      - Progress indicators
+      - Success/error feedback animations
+      
+      **Gesture Handling:**
+      - Swipe gestures and directions
+      - Pull-to-refresh implementations
+      - Drag and drop interactions
+      - Pinch-to-zoom (if applicable)
+      
+      **Animation Specifications:**
+      - Duration and easing curves
+      - Performance considerations
+      - Accessibility motion preferences
+      - Battery optimization
+
+  - name: theme_customization
+    title: "🎨 Theme & Customization"
+    prompt: |
+      Define theme customization approach:
+      
+      **Material Theme Configuration:**
+      ```dart
+      ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: [Primary Color],
+          brightness: Brightness.light,
+        ),
+        // Define custom theme properties
+      )
+      ```
+      
+      **Custom Theme Extensions:**
+      - Additional color properties
+      - Custom text styles
+      - Component theme customizations
+      - Platform-specific adaptations
+      
+      **Dark Mode Implementation:**
+      - Dark theme color scheme
+      - Component adaptations
+      - System theme following
+      - User preference handling
+
+  - name: accessibility_compliance
+    title: "♿ Accessibility Compliance"
+    prompt: |
+      Define accessibility implementation:
+      
+      **WCAG Compliance:**
+      - Color contrast ratios (AA level minimum)
+      - Text size and readability
+      - Touch target sizes (44x44 minimum)
+      - Focus indicators and management
+      
+      **Screen Reader Support:**
+      - Semantic markup with Semantics widgets
+      - Content descriptions and labels
+      - Navigation announcements
+      - State change notifications
+      
+      **Motor Accessibility:**
+      - Large touch targets
+      - Gesture alternatives
+      - Voice navigation support
+      - Switch control compatibility
+      
+      **Cognitive Accessibility:**
+      - Clear navigation patterns
+      - Consistent UI conventions
+      - Error prevention and recovery
+      - Help and documentation access
+
+  - name: localization_design
+    title: "🌍 Localization Design Guidelines"
+    prompt: |
+      Define localization and internationalization:
+      
+      **Text Localization:**
+      - Translation key naming conventions
+      - Text expansion/contraction handling
+      - Context-sensitive translations
+      - Placeholder and dynamic content
+      
+      **Cultural Adaptations:**
+      - Right-to-left (RTL) layout support
+      - Date and time format variations
+      - Number and currency formatting
+      - Cultural color and symbol considerations
+      
+      **Layout Adaptations:**
+      - Text length variations
+      - Font and typography changes
+      - Icon and image localization
+      - Cultural UI pattern preferences
+
+  - name: performance_considerations
+    title: "⚡ Performance & Optimization"
+    prompt: |
+      Define performance optimization requirements:
+      
+      **Rendering Performance:**
+      - Widget tree optimization
+      - Build method efficiency
+      - Avoid unnecessary rebuilds
+      - Image optimization and caching
+      
+      **Memory Management:**
+      - Large list handling (ListView.builder)
+      - Image memory management
+      - Animation resource cleanup
+      - State management efficiency
+      
+      **Battery Optimization:**
+      - Animation frequency limits
+      - Background processing minimization
+      - Location and sensor usage
+      - Network request optimization
+
+  - name: implementation_guidelines
+    title: "🛠️ Implementation Guidelines"
+    prompt: |
+      Provide Flutter-specific implementation guidance:
+      
+      **Widget Implementation Patterns:**
+      - StatelessWidget vs StatefulWidget usage
+      - Widget composition best practices
+      - Key usage for performance
+      - Build method optimization
+      
+      **State Management Integration:**
+      - BlocBuilder and BlocListener usage
+      - State-dependent UI rendering
+      - Loading and error state handling
+      - State change animations
+      
+      **Asset Management:**
+      - Image asset organization
+      - Icon and graphic specifications
+      - Font asset requirements
+      - Platform-specific assets
+      
+      **Testing Considerations:**
+      - Widget testability requirements
+      - Key assignment for testing
+      - Semantic testing support
+      - Golden test specifications
+
+  - name: handoff_documentation
+    title: "📋 Developer Handoff"
+    prompt: |
+      Prepare comprehensive developer handoff:
+      
+      **Design Assets:**
+      - Figma/Design file links
+      - Exported assets and icons
+      - Color palette specifications
+      - Typography style guide
+      
+      **Implementation Priorities:**
+      - Must-have features and requirements
+      - Nice-to-have enhancements
+      - Future iteration considerations
+      - Technical debt considerations
+      
+      **Quality Assurance:**
+      - Visual testing requirements
+      - Cross-platform testing needs
+      - Accessibility testing checklist
+      - Performance benchmarking
+
+instructions:
+  pre_fill: |
+    Before creating this UI specification:
+    1. Review the Flutter PRD and understand feature requirements
+    2. Research Material Design 3 guidelines and best practices
+    3. Consider target audience and usage patterns
+    4. Plan for responsive design across device sizes
+    5. Understand Flutter's widget system and capabilities
+
+  post_completion: |
+    After completing this UI specification:
+    1. Review with stakeholders and development team
+    2. Validate Material Design 3 compliance
+    3. Ensure accessibility requirements are comprehensive
+    4. Verify responsive design coverage
+    5. Prepare for Cubit state management integration
+    6. Save as docs/flutter-ui-spec.md for development reference
+
+  quality_checklist:
+    - "Material Design 3 principles correctly applied"
+    - "Responsive design covers all screen sizes"
+    - "Accessibility compliance thoroughly addressed"
+    - "Localization requirements defined"
+    - "Performance considerations included"
+    - "Animation specifications are clear"
+    - "Custom widget APIs are well-defined"
+    - "Implementation guidelines are Flutter-specific"
+    - "Developer handoff documentation is complete"
+    - "Integration with Cubit state management considered"

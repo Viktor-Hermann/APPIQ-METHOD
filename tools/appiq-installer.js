@@ -2170,10 +2170,11 @@ ${
 3. **Erstellt:** Angepasste Workflows für Ihr Projekt`,
 
       "Project Manager": `
-**📋 Bestehende Dokumentation:**
-1. \`/analyze-docs\` - Scannt bestehende Dokumentation
-2. **Legt PRD ab in:** \`docs/prd.md\` (falls nicht vorhanden)
-3. **Nächster Schritt:** Architect für Architektur-Review`,
+**📋 Automatische PRD Erstellung:**
+1. **Erstellt automatisch:** \`docs/prd.md\` (falls nicht vorhanden)
+2. **Für Flutter Projekte:** Verwendet flutter-mobile-prd-tmpl.yaml
+3. **Keine Projektname-Abfrage** - Verwendet Verzeichnisname
+4. **Nächster Schritt:** Architect für Architektur-Review`,
 
       "System Architect": `
 **🏗️ Architektur-Review:**
@@ -2564,7 +2565,7 @@ version: "1.0.0"
 project:
   type: ${this.config.projectType}
   created: ${new Date().toISOString()}
-  name: ${this.config.projectName || "Unbenanntes Projekt"}
+  name: ${this.config.projectName || path.basename(this.projectRoot)}
   plan_approved: ${this.config.planApproved}
 
 # Wo die wichtigen Dateien liegen
