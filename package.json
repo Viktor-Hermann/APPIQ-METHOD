@@ -1,9 +1,10 @@
 {
-  "name": "bmad-method",
-  "version": "4.33.1",
-  "description": "Breakthrough Method of Agile AI-driven Development",
+  "name": "appiq-solution",
+  "version": "1.6.4",
+  "description": "APPIQ SOLUTION: Flutter Mobile Development Extension for BMAD Method",
   "main": "tools/cli.js",
   "bin": {
+    "appiq-solution": "tools/bmad-npx-wrapper.js",
     "bmad": "tools/bmad-npx-wrapper.js",
     "bmad-method": "tools/bmad-npx-wrapper.js"
   },
@@ -46,19 +47,24 @@
     "ora": "^5.4.1"
   },
   "keywords": [
-    "agile",
-    "ai",
-    "orchestrator",
-    "development",
-    "methodology",
-    "agents",
-    "bmad"
+    "ai-agents",
+    "development-workflow", 
+    "project-management",
+    "greenfield",
+    "brownfield",
+    "flutter",
+    "mobile-development",
+    "clean-architecture",
+    "material-design",
+    "cursor",
+    "claude-code",
+    "windsurf"
   ],
-  "author": "Brian (BMad) Madison",
+  "author": "Viktor Hermann",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bmadcode/BMAD-METHOD.git"
+    "url": "git+https://github.com/your-repo/appiq-solution.git"
   },
   "engines": {
     "node": ">=20.0.0"

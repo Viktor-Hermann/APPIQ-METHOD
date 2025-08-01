@@ -548,4 +548,70 @@ flutter test integration_test/
 - Use secure token storage
 - Handle token refresh properly
 
+## 🚨 MANDATORY DEVELOPMENT RULES - ALWAYS FOLLOW!
+
+### CRITICAL: These rules MUST be followed by ALL agents, ALL workflows, ALL IDEs!
+
+#### Standard Workflow (NO EXCEPTIONS!)
+1. **THINK**: Analyze problem and read existing codebase
+2. **PLAN**: Write detailed plan to `tasks/todo.md` with checkable items  
+3. **VERIFY**: Get plan approved before starting ANY coding
+4. **WORK**: Execute todo items, marking complete as you go
+5. **EXPLAIN**: Provide high-level explanations at every step
+6. **SIMPLE**: Make minimal impact changes - avoid complexity
+7. **REVIEW**: Add review section to `todo.md` with summary
+8. **COMMIT**: Make git commit after each completed task
+
+#### MANDATORY Quality Gates (ALL 5 MUST PASS!)
+- 🧹 **DRY**: No code duplication - ALWAYS reuse existing code
+- 📖 **Readable**: Self-documenting code with clear naming
+- 🔧 **Maintainable**: Clean Architecture with proper separation
+- ⚡ **Performant**: Efficient algorithms and resource usage
+- 🧪 **Testable**: Comprehensive test coverage
+
+#### MANDATORY Pre-Coding Checklist
+- [ ] **Check existing code** for similar functionality FIRST
+- [ ] **Review shared components** in `lib/shared/`
+- [ ] **Follow existing patterns** - NEVER create new patterns
+- [ ] **Plan localization keys** - NO static text allowed
+- [ ] **Verify architecture compliance** with Clean Architecture
+- [ ] **Identify reusable components** before creating new ones
+
+#### MANDATORY Flutter Rules
+- ✅ **Clean Architecture**: Presentation → Domain ← Data
+- ✅ **Cubit State Management**: Follow existing Cubit patterns
+- ✅ **Repository Pattern**: Implement like existing repositories
+- ✅ **Dependency Injection**: Use GetIt like existing features
+- ✅ **Localization**: ALL text must use AppLocalizations
+- ✅ **Testing**: Unit tests for business logic, widget tests for UI
+
+#### MANDATORY Code Integration Rules
+- ✅ **BEFORE new files**: Check if similar functionality exists
+- ✅ **BEFORE new widgets**: Review `lib/shared/widgets/`
+- ✅ **BEFORE new services**: Check `lib/shared/services/`
+- ✅ **BEFORE new utilities**: Review `lib/shared/utils/`
+- ✅ **EXTEND existing code** instead of duplicating
+- ✅ **FOLLOW existing naming conventions** exactly
+
+#### MANDATORY Validation Criteria
+All code MUST pass these criteria:
+1. **Architecture**: Follows Clean Architecture with proper layer separation
+2. **Localization**: All text supports multi-language (NO static text!)
+3. **Quality**: Passes all 5 quality criteria (DRY, Readable, Maintainable, Performant, Testable)
+4. **Documentation**: Code is properly documented with examples
+5. **Consistency**: Code style matches existing patterns EXACTLY
+
+#### FAILURE CONDITIONS (NEVER ALLOWED!)
+- ❌ Static text in UI (instant failure)
+- ❌ Code duplication (instant failure)
+- ❌ Breaking existing patterns (instant failure)
+- ❌ Missing tests (instant failure)
+- ❌ Architecture violations (instant failure)
+
+### 🎯 REMEMBER: When in doubt, ALWAYS follow existing patterns!
+
+**These rules apply to ALL development work - NO EXCEPTIONS!**
+
+---
+
 This guide ensures consistent, high-quality Flutter development that meets professional standards and security requirements.

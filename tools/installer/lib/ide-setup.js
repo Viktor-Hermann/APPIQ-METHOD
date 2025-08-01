@@ -93,15 +93,26 @@ class IdeSetup extends BaseIdeSetup {
 
     // Setup expansion pack commands
     const expansionPacks = await this.getInstalledExpansionPacks(installDir);
+    console.log(chalk.blue(`📦 Found ${expansionPacks.length} expansion packs`));
+    
     for (const packInfo of expansionPacks) {
+      console.log(chalk.blue(`🔍 Processing expansion pack: ${packInfo.name} at ${packInfo.path}`));
+      
       const packSlashPrefix = await this.getExpansionPackSlashPrefix(packInfo.path);
       const packAgents = await this.getExpansionPackAgents(packInfo.path);
       const packTasks = await this.getExpansionPackTasks(packInfo.path);
       
+      console.log(chalk.blue(`   - Slash prefix: ${packSlashPrefix}`));
+      console.log(chalk.blue(`   - Found ${packAgents.length} agents: ${packAgents.join(', ')}`));
+      console.log(chalk.blue(`   - Found ${packTasks.length} tasks: ${packTasks.join(', ')}`));
+      
       if (packAgents.length > 0 || packTasks.length > 0) {
         // Use the actual directory name where the expansion pack is installed
         const rootPath = path.relative(installDir, packInfo.path);
+        console.log(chalk.green(`✓ Setting up commands for ${packInfo.name} with root path: ${rootPath}`));
         await this.setupClaudeCodeForPackage(installDir, packInfo.name, packSlashPrefix, packAgents, packTasks, rootPath);
+      } else {
+        console.log(chalk.yellow(`⚠ No agents or tasks found for ${packInfo.name}`));
       }
     }
 
@@ -537,7 +548,7 @@ class IdeSetup extends BaseIdeSetup {
     
     // Check for dot-prefixed expansion packs in install directory
     const glob = require("glob");
-    const dotExpansions = glob.sync(".bmad-*", { cwd: installDir });
+    const dotExpansions = glob.sync(".{bmad,appiq}-*", { cwd: installDir });
     
     for (const dotExpansion of dotExpansions) {
       if (dotExpansion !== ".bmad-core") {

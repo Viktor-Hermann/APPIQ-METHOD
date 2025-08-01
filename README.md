@@ -1,186 +1,231 @@
-# BMad-Method: Universal AI Agent Framework
+# 📱 APPIQ SOLUTION: Flutter Mobile Development Extension
 
-[![Version](https://img.shields.io/npm/v/bmad-method?color=blue&label=version)](https://www.npmjs.com/package/bmad-method)
+[![Version](https://img.shields.io/npm/v/appiq-solution?color=blue&label=version)](https://www.npmjs.com/package/appiq-solution)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Community-7289da?logo=discord&logoColor=white)](https://discord.gg/gk8jAdXWmj)
 
-Foundations in Agentic Agile Driven Development, known as the Breakthrough Method of Agile AI-Driven Development, yet so much more. Transform any domain with specialized AI expertise: software development, entertainment, creative writing, business strategy to personal wellness just to name a few.
+**A specialized extension of the BMAD Method for Flutter Mobile App Development**
 
-**[Subscribe to BMadCode on YouTube](https://www.youtube.com/@BMadCode?sub_confirmation=1)**
+APPIQ SOLUTION extends the proven BMAD Method with first-class Flutter support featuring Clean Architecture, Cubit patterns, BLoC state management, dependency injection, and modern Mobile Development Best Practices.
 
-**[Join our Discord Community](https://discord.gg/gk8jAdXWmj)** - A growing community for AI enthusiasts! Get help, share ideas, explore AI agents & frameworks, collaborate on tech projects, enjoy hobbies, and help each other succeed. Whether you're stuck on BMad, building your own agents, or just want to chat about the latest in AI - we're here for you! **Some mobile and VPN may have issue joining the discord, this is a discord issue - if the invite does not work, try from your own internet or another network, or non-VPN.**
+## 🚀 Quick Start
 
-⭐ **If you find this project helpful or useful, please give it a star in the upper right hand corner!** It helps others discover BMad-Method and you will be notified of updates!
+**Simple and fast:**
 
-## Overview
+```bash
+npx appiq-solution
+```
 
-**BMad Method's Two Key Innovations:**
+The Smart Installer configures:
+
+✅ **Multi-IDE Support**: Cursor, Claude Code, Windsurf, VS Code + Cline, and more  
+✅ **Auto-detect Tech Stack**: Flutter, React, Vue, Next.js, Angular, Fullstack, API-only  
+✅ **Smart MCP Integration**: Agents know which MCP servers they can use (no auto-config)  
+✅ **Planning Workflow**: Project idea → Plan generation → Approval → Development  
+✅ **Full BMAD Flow**: Document sharding, Agent orchestration, Development cycle  
+✅ **🎯 Advanced Flutter Support**: Dart MCP Server integration, Clean Architecture, Cubit patterns, BLoC state management, dependency injection with GetIt, proper testing strategies  
+✅ **Modern Web**: shadcn/ui, v0.dev, Tailwind CSS integration  
+✅ **Security First**: No API Keys stored or auto-configured
+
+## What is BMAD Method?
+
+APPIQ SOLUTION is built on the **BMAD Method** - a proven AI-driven development framework that uses specialized AI agents to handle the complete software development lifecycle.
+
+**BMAD Method's Two Key Innovations:**
 
 **1. Agentic Planning:** Dedicated agents (Analyst, PM, Architect) collaborate with you to create detailed, consistent PRDs and Architecture documents. Through advanced prompt engineering and human-in-the-loop refinement, these planning agents produce comprehensive specifications that go far beyond generic AI task generation.
 
 **2. Context-Engineered Development:** The Scrum Master agent then transforms these detailed plans into hyper-detailed development stories that contain everything the Dev agent needs - full context, implementation details, and architectural guidance embedded directly in story files.
 
-This two-phase approach eliminates both **planning inconsistency** and **context loss** - the biggest problems in AI-assisted development. Your Dev agent opens a story file with complete understanding of what to build, how to build it, and why.
+This two-phase approach eliminates both **planning inconsistency** and **context loss** - the biggest problems in AI-assisted development.
 
-**📖 [See the complete workflow in the User Guide](bmad-core/user-guide.md)** - Planning phase, development cycle, and all agent roles
+## 🎯 Available MCP Servers
 
-## Quick Navigation
+Your agents know these MCP servers (you configure them manually in your IDE):
 
-### Understanding the BMad Workflow
+🧠 **Sequential Thinking**: Complex problem solving  
+🌐 **Puppeteer**: Browser automation and testing  
+🔗 **Claude Continuity**: Enhanced thread continuity  
+💾 **Extended Memory**: Enhanced AI memory capabilities  
+✨ **21st.dev Magic**: UI builder like v0 in your IDE  
+📱 **Dart MCP**: Flutter/Dart development (auto-detected for Flutter projects)  
+🔥 **Firebase**: Auth, Firestore, Functions integration  
+⚡ **Supabase**: Database, auth, storage  
+📚 **Context7**: Up-to-date library documentation  
+💳 **Stripe**: Payment integration
 
-**Before diving in, review these critical workflow diagrams that explain how BMad works:**
+## 📱 Flutter Features
 
-1. **[Planning Workflow (Web UI)](bmad-core/user-guide.md#the-planning-workflow-web-ui)** - How to create PRD and Architecture documents
-2. **[Core Development Cycle (IDE)](bmad-core/user-guide.md#the-core-development-cycle-ide)** - How SM, Dev, and QA agents collaborate through story files
+🏗️ **Clean Architecture**: Domain-driven Design, clean layer separation  
+🔄 **State Management**: Cubit patterns, BLoC integration  
+🛠️ **Best Practices**: GetIt dependency injection, null safety  
+🎨 **Material 3**: Modern UI components, theming  
+🧪 **Testing**: Unit, Widget, and Integration tests  
+📦 **Package Management**: Curated package recommendations
 
-> ⚠️ **These diagrams explain 90% of BMad Method Agentic Agile flow confusion** - Understanding the PRD+Architecture creation and the SM/Dev/QA workflow and how agents pass notes through story files is essential - and also explains why this is NOT taskmaster or just a simple task runner!
+## 🎯 Step-by-Step Guide for Your Brownfield Flutter Project
 
-### What would you like to do?
-
-- **[Install and Build software with Full Stack Agile AI Team](#quick-start)** → Quick Start Instruction
-- **[Learn how to use BMad](bmad-core/user-guide.md)** → Complete user guide and walkthrough
-- **[See available AI agents](/bmad-core/agents))** → Specialized roles for your team
-- **[Explore non-technical uses](#-beyond-software-development---expansion-packs)** → Creative writing, business, wellness, education
-- **[Create my own AI agents](#creating-your-own-expansion-pack)** → Build agents for your domain
-- **[Browse ready-made expansion packs](expansion-packs/)** → Game dev, DevOps, infrastructure and get inspired with ideas and examples
-- **[Understand the architecture](docs/core-architecture.md)** → Technical deep dive
-- **[Join the community](https://discord.gg/gk8jAdXWmj)** → Get help and share ideas
-
-## Important: Keep Your BMad Installation Updated
-
-**Stay up-to-date effortlessly!** If you already have BMad-Method installed in your project, simply run:
+### 1. Install BMAD Method in Your Existing Project
 
 ```bash
-npx bmad-method install
-# OR
-git pull
-npm run install:bmad
+npx appiq-solution
 ```
 
-This will:
+**Important selections during installation:**
+- Choose the `appiq-flutter-mobile-dev` Expansion Pack
+- Provide the path to your existing Architecture MD file
+- The system will install Flutter agents in `.bmad-core/`
 
-- ✅ Automatically detect your existing v4 installation
-- ✅ Update only the files that have changed and add new files
-- ✅ Create `.bak` backup files for any custom modifications you've made
-- ✅ Preserve your project-specific configurations
+### 2. Analyze Existing Architecture
 
-This makes it easy to benefit from the latest improvements, bug fixes, and new agents without losing your customizations!
-
-## Quick Start
-
-### One Command for Everything (IDE Installation)
-
-**Just run one of these commands:**
+Since you already have documented architecture, this is the perfect starting point:
 
 ```bash
-npx bmad-method install
-# OR if you already have BMad installed:
-git pull
-npm run install:bmad
+@architect
 ```
 
-This single command handles:
+**What happens here:**
+- The Architect agent reads your architecture document
+- Analyzes your existing code
+- Creates a "Brownfield Analysis" with recommendations
+- Defines how new features fit into your existing structure
 
-- **New installations** - Sets up BMad in your project
-- **Upgrades** - Updates existing installations automatically
-- **Expansion packs** - Installs any expansion packs you've added to package.json
+### 3. Plan Livestream Feature
 
-> **That's it!** Whether you're installing for the first time, upgrading, or adding expansion packs - these commands do everything.
-
-**Prerequisites**: [Node.js](https://nodejs.org) v20+ required
-
-### Fastest Start: Web UI Full Stack Team at your disposal (2 minutes)
-
-1. **Get the bundle**: Save or clone the [full stack team file](dist/teams/team-fullstack.txt) or choose another team
-2. **Create AI agent**: Create a new Gemini Gem or CustomGPT
-3. **Upload & configure**: Upload the file and set instructions: "Your critical operating instructions are attached, do not break character as directed"
-4. **Start Ideating and Planning**: Start chatting! Type `*help` to see available commands or pick an agent like `*analyst` to start right in on creating a brief.
-5. **CRITICAL**: Talk to BMad Orchestrator in the web at ANY TIME (#bmad-orchestrator command) and ask it questions about how this all works!
-6. **When to move to the IDE**: Once you have your PRD, Architecture, optional UX and Briefs - its time to switch over to the IDE to shard your docs, and start implementing the actual code! See the [User guide](bmad-core/user-guide.md) for more details
-
-### Alternative: Clone and Build
+Now the Scrum Master comes into play:
 
 ```bash
-git clone https://github.com/bmadcode/bmad-method.git
-npm run install:bmad # build and install all to a destination folder
+@sm
 ```
 
-## 🌟 Beyond Software Development - Expansion Packs
+**The SM will ask you:**
+- Which specific livestream functions are needed
+- Which UI components are required
+- How the feature integrates into existing navigation
+- Which backend endpoints are needed
 
-BMad's natural language framework works in ANY domain. Expansion packs provide specialized AI agents for creative writing, business strategy, health & wellness, education, and more. Also expansion packs can expand the core BMad-Method with specific functionality that is not generic for all cases. [See the Expansion Packs Guide](docs/expansion-packs.md) and learn to create your own!
+### 4. Automatic Flutter Workflow Starts
 
-## Codebase Flattener Tool
+Once the story is defined, the `flutter-ui-first-development` workflow automatically starts:
 
-The BMad-Method includes a powerful codebase flattener tool designed to prepare your project files for AI model consumption. This tool aggregates your entire codebase into a single XML file, making it easy to share your project context with AI assistants for analysis, debugging, or development assistance.
+**Phase 1: UI Design (Maya - flutter-ui-agent)**
+```
+"How should the livestream UI look?"
+"Which widgets do we need (Player, Chat, Controls)?"
+"Where in existing navigation will it be integrated?"
+```
 
-### Features
+Maya creates:
+- Livestream pages (`livestream_page.dart`, `livestream_detail_page.dart`)
+- Custom widgets (`livestream_player_widget.dart`, `chat_widget.dart`)
+- Localization keys for all texts
+- Integration into your existing navigation
 
-- **AI-Optimized Output**: Generates clean XML format specifically designed for AI model consumption
-- **Smart Filtering**: Automatically respects `.gitignore` patterns to exclude unnecessary files
-- **Binary File Detection**: Intelligently identifies and excludes binary files, focusing on source code
-- **Progress Tracking**: Real-time progress indicators and comprehensive completion statistics
-- **Flexible Output**: Customizable output file location and naming
+**Phase 2: State Management (Alex - flutter-cubit-agent)**
 
-### Usage
+Alex implements:
+- `LivestreamCubit` with States (initial, loading, streaming, error)
+- `LivestreamState` class with all required data
+- Error handling for connection drops
+- Integration with your existing state patterns
+
+**Phase 3: Business Logic (Jordan - flutter-domain-agent)**
+
+Jordan creates:
+- `LivestreamEntity` (Stream-ID, URL, Viewer-Count, etc.)
+- `StartLivestreamUseCase`, `StopLivestreamUseCase`
+- `LivestreamRepository` Interface
+- Business validation (e.g., permission checks)
+
+**Phase 4: Data Layer (Sam - flutter-data-agent)**
+
+Sam implements:
+- `LivestreamRepositoryImpl`
+- `LivestreamRemoteDataSource` (API calls)
+- `LivestreamLocalDataSource` (caching)
+- `LivestreamModel` with JSON serialization
+- WebSocket integration for real-time chat
+
+### 5. Backend Integration
+
+Since you also need backend functions:
+```bash
+@backend-dev
+```
+
+### 6. Automatic Quality Control
+
+After each phase runs automatically:
+- Code review against your existing patterns
+- Consistency check with documented architecture
+- Testing (Unit, Widget, Integration tests)
+- Security validation
+
+## 🔄 Your Concrete Workflow
+
+**One-time setup:**
+```bash
+npx appiq-solution  # Choose appiq-flutter-mobile-dev
+@architect          # Analyze existing architecture
+```
+
+**For each new feature:**
+```bash
+@sm  # "Create story for [Feature-Name]"
+```
+- System runs automatically through all agents
+- You provide input/feedback at respective handoff points
+- At the end you have a fully implemented feature
+
+**In your IDE (Cursor, Claude, etc.):**
+```
+@smart-launcher
+```
+
+## 🗂️ Codebase Context Management
+
+Automatic context export after every feature/milestone:
 
 ```bash
-# Basic usage - creates flattened-codebase.xml in current directory
+# Manual execution
 npx bmad-method flatten
 
-# Specify custom input directory
-npx bmad-method flatten --input /path/to/source/directory
-npx bmad-method flatten -i /path/to/source/directory
+# With custom output (for AI agents)
+npx bmad-method flatten --output context/current-codebase.xml
 
-# Specify custom output file
-npx bmad-method flatten --output my-project.xml
-npx bmad-method flatten -o /path/to/output/codebase.xml
-
-# Combine input and output options
-npx bmad-method flatten --input /path/to/source --output /path/to/output/codebase.xml
+# Automatically in package.json scripts:
+{
+  "scripts": {
+    "flatten": "npx bmad-method flatten --output context/milestone-$(date +%Y%m%d).xml",
+    "posttest": "npm run flatten",
+    "postbuild": "npm run flatten"
+  }
+}
 ```
 
-### Example Output
+**Where it's saved:**
+- **Standard**: `flattened-codebase.xml` in current directory
+- **Custom**: Any path with `--output` parameter
+- **Recommendation**: `context/` folder for better organization
 
-The tool will display progress and provide a comprehensive summary:
+**Benefits for Flutter development:**
+✅ AI agents always have current codebase context  
+✅ Perfect for code reviews and architecture discussions  
+✅ Easy knowledge transfer between team members
 
-```
-📊 Completion Summary:
-✅ Successfully processed 156 files into flattened-codebase.xml
-📁 Output file: /path/to/your/project/flattened-codebase.xml
-📏 Total source size: 2.3 MB
-📄 Generated XML size: 2.1 MB
-📝 Total lines of code: 15,847
-🔢 Estimated tokens: 542,891
-📊 File breakdown: 142 text, 14 binary, 0 errors
-```
+## 📚 Documentation
 
-The generated XML file contains all your project's source code in a structured format that AI models can easily parse and understand, making it perfect for code reviews, architecture discussions, or getting AI assistance with your BMad-Method projects.
-
-## Documentation & Resources
-
-### Essential Guides
-
-- 📖 **[User Guide](bmad-core/user-guide.md)** - Complete walkthrough from project inception to completion
-- 🏗️ **[Core Architecture](docs/core-architecture.md)** - Technical deep dive and system design
-- 🚀 **[Expansion Packs Guide](docs/expansion-packs.md)** - Extend BMad to any domain beyond software development
+📖 **[User Guide](bmad-core/user-guide.md)** - Complete guide to Flutter development with AI agents  
+📱 **[Flutter Expansion Pack](expansion-packs/appiq-flutter-mobile-dev/)** - Specialized Flutter agents and templates  
+🏗️ **[BMAD Core Architecture](docs/core-architecture.md)** - Technical deep dive into the framework
 
 ## Support
 
-- 💬 [Discord Community](https://discord.gg/gk8jAdXWmj)
-- 🐛 [Issue Tracker](https://github.com/bmadcode/bmad-method/issues)
-- 💬 [Discussions](https://github.com/bmadcode/bmad-method/discussions)
-
-## Contributing
-
-**We're excited about contributions and welcome your ideas, improvements, and expansion packs!** 🎉
-
-📋 **[Read CONTRIBUTING.md](CONTRIBUTING.md)** - Complete guide to contributing, including guidelines, process, and requirements
+💬 [Discord Community](https://discord.gg/gk8jAdXWmj)  
+🐛 [Issue Tracker](https://github.com/your-repo/appiq-solution/issues)  
+💬 [Discussions](https://github.com/your-repo/appiq-solution/discussions)  
+💖 [Support the Project via PayPal](https://paypal.me/yourusername)
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
-
-[![Contributors](https://contrib.rocks/image?repo=bmadcode/bmad-method)](https://github.com/bmadcode/bmad-method/graphs/contributors)
-
-<sub>Built with ❤️ for the AI-assisted development community</sub>
+MIT © Viktor Hermann

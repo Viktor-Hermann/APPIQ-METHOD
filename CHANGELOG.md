@@ -1,3 +1,65 @@
+# [1.5.0] APPIQ Flutter Mobile Dev Extension (2025-07-30)
+
+## 🚨 MAJOR FEATURES - MANDATORY DEVELOPMENT RULES
+
+### ✨ New Features
+
+* **🔧 Mandatory Development Rules System**: Complete enforcement of development standards
+  - **8-Step Standard Workflow**: THINK → PLAN → VERIFY → WORK → EXPLAIN → SIMPLE → REVIEW → COMMIT
+  - **5 Quality Gates**: DRY, Readable, Maintainable, Performant, Testable (ALL must pass!)
+  - **Automatic Rule Loading**: All agents now automatically load mandatory rules
+  - **Instant Failure Detection**: Static text, code duplication, architecture violations
+
+* **🤖 Enhanced Flutter Agents**: All agents updated with mandatory workflow enforcement
+  - **flutter-ui-agent**: Enhanced with pre-coding checklist and quality gates
+  - **flutter-cubit-agent**: Mandatory state management patterns
+  - **flutter-domain-agent**: Business logic validation rules
+  - **flutter-data-agent**: Repository pattern enforcement
+  - **shared-components-agent**: Component reuse validation
+
+* **✅ Automatic Validation System**: `validate-mandatory-rules.md` task
+  - **Script-based validation**: Automatic checks for all quality criteria
+  - **Comprehensive reporting**: Success/failure reports with specific actions
+  - **Pre-commit validation**: Prevents bad code from being committed
+  - **Architecture compliance**: Clean Architecture layer validation
+
+* **📋 Enhanced Development Guidelines**: `flutter-development-guidelines.md`
+  - **MANDATORY sections**: Critical rules that MUST be followed
+  - **Failure conditions**: Clear instant failure scenarios
+  - **Pre-coding checklists**: What to check before writing any code
+  - **Integration rules**: How to work with existing codebase
+
+* **⚙️ Core Configuration Enhancement**: `core-config-smart.yaml`
+  - **mandatoryRules enforcement**: Automatic rule application
+  - **devLoadAlwaysFiles**: Rules loaded with every agent
+  - **Quality gates configuration**: All 5 criteria enforced
+  - **Failure condition settings**: Configurable instant failures
+
+### 🔧 Improvements
+
+* **Code Reuse Optimization**: Always check existing components before creating new ones
+* **Pattern Consistency**: Enforce existing architectural patterns
+* **Localization Enforcement**: NO static text allowed - all text must use AppLocalizations
+* **Testing Requirements**: Comprehensive test coverage mandatory
+* **Performance Standards**: Optimized implementations required
+
+### 💥 Breaking Changes
+
+* **Static Text**: Now causes instant failure - ALL text must use AppLocalizations
+* **Code Duplication**: Instant failure when shared components exist
+* **Pattern Breaking**: Cannot create new patterns without approval
+* **Missing Tests**: All new features must have comprehensive tests
+* **Architecture Violations**: Clean Architecture must be followed strictly
+
+### 🎯 Developer Experience
+
+* **Consistent Code Quality**: All code looks like it's from a single developer
+* **Automatic Enforcement**: Rules applied automatically in Cursor, Claude Code, and all IDEs
+* **Clear Guidelines**: Explicit failure conditions and success criteria
+* **Validation Feedback**: Detailed reports on what needs to be fixed
+
+---
+
 ## [4.33.1](https://github.com/bmadcode/BMAD-METHOD/compare/v4.33.0...v4.33.1) (2025-07-29)
 
 

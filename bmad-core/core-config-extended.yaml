@@ -1,0 +1,39 @@
+markdownExploder: true
+prd:
+  prdFile: docs/prd.md
+  prdVersion: v4
+  prdSharded: true
+  prdShardedLocation: docs/prd
+  epicFilePattern: epic-{n}*.md
+  # NEUE ERWEITERUNG: PRD Pattern-Erkennung
+  prdFilePattern: "*_prd.md"  # Erkennt alle Dateien die mit _prd.md enden
+  autoPrdDetection: true      # Aktiviert automatische PRD-Erkennung
+  autoPrdSharding: true       # Automatisches Sharding bei Erkennung
+  autoPrdWorkflow: true       # Startet automatisch PO → SM → Dev Workflow
+
+architecture:
+  architectureFile: docs/architecture.md
+  architectureVersion: v4
+  architectureSharded: true
+  architectureShardedLocation: docs/architecture
+
+# Erweiterte Workflow-Automatisierung
+autoWorkflow:
+  enabled: true
+  scanDirectories: 
+    - "docs/"
+    - "features/"
+    - "./"
+  triggerPatterns:
+    - "*_prd.md"
+    - "*_requirements.md" 
+    - "*_feature.md"
+
+customTechnicalDocuments: null
+devLoadAlwaysFiles:
+  - docs/architecture/coding-standards.md
+  - docs/architecture/tech-stack.md
+  - docs/architecture/source-tree.md
+devDebugLog: .ai/debug-log.md
+devStoryLocation: docs/stories
+slashPrefix: bmad

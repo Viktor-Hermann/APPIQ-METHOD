@@ -1,0 +1,184 @@
+markdownExploder: true
+
+# Standard PRD Configuration
+prd:
+  prdFile: docs/prd.md
+  prdVersion: v4
+  prdSharded: true
+  prdShardedLocation: docs/prd
+  epicFilePattern: epic-{n}*.md
+  
+  # Enhanced PRD Pattern Recognition
+  prdFilePattern: "*_prd.md"
+  requirementsFilePattern: "*_requirements.md"
+  featureFilePattern: "*_feature.md"
+  
+  # Auto-Detection Settings
+  autoPrdDetection: true
+  autoPrdSharding: true
+  autoPrdWorkflow: true
+
+architecture:
+  architectureFile: docs/architecture.md
+  architectureVersion: v4
+  architectureSharded: true
+  architectureShardedLocation: docs/architecture
+
+# Smart Analysis Configuration
+smartAnalysis:
+  enabled: true
+  
+  # Codebase Analysis
+  codebaseAnalysis:
+    enabled: true
+    scanDirectories:
+      - "lib/features/"
+      - "lib/shared/"
+      - "lib/core/"
+    
+    # Similarity Detection
+    similarityThreshold: 0.6  # 60% similarity to suggest reuse
+    keywordMatching: true
+    patternMatching: true
+    
+    # Code Reuse Detection 
+    reuseAnalysis:
+      widgets: "lib/shared/widgets/"
+      services: "lib/shared/services/"
+      utils: "lib/shared/utils/"
+      patterns: "lib/features/*/presentation/"
+  
+  # UI Reference Processing
+  uiReferenceProcessing:
+    enabled: true
+    assetDirectories:
+      - "assets/images/"
+      - "assets/icons/"
+      - "assets/mockups/"
+    supportedFormats: ["png", "jpg", "svg", "pdf"]
+    autoCreateDirectories: true
+  
+  # Architect Consultation
+  architectConsultation:
+    enabled: true
+    triggers:
+      - complexityThreshold: "high"
+      - conflictingPatterns: true
+      - noExistingPatterns: true
+      - crossFeatureDependencies: true
+    
+    analysisDepth: "deep"  # shallow, medium, deep
+    
+  # Integration Analysis
+  integrationAnalysis:
+    enabled: true
+    checkExistingFiles: true
+    validatePaths: true
+    conflictDetection: true
+    dependencyMapping: true
+
+# Auto-Workflow Configuration
+autoWorkflow:
+  enabled: true
+  
+  # Scan Configuration
+  scanDirectories: 
+    - "docs/"
+    - "features/"
+    - "./"
+    - "requirements/"
+  
+  # File Pattern Triggers
+  triggerPatterns:
+    - "*_prd.md"
+    - "*_requirements.md" 
+    - "*_feature.md"
+    - "*_spec.md"
+  
+  # Workflow Automation
+  autoSharding: true
+  autoStoryGeneration: true
+  autoArchitectConsultation: true
+  
+  # Flutter-Specific Settings
+  flutterIntegration:
+    enabled: true
+    autoDetectFlutterProject: true
+    applyFlutterPatterns: true
+    useCleanArchitecture: true
+    defaultStateManagement: "cubit"
+
+# Development Configuration
+customTechnicalDocuments: null
+devLoadAlwaysFiles:
+  - docs/architecture/coding-standards.md
+  - docs/architecture/tech-stack.md
+  - docs/architecture/source-tree.md
+  - bmad-core/data/mandatory-development-rules.md
+  - expansion-packs/appiq-flutter-mobile-dev/data/flutter-development-guidelines.md
+  
+devDebugLog: .ai/debug-log.md
+devStoryLocation: docs/stories
+
+# Enhanced Development Settings
+devEnhancements:
+  codeReuseValidation: true
+  existingComponentScan: true
+  architecturalComplianceCheck: true
+  performancePatternValidation: true
+
+# MANDATORY DEVELOPMENT RULES ENFORCEMENT
+mandatoryRules:
+  enabled: true
+  enforceStandardWorkflow: true
+  enforceQualityGates: true
+  enforcePreCodingChecklist: true
+  
+  # Standard Workflow Enforcement
+  standardWorkflow:
+    requirePlan: true
+    requireVerification: true
+    requireExplanations: true
+    requireSimpleChanges: true
+    requireReview: true
+    requireCommits: true
+  
+  # Quality Gates Enforcement (ALL 5 MUST PASS!)
+  qualityGates:
+    DRY: true              # No code duplication
+    Readable: true         # Self-documenting code
+    Maintainable: true     # Clean Architecture
+    Performant: true       # Optimized implementation
+    Testable: true         # Comprehensive tests
+  
+  # Flutter-Specific Rules
+  flutterRules:
+    noStaticText: true           # All text must use AppLocalizations
+    cleanArchitecture: true     # Presentation → Domain ← Data
+    cubitStateManagement: true  # Use Cubit patterns
+    repositoryPattern: true     # Implement Repository pattern
+    dependencyInjection: true   # Use GetIt
+    
+  # Code Integration Rules
+  codeIntegration:
+    checkExistingFirst: true    # Always check existing code first
+    reuseComponents: true       # Reuse shared components
+    followPatterns: true        # Follow existing patterns
+    extendNotDuplicate: true    # Extend instead of duplicate
+  
+  # Failure Conditions (NEVER ALLOWED!)
+  failureConditions:
+    staticTextInUI: true        # Instant failure
+    codeDuplication: true       # Instant failure
+    patternBreaking: true       # Instant failure
+    missingTests: true          # Instant failure
+    architectureViolation: true # Instant failure
+
+# Reporting Configuration
+reporting:
+  generateAnalysisReports: true
+  reportLocation: "docs/analysis/"
+  includeReuseRecommendations: true
+  includeArchitecturalSuggestions: true
+
+slashPrefix: bmad

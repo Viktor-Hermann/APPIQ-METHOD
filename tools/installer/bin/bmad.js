@@ -33,12 +33,12 @@ try {
 
 program
   .version(version)
-  .description('BMad Method installer - Universal AI agent framework for any domain');
+  .description('Appiq-Solution installer - Flutter Mobile Development Extension\nBased on and credits go to BMAD Method');
 
 program
   .command('install')
-  .description('Install BMad Method agents and tools')
-  .option('-f, --full', 'Install complete BMad Method')
+  .description('Install Appiq-Solution Flutter agents and tools')
+  .option('-f, --full', 'Install complete Appiq-Solution')
   .option('-x, --expansion-only', 'Install only expansion packs (no bmad-core)')
   .option('-d, --directory <path>', 'Installation directory')
   .option('-i, --ide <ide...>', 'Configure for specific IDE(s) - can specify multiple (cursor, claude-code, windsurf, trae, roo, cline, gemini, github-copilot, other)')
@@ -128,16 +128,17 @@ async function promptInstallation() {
   
   // Display ASCII logo
   console.log(chalk.bold.cyan(`
-██████╗ ███╗   ███╗ █████╗ ██████╗       ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ 
-██╔══██╗████╗ ████║██╔══██╗██╔══██╗      ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗
-██████╔╝██╔████╔██║███████║██║  ██║█████╗██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║
-██╔══██╗██║╚██╔╝██║██╔══██║██║  ██║╚════╝██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║
-██████╔╝██║ ╚═╝ ██║██║  ██║██████╔╝      ██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝
-╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝       ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ 
+ █████╗ ██████╗ ██████╗ ██╗ ██████╗       ███████╗ ██████╗ ██╗     ██╗   ██╗████████╗██╗ ██████╗ ███╗   ██╗
+██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗      ██╔════╝██╔═══██╗██║     ██║   ██║╚══██╔══╝██║██╔═══██╗████╗  ██║
+███████║██████╔╝██████╔╝██║██║   ██║█████╗███████╗██║   ██║██║     ██║   ██║   ██║   ██║██║   ██║██╔██╗ ██║
+██╔══██║██╔═══╝ ██╔═══╝ ██║██║▄▄ ██║╚════╝╚════██║██║   ██║██║     ██║   ██║   ██║   ██║██║   ██║██║╚██╗██║
+██║  ██║██║     ██║     ██║╚██████╔╝      ███████║╚██████╔╝███████╗╚██████╔╝   ██║   ██║╚██████╔╝██║ ╚████║
+╚═╝  ╚═╝╚═╝     ╚═╝     ╚═╝ ╚══▀▀═╝       ╚══════╝ ╚═════╝ ╚══════╝ ╚═════╝    ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
   `));
   
-  console.log(chalk.bold.magenta('🚀 Universal AI Agent Framework for Any Domain'));
-  console.log(chalk.bold.blue(`✨ Installer v${version}\n`));
+      console.log(chalk.bold.magenta('🚀 Appiq-Solution - Flutter Mobile Development Extension'));
+    console.log(chalk.gray('   Based on and credits go to BMAD Method'));
+      console.log(chalk.bold.blue(`✨ Appiq-Solution Installer v${version}\n`));
 
   const answers = {};
 
@@ -146,11 +147,9 @@ async function promptInstallation() {
     {
       type: 'input',
       name: 'directory',
-      message: 'Enter the full path to your project directory where BMad should be installed:',
+      message: 'Enter the full path to your project directory where Appiq-Solution should be installed (leave empty to install in the current folder):',
       validate: (input) => {
-        if (!input.trim()) {
-          return 'Please enter a valid project path';
-        }
+        // Allow empty input for current folder
         return true;
       }
     }

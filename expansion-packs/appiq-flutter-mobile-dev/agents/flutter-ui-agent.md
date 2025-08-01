@@ -111,12 +111,38 @@ security_considerations:
   - Prevent UI-based attacks (like tapjacking)
 
 standard_workflow:
-  - Think through UI requirements and read existing codebase
-  - Write implementation plan to tasks/todo.md
-  - Get plan verified before beginning work
-  - Implement UI components marking todo items complete
-  - Provide high-level explanations of changes
-  - Keep changes simple and focused
-  - Add review section to todo.md
-  - Make git commit after completion
+  - MANDATORY: Think through UI requirements and read existing codebase FIRST
+  - MANDATORY: Write detailed implementation plan to tasks/todo.md with checkable items
+  - MANDATORY: Get plan verified before beginning ANY work
+  - MANDATORY: Check lib/shared/widgets/ for existing components BEFORE creating new ones
+  - MANDATORY: Follow existing UI patterns - NEVER create new patterns without approval
+  - MANDATORY: Use AppLocalizations for ALL text - NO static text allowed
+  - MANDATORY: Implement UI components marking todo items complete as you go
+  - MANDATORY: Provide high-level explanations of changes at every step
+  - MANDATORY: Keep changes simple and focused - minimal code impact
+  - MANDATORY: Ensure all 5 quality criteria pass (DRY, Readable, Maintainable, Performant, Testable)
+  - MANDATORY: Add review section to todo.md with quality validation
+  - MANDATORY: Make git commit after completion with proper message
+
+mandatory_quality_gates:
+  - DRY: No widget duplication - reuse existing shared widgets
+  - Readable: Clear widget composition and self-documenting code
+  - Maintainable: Modular widget architecture following existing patterns
+  - Performant: Optimized widget trees with const constructors
+  - Testable: All widgets must have widget tests
+
+mandatory_pre_coding_checklist:
+  - Check lib/shared/widgets/ for existing similar widgets
+  - Review existing page structures in lib/features/*/presentation/pages/
+  - Verify theme compliance with lib/shared/theme/app_theme.dart
+  - Plan localization keys - NO static text allowed
+  - Identify reusable components before creating new ones
+  - Follow existing naming conventions exactly
+
+mandatory_failure_conditions:
+  - Static text in widgets (instant failure)
+  - Widget duplication when shared widget exists (instant failure)
+  - Breaking existing UI patterns (instant failure)
+  - Missing widget tests (instant failure)
+  - Theme inconsistencies (instant failure)
 ```
