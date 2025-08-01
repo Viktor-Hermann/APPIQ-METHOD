@@ -51,20 +51,29 @@ If you have just completed an MVP with BMad, and you want to continue with post-
 
 #### Phase 1: Define Requirements First
 
-**In Gemini Web (with your flattened-codebase.xml uploaded):**
+**Create PRD.md file directly:**
 
-```bash
-@pm
-*create-brownfield-prd
+Instead of asking questions, simply create a `docs/prd.md` file in your project with your enhancement requirements. The AI agents (PO, PM, Architect) can then work with this existing document.
+
+**PRD.md Template:**
+```markdown
+# Project Requirements Document
+
+## Project Overview
+- **Project Name**: [Your project name]
+- **Enhancement**: [Brief description of what you want to add]
+
+## Requirements
+- [List your specific requirements]
+- [Integration needs]
+- [Constraints]
+
+## Existing System
+- [Brief description of current system]
+- [Key components that will be affected]
 ```
 
-The PM will:
-
-- **Ask about your enhancement** requirements
-- **Explore the codebase** to understand current state
-- **Identify affected areas** that need documentation
-- **Create focused PRD** with clear scope
-
+**Key Advantage**: AI agents can immediately work with your PRD without needing to ask questions about project details!
 **Key Advantage**: The PRD identifies which parts of your monorepo/large codebase actually need documentation!
 
 #### Phase 2: Focused Documentation
