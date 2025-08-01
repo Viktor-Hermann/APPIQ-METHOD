@@ -1,0 +1,23 @@
+bundle:
+  name: Flutter Mobile Development Team
+  icon: 📱
+  description: Complete Flutter mobile development team with Clean Architecture, specialized agents for UI, state management, domain, and data layers
+agents:
+  - bmad-orchestrator
+  - analyst
+  - pm
+  - ux-expert
+  - architect
+  - po
+  - flutter-ui-agent
+  - flutter-cubit-agent
+  - flutter-domain-agent
+  - flutter-data-agent
+  - shared-components-agent
+  - qa
+  - sm
+workflows:
+  - flutter-greenfield-mobile.yaml
+  - flutter-brownfield-mobile.yaml
+  - flutter-feature-development.yaml
+  - flutter-ui-first-development.yaml
