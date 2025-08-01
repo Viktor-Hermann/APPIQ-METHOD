@@ -7,7 +7,7 @@
 
 **🎉 NEW: One-Command Installation with Smart MCP Integration!**
 
-APPIQ SOLUTION: Advanced Project Intelligence & Quality Solution - Built with ❤️ based on the amazing Bmad-Method. Transform any domain with specialized AI expertise: Flutter mobile development, modern web apps, fullstack solutions, and beyond.
+APPIQ SOLUTION: Advanced Project Intelligence & Quality Solution - Built with ❤️ based on the amazing Bmad-Method. **Specially optimized for Flutter mobile development** with Clean Architecture, Cubit patterns, and Dart MCP integration. Transform any domain with specialized AI expertise: advanced mobile apps, modern web solutions, fullstack development, and beyond.
 
 **[Subscribe to BMadCode on YouTube](https://www.youtube.com/@BMadCode?sub_confirmation=1)**
 
@@ -85,7 +85,7 @@ npx appiq-solution install
 - ✅ **Smart MCP Integration**: Agents know which MCP servers they can use (no auto-config)
 - ✅ **Planning Workflow**: Project idea → Plan generation → Approval → Development
 - ✅ **Full BMAD Flow**: Document sharding, agent orchestration, development cycle
-- ✅ **Flutter Support**: Dart MCP Server integration, Clean Architecture, Cubit patterns
+- ✅ **🎯 Advanced Flutter Support**: Dart MCP Server integration, Clean Architecture, Cubit patterns, BLoC state management, dependency injection with GetIt, proper testing strategies
 - ✅ **Modern Web**: shadcn/ui, v0.dev, Tailwind CSS integration
 - ✅ **Security First**: No API keys stored or configured automatically
 
@@ -110,6 +110,23 @@ Then in your IDE (Cursor, Claude, etc.):
 ```
 
 **📖 [Complete Smart Workflow Guide](SMART_WORKFLOW_GUIDE.md)**
+
+### 📱 **Flutter Mobile Development - First Class Support**
+
+APPIQ Solution provides **industry-leading Flutter development support** with:
+
+- **🏗️ Clean Architecture**: Domain-driven design, proper layer separation
+- **🔄 State Management**: Cubit patterns, BLoC integration, proper state flows
+- **🛠️ Best Practices**: Dependency injection with GetIt, null safety, proper error handling
+- **🎨 Material 3**: Modern UI components, theming, responsive design
+- **🧪 Testing**: Unit tests, widget tests, integration tests, proper mocking
+- **🔧 DevTools**: Dart MCP Server integration, hot reload optimization
+- **📦 Package Management**: Curated package recommendations, version management
+
+**Get started with Flutter projects:**
+```bash
+npx appiq-solution install  # Auto-detects Flutter projects
+```
 
 ### Alternative: Traditional BMAD Installation
 
@@ -149,9 +166,9 @@ npm run install:bmad # build and install all to a destination folder
 
 ## 🌟 Beyond Software Development - Expansion Packs
 
-Both APPIQ Solution and BMad's natural language framework work in ANY domain. Expansion packs provide specialized AI agents for:
+Both APPIQ Solution and BMad's natural language framework work in ANY domain. **Specially optimized for mobile development**, expansion packs provide specialized AI agents for:
 
-- **📱 Flutter Mobile Development** - Clean Architecture, Cubit, Dart MCP integration
+- **📱 Flutter Mobile Development** - Clean Architecture, Cubit patterns, BLoC state management, dependency injection, proper testing, null safety, and Material 3 design integration
 - **🎮 Game Development** - Unity 2D, Phaser.js game creation
 - **🏗️ DevOps & Infrastructure** - Platform engineering, deployment automation
 - **✍️ Creative Writing** - Story development, character creation
@@ -221,6 +238,7 @@ The generated XML file contains all your project's source code in a structured f
 - 💬 [Discord Community](https://discord.gg/gk8jAdXWmj)
 - 🐛 [Issue Tracker](https://github.com/bmadcode/bmad-method/issues)
 - 💬 [Discussions](https://github.com/bmadcode/bmad-method/discussions)
+- 💖 [![Support the Project via PayPal](https://becomingdeutsch.wordpress.com/wp-content/uploads/2019/08/buy-me-a-coffee-with-paypal.png)](https://www.paypal.com/paypalme/vhermann)
 
 ## Contributing
 
